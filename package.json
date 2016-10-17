@@ -15,8 +15,15 @@
     "start": "webpack-dev-server --config config/webpack.config.dev.js",
     "build": "NODE_ENV=production webpack --config config/webpack.config.prod.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unlease-development/rooftop.git"
+  },
   "author": "Luke <luke@unlease.io> (https://www.unlease.io/)",
   "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/unlease-development/rooftop/issues"
+  },
   "devDependencies": {
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
