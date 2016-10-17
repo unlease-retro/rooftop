@@ -16,7 +16,7 @@ module.exports = {
 
   output: {
     path: PATHS.dist,
-    filename: 'bundle.js',
+    filename: '[name].[hash].js',
     publicPath: '/'
   },
 
