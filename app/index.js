@@ -6,11 +6,13 @@ import useRelay from 'react-router-relay'
 
 import Root from './containers/Root'
 
+const GraphQLServer = 'http://localhost:5000/graphql'
+
 Relay.injectNetworkLayer(
-  new Relay.DefaultNetworkLayer('https://api.graph.cool/relay/v1/ciue3pqxi05d30174jx0hl8x3')
+  new Relay.DefaultNetworkLayer(GraphQLServer)
 )
 
-const ViewerQueries = { viewer: () => Relay.QL`query { viewer }` }
+// const ViewerQueries = { viewer: () => Relay.QL`query { viewer }` }
 
 render(
   <Router
@@ -19,7 +21,7 @@ render(
     render={applyRouterMiddleware(useRelay)}
     history={browserHistory}
   >
-    <Route path='/' component={Root} queries={ViewerQueries} />
+    <Route path='/' component={Root} />
   </Router>
   , document.getElementById('root')
 )
