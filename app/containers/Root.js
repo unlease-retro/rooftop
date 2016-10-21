@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import Relay from 'react-relay'
+import Relay from 'react-relay'
 
 class Root extends Component {
 
@@ -21,22 +21,13 @@ class Root extends Component {
 
 }
 
-export default Root
-
-// export default Relay.createContainer(Root, {
-//   fragments: {
-//     viewer: () => Relay.QL`
-//       fragment on Listing {
-//         listings(lng: -0.12775829999998223, lat: 51.5073509, radius: 21) {
-//           edges {
-//             node {
-//               id
-//               location
-//             }
-//           }
-//         }
-//         id
-//       }
-//     `,
-//   },
-// })
+export default Relay.createContainer(Root, {
+  fragments: {
+    listings: () => Relay.QL`
+      fragment on Listing {
+        id
+        location
+      }
+    `,
+  },
+})

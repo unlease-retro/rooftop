@@ -9,10 +9,12 @@ import Root from './containers/Root'
 const GraphQLServer = 'http://localhost:5000/graphql'
 
 Relay.injectNetworkLayer(
-  new Relay.DefaultNetworkLayer(GraphQLServer)
+  new Relay.DefaultNetworkLayer(GraphQLServer, {
+    credentials: 'same-origin',
+  })
 )
 
-// const ViewerQueries = { viewer: () => Relay.QL`query { viewer }` }
+const ListingQueries = { listings: () => Relay.QL`query { listings }` }
 
 render(
   <Router
@@ -21,7 +23,7 @@ render(
     render={applyRouterMiddleware(useRelay)}
     history={browserHistory}
   >
-    <Route path='/' component={Root} />
+    <Route path='/' component={Root} queries={ListingQueries} />
   </Router>
   , document.getElementById('root')
 )
