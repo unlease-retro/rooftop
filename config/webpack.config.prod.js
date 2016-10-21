@@ -14,7 +14,7 @@ module.exports = {
 
   profile: true,
 
-  entry: [ PATHS.src ],
+  entry: [ 'regenerator-runtime/runtime', PATHS.src ],
 
   output: {
     path: PATHS.dist,

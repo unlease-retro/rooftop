@@ -12,7 +12,7 @@ module.exports = {
 
   devtool: 'eval',
 
-  entry: [ PATHS.src ],
+  entry: [ 'regenerator-runtime/runtime', PATHS.src ],
 
   output: {
     path: PATHS.dist,
