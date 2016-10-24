@@ -11,6 +11,5 @@ export const initialState = Immutable.fromJS({
 export default createReducer(initialState, {
 
   [actions.SET_AUTHORISED]: (state, action) => state.merge({ ...action.payload }),
-  [actions.SET_AUTHORISED]: (state, action) => state.merge({ ...action.payload }),
 
 })
