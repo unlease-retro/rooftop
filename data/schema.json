@@ -13,6 +13,18 @@
           "description": null,
           "fields": [
             {
+              "name": "query",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Query",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "listings",
               "description": null,
               "args": [
