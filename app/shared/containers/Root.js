@@ -7,10 +7,16 @@ import { syncHistoryWithStore } from 'react-router-redux'
 
 import routes from '../../routes'
 import configureStore from '../store'
+import configureNetwork from '../network'
 import createSelectLocationState from '../util/createSelectLocationState'
 
+// application setup
 const store = configureStore()
+const network = configureNetwork(store)
 const history = syncHistoryWithStore(browserHistory, store, { selectLocationState: createSelectLocationState() })
+
+// configure Relay network layer
+Relay.injectNetworkLayer( network )
 
 export default class Root extends Component {
 
