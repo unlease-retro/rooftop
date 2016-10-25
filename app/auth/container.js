@@ -2,11 +2,21 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import { withRouter } from 'react-router'
 
 import * as actions from './actions'
 import selectors from './selectors'
 
 export class Auth extends Component {
+
+  componentWillReceiveProps(nextProps) {
+
+    const { authorised, router } = nextProps
+
+    // redirect authorised users to `/`
+    if ( authorised ) return router.push('/')
+
+  }
 
   render() {
 
@@ -28,9 +38,9 @@ export class Auth extends Component {
 
 }
 
-export default connect(
+export default withRouter(connect(
   createStructuredSelector({ ...selectors }),
   dispatch => ({
     actions: bindActionCreators(actions, dispatch)
   })
-)(Auth)
+)(Auth))

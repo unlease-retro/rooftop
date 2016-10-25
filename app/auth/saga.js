@@ -29,7 +29,7 @@ function* fetchLogin({ payload }) {
 
   } catch (error) {
 
-    yield put({ type: actions.LOGIN_FAILURE, payload: { error } })
+    yield put({ type: actions.LOGIN_FAILURE, payload: { authorised: false, error } })
 
   }
 
@@ -58,7 +58,7 @@ function* fetchRefreshToken() {
 
   } catch (error) {
 
-    yield put({ type: actions.REFRESH_TOKEN_FAILURE, payload: { error } })
+    yield put({ type: actions.REFRESH_TOKEN_FAILURE, payload: { authorised: false, error } })
 
   }
 
@@ -88,7 +88,7 @@ function* fetchCheckToken() {
 
   } catch (error) {
 
-    yield put({ type: actions.CHECK_TOKEN_FAILURE, payload: { error } })
+    yield put({ type: actions.CHECK_TOKEN_FAILURE, payload: { authorised: false, error } })
 
   }
 

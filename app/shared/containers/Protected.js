@@ -8,23 +8,12 @@ import { selectors, actions } from '../../auth'
 
 class Protected extends React.Component {
 
-  componentWillMount() {
+  componentWillReceiveProps(nextProps) {
 
-    // const { checkToken } = this.props.actions
-
-    // check if user's access token is valid
-    // checkToken()
-
-  }
-
-  componentWillReceiveProps() {
-
-    // TODO - this won't work, as we'll start checking the token then user will be redirected straight away
-
-    // const { authorised, router } = nextProps
+    const { authorised, router } = nextProps
 
     // redirect unauthorised scoundrels to `/login`
-    // if ( !authorised ) return router.push('login')
+    if ( !authorised ) return router.push('login')
 
   }
 
