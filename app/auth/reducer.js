@@ -5,11 +5,15 @@ import * as actions from './actionTypes'
 
 export const initialState = Immutable.fromJS({
   authorised: false,
-  token: null,
+  user: {},
 })
 
 export default createReducer(initialState, {
 
-  [actions.SET_AUTHORISED]: (state, action) => state.merge({ ...action.payload }),
+  [actions.LOGIN_SUCCESS]: (state, { payload }) => state.merge({ ...payload }),
+
+  [actions.CHECK_TOKEN_SUCCESS]: (state, { payload }) => state.merge({ ...payload }),
+
+  [actions.REFRESH_TOKEN_SUCCESS]: (state, { payload }) => state.merge({ ...payload }),
 
 })

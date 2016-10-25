@@ -9,11 +9,15 @@ import routes from '../../routes'
 import configureStore from '../store'
 import configureNetwork from '../network'
 import createSelectLocationState from '../util/createSelectLocationState'
+import rootSaga from '../sagas'
 
 // application setup
 const store = configureStore()
 const network = configureNetwork(store)
 const history = syncHistoryWithStore(browserHistory, store, { selectLocationState: createSelectLocationState() })
+
+// start sagas
+store.runSaga(rootSaga)
 
 // configure Relay network layer
 Relay.injectNetworkLayer( network )

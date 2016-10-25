@@ -10,10 +10,16 @@ export class Auth extends Component {
 
   render() {
 
+    const { login } = this.props.actions
+
     return (
       <div>
 
         <h1>Auth</h1>
+
+        <input type='email' placeholder='Email' />
+        <input type='password' placeholder='Password' />
+        <button onClick={ () => login({ username: 't@t.co', password: 'test11' }) }>Login</button>
 
       </div>
     )

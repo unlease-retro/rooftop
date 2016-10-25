@@ -1,6 +1,6 @@
 import { RelayNetworkLayer, urlMiddleware, authMiddleware } from 'react-relay-network-layer'
 
-import { getToken } from '../../auth/selectors'
+import { getAccessToken } from '../../auth/selectors'
 import { GRAPHQL_SERVER } from '../constants'
 
 // custom middleware
@@ -11,7 +11,7 @@ const configureNetwork = store => new RelayNetworkLayer([
 
   urlMiddleware({ url: () => GRAPHQL_SERVER }),
 
-  authMiddleware({ token: () => getToken(store.getState()) }),
+  authMiddleware({ token: () => getAccessToken(store.getState()) }),
 
   corsMiddleware({ credentials: 'same-origin' }),
 
