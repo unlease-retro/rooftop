@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -6,7 +6,7 @@ import { withRouter } from 'react-router'
 
 import { selectors, actions } from '../../auth'
 
-class Protected extends React.Component {
+class Protected extends Component {
 
   componentWillReceiveProps(nextProps) {
 
