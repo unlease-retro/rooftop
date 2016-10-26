@@ -11,6 +11,8 @@ export const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
+  [actions.LOGOUT]: state => state.merge({ ...initialState.toJS() }),
+
   [actions.LOGIN_SUCCESS]: (state, { payload }) => state.merge({ ...payload }),
   [actions.LOGIN_FAILURE]: (state, { payload }) => state.merge({ ...payload }),
 

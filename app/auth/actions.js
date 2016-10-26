@@ -1,6 +1,14 @@
 import * as actions from './actionTypes'
 
 // -----
+// LOGOUT
+// -----
+
+export const logout = () => ({
+  type: actions.LOGOUT
+})
+
+// -----
 // LOGIN
 // -----
 

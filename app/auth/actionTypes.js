@@ -1,5 +1,7 @@
 import { name } from './constants'
 
+export const LOGOUT = `${name}/LOGOUT`
+
 export const LOGIN_REQUEST = `${name}/LOGIN_REQUEST`
 export const LOGIN_SUCCESS = `${name}/LOGIN_SUCCESS`
 export const LOGIN_FAILURE = `${name}/LOGIN_FAILURE`

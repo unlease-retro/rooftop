@@ -19,10 +19,13 @@ class Protected extends Component {
 
   render() {
 
-    const { children } = this.props
+    const { actions, children } = this.props
+    const { logout } = actions
 
     return (
-      <div>
+      <div id='protected'>
+
+        <a onClick={ () => logout() }>Logout</a>
 
         { children }
 
