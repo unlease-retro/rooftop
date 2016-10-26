@@ -8,6 +8,7 @@ import * as actions from './actions'
 import selectors from './selectors'
 
 import { ButtonPrimary } from 'components/button'
+import { Icon } from 'components/icon'
 import { Input } from 'components/input'
 import { Text, TitleText } from 'components/text'
 
@@ -29,8 +30,8 @@ export class Auth extends Component {
     return (
       <div id='Auth'>
 
-        <TitleText>Auth</TitleText>
-        <Text>Please login</Text>
+        <TitleText><Icon className='material-icons'>lock</Icon> Auth</TitleText>
+        <Text className='something'>Please login</Text>
 
         <Input type='email' placeholder='Email' innerRef={ r => this.email = r } />
         <Input type='password' placeholder='Password' innerRef={ r => this.password = r } />
