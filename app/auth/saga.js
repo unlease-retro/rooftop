@@ -28,7 +28,7 @@ function* fetchLogin({ payload }) {
 
     if (user.error) {
 
-      yield put(actions.loginFailure({}, { ui: { error: new Error(user.error_description) } }))
+      throw new Error(user.error_description)
 
     } else {
 
@@ -65,7 +65,7 @@ function* fetchRefreshToken() {
 
     if (user.error) {
 
-      yield put(actions.refreshTokenFailure({}, { ui: { error: new Error(user.error_description) } }))
+      throw new Error(user.error_description)
 
     } else {
 
