@@ -6,6 +6,8 @@ const PATHS = {
   src: path.join(__dirname, '../app'),
   dist: path.join(__dirname, '../public'),
   static: path.join(__dirname, '../static'),
+  components: 'shared/components',
+  style: 'shared/style',
 }
 
 module.exports = {
@@ -18,6 +20,14 @@ module.exports = {
     path: PATHS.dist,
     filename: '[name].[hash].js',
     publicPath: '/'
+  },
+
+  resolve: {
+    root: PATHS.src,
+    alias: {
+      components: PATHS.components,
+      style: PATHS.style,
+    }
   },
 
   plugins: [

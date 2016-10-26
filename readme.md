@@ -13,3 +13,9 @@ yarn
 ```
 yarn start
 ```
+
+### Release
+
+```
+yarn run build
+```

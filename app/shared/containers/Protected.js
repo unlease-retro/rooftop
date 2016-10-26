@@ -23,7 +23,7 @@ class Protected extends Component {
     const { logout } = actions
 
     return (
-      <div id='protected'>
+      <div id='Protected'>
 
         <a onClick={ () => logout() }>Logout</a>
 

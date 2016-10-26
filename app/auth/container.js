@@ -7,6 +7,8 @@ import { withRouter } from 'react-router'
 import * as actions from './actions'
 import selectors from './selectors'
 
+import { ButtonPrimary } from 'components/button'
+
 export class Auth extends Component {
 
   componentWillReceiveProps(nextProps) {
@@ -23,13 +25,14 @@ export class Auth extends Component {
     const { login } = this.props.actions
 
     return (
-      <div>
+      <div id='Auth'>
 
         <h1>Auth</h1>
 
         <input type='email' placeholder='Email' />
         <input type='password' placeholder='Password' />
-        <button onClick={ () => login({ username: 't@t.co', password: 'test11' }) }>Login</button>
+
+        <ButtonPrimary onClick={ () => login({ username: 't@t.co', password: 'test11' }) }>Login</ButtonPrimary>
 
       </div>
     )
