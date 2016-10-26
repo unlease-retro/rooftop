@@ -8,6 +8,8 @@ import * as actions from './actions'
 import selectors from './selectors'
 
 import { ButtonPrimary } from 'components/button'
+import { Input } from 'components/input'
+import { Text, TitleText } from 'components/text'
 
 export class Auth extends Component {
 
@@ -27,12 +29,13 @@ export class Auth extends Component {
     return (
       <div id='Auth'>
 
-        <h1>Auth</h1>
+        <TitleText>Auth</TitleText>
+        <Text>Please login</Text>
 
-        <input type='email' placeholder='Email' />
-        <input type='password' placeholder='Password' />
+        <Input type='email' placeholder='Email' innerRef={ r => this.email = r } />
+        <Input type='password' placeholder='Password' innerRef={ r => this.password = r } />
 
-        <ButtonPrimary onClick={ () => login({ username: 't@t.co', password: 'test11' }) }>Login</ButtonPrimary>
+        <ButtonPrimary onClick={ () => login({ username: this.email.value, password: this.password.value }) }>Login</ButtonPrimary>
 
       </div>
     )
