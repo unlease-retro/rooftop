@@ -28,12 +28,12 @@ export const loginSuccess = ({ authorised=true, user }) => ({
   }
 })
 
-export const loginFailure = ({ authorised=false, error }) => ({
+export const loginFailure = ({ authorised=false }, meta) => ({
   type: actions.LOGIN_FAILURE,
   payload: {
     authorised,
-    error,
-  }
+  },
+  meta
 })
 
 // -----
@@ -52,10 +52,10 @@ export const refreshTokenSuccess = ({ authorised=true, user }) => ({
   }
 })
 
-export const refreshTokenFailure = ({ authorised=false, error }) => ({
+export const refreshTokenFailure = ({ authorised=false }, meta) => ({
   type: actions.REFRESH_TOKEN_FAILURE,
   payload: {
     authorised,
-    error,
-  }
+  },
+  meta
 })

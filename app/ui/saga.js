@@ -46,11 +46,11 @@ export function* watchFailure() {
 
 }
 
-function* handleFailure(action) {
+function* handleFailure({ meta={} }) {
 
-  const { error } = action.payload
+  const { ui } = meta
 
-  yield put({ type: actions.UPDATE, payload: { error, requesting: false } })
+  yield put({ type: actions.UPDATE, payload: { requesting: false, ...ui } })
 
 }
 

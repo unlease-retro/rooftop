@@ -26,11 +26,19 @@ function* fetchLogin({ payload }) {
     const res = yield call(API.post, 'auth/login', { username, password })
     const user = res
 
-    yield put(actions.loginSuccess({ user }))
+    if (user.error) {
+
+      yield put(actions.loginFailure({}, { ui: { error: new Error(user.error_description) } }))
+
+    } else {
+
+      yield put(actions.loginSuccess({ user }))
+
+    }
 
   } catch (error) {
 
-    yield put(actions.loginFailure({ error }))
+    yield put(actions.loginFailure({}, { ui: { error } }))
 
   }
 
@@ -55,11 +63,19 @@ function* fetchRefreshToken() {
     const res = yield call(API.post, 'auth/refresh', { refresh_token })
     const user = res
 
-    yield put(actions.refreshTokenSuccess({ user }))
+    if (user.error) {
+
+      yield put(actions.refreshTokenFailure({}, { ui: { error: new Error(user.error_description) } }))
+
+    } else {
+
+      yield put(actions.refreshTokenSuccess({ user }))
+
+    }
 
   } catch (error) {
 
-    yield put(actions.refreshTokenFailure({ error }))
+    yield put(actions.refreshTokenFailure({}, { ui: { error } }))
 
   }
 

@@ -6,7 +6,6 @@ import * as actions from './actionTypes'
 export const initialState = Immutable.fromJS({
   authorised: false,
   user: {},
-  error: null,
 })
 
 export default createReducer(initialState, {
