@@ -1,5 +1,9 @@
 import * as actions from './actionTypes'
 
+// -----
+// LOGIN
+// -----
+
 export const login = ({ username, password }) => ({
   type: actions.LOGIN_REQUEST,
   payload: {
@@ -8,18 +12,42 @@ export const login = ({ username, password }) => ({
   }
 })
 
-export const checkToken = () => ({
-  type: actions.CHECK_TOKEN_REQUEST
+export const loginSuccess = ({ authorised=true, user }) => ({
+  type: actions.LOGIN_SUCCESS,
+  payload: {
+    authorised,
+    user,
+  }
 })
+
+export const loginFailure = ({ authorised=false, error }) => ({
+  type: actions.LOGIN_FAILURE,
+  payload: {
+    authorised,
+    error,
+  }
+})
+
+// -----
+// REFRESH TOKEN
+// -----
 
 export const refreshToken = () => ({
   type: actions.REFRESH_TOKEN_REQUEST
 })
 
-export const refreshTokenSuccess = ({ authorised, user }) => ({
+export const refreshTokenSuccess = ({ authorised=true, user }) => ({
   type: actions.REFRESH_TOKEN_SUCCESS,
   payload: {
     authorised,
     user,
+  }
+})
+
+export const refreshTokenFailure = ({ authorised=false, error }) => ({
+  type: actions.REFRESH_TOKEN_FAILURE,
+  payload: {
+    authorised,
+    error,
   }
 })

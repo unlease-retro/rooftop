@@ -14,9 +14,6 @@ export default createReducer(initialState, {
   [actions.LOGIN_SUCCESS]: (state, { payload }) => state.merge({ ...payload }),
   [actions.LOGIN_FAILURE]: (state, { payload }) => state.merge({ ...payload }),
 
-  [actions.CHECK_TOKEN_SUCCESS]: (state, { payload }) => state.merge({ ...payload }),
-  [actions.CHECK_TOKEN_FAILURE]: (state, { payload }) => state.merge({ ...payload }),
-
   [actions.REFRESH_TOKEN_SUCCESS]: (state, { payload }) => state.merge({ ...payload }),
   [actions.REFRESH_TOKEN_FAILURE]: (state, { payload }) => state.merge({ ...payload }),
 
