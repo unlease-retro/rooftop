@@ -7,7 +7,7 @@ export default class App extends Component {
     const { children } = this.props
 
     return (
-      <div id='app'>
+      <div id='App'>
 
         { children }
 
