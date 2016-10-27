@@ -1,16 +1,32 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
 
+import { Button } from 'components/button'
+import { View, Grid } from 'components/layout'
+import { TitleText } from 'components/text'
+
 class Listings extends Component {
 
   render() {
 
-    const { listings } = this.props.query
+    const { relay, query } = this.props
+    const { listings } = query
 
     console.log(listings)
 
     return (
-      <h1>🏠 Listings</h1>
+      <View>
+
+        <TitleText>Listings</TitleText>
+
+        <Grid>
+
+          <Button onClick={ () => relay.setVariables({ lng: -0.12775829999998223, lat: 51.5073509 }) }>London</Button>
+          <Button onClick={ () => relay.setVariables({ lng: -1.257652, lat: 51.751990 }) }>Oxford</Button>
+
+        </Grid>
+
+      </View>
     )
 
   }

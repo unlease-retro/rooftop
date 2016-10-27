@@ -32,7 +32,7 @@ export class Auth extends Component {
       <View>
 
         <TitleText><Icon className='material-icons'>lock</Icon> Auth</TitleText>
-        <Text className='something'>Please login</Text>
+        <Text>Please login</Text>
 
         <Grid>
 
