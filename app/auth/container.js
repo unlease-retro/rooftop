@@ -28,8 +28,6 @@ export class Auth extends Component {
 
     const { login } = this.props.actions
 
-    // TODO - div => View
-
     return (
       <View>
 
