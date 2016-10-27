@@ -1,8 +1,33 @@
 /**
-  * @desc Modular CSS Scale
+  * @desc Media queries breakpoint utility
 */
 
+import { css } from 'styled-components'
 
-// TODO
-// https://github.com/styled-components/styled-components/blob/master/docs/tips-and-tricks.md#more-powerful-example
+// TODO - abstract! obvs
+// breakpoints.js => small, aboveSmall, large
 // const ms = size => `@media screen and (min-width: ${size})`
+
+const small = (...args) => css`
+  @media (max-width: 40em) {
+    ${ css(...args) }
+  }
+`
+
+const aboveSmall = (...args) => css`
+  @media (min-width: 40em) {
+    ${ css(...args) }
+  }
+`
+
+const large = (...args) => css`
+  @media (min-width: 64em) {
+    ${ css(...args) }
+  }
+`
+
+export {
+  small,
+  aboveSmall,
+  large,
+}

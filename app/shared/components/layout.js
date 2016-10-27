@@ -1,7 +1,7 @@
 /**
   * @name View - top-level wrapper component
-  * @param {string} [width=1280px] - base width
-  * @param {string} [maxWidth=100%] - maximum width
+  * @param {string} [width=100%] - base width
+  * @param {string} [maxWidth=1280px] - maximum width
   *
   * @name Grid
   * @param {string} [cell] - fixed width of grid cells
@@ -10,7 +10,9 @@
 
 import styled from 'styled-components'
 
-// import { space } from 'style'
+import { media } from 'style'
+
+// TODO - add gutter to View using `space.p[*]`
 
 export const View = styled.div`
   width: ${ props => props.width || View.default.width };
@@ -18,7 +20,7 @@ export const View = styled.div`
   margin: 0 auto;
 `
 
-// TODO - full width mobile => `& > * { flex: 0 0 100%; }`
+// TODO - use `space` utility for defaults - work out ems if necessary
 // TODO - variable cell widths => `& > *:nth-child(n) { flex-basis: 10em; }`
 // TODO - percentage cell widths => `> *:nth-child(n) { flex-basis: calc(100% - gutter); }` || columns: `calc(100% * 1 / 12)`
 
@@ -28,14 +30,17 @@ export const Grid = styled.div`
   margin: -${ props => props.gutter || Grid.default.gutter };
 
   & > * {
-    flex: ${ props => props.cell ? `1 0 ${props.cell}` : 1 };
+    flex: 0 0 100%;
     margin: ${ props => props.gutter || Grid.default.gutter };
+    ${ media.aboveSmall`
+      flex: ${ props => props.cell ? `1 0 ${props.cell}` : 1 };
+    ` }
   }
 `
 
 View.default = {
-  width: '1280px',
-  maxWidth: '100%',
+  width: '100%',
+  maxWidth: '1280px',
 }
 
 Grid.default = {

@@ -1,9 +1,9 @@
 import * as colours from './colours'
-// import media from './media'
+import * as media from './media'
 import space from './space'
 
 export {
   colours,
-  // media,
+  media,
   space,
 }
