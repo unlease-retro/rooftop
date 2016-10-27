@@ -1,33 +1,22 @@
 /**
   * @desc Media queries breakpoint utility
+  * @prop studio - small screens
+  * @prop flat - above small screens
+  * @prop house - huge screens
 */
 
 import { css } from 'styled-components'
 
-// TODO - abstract! obvs
-// breakpoints.js => small, aboveSmall, large
-// const ms = size => `@media screen and (min-width: ${size})`
+import * as bp from './breakpoints'
 
-const small = (...args) => css`
-  @media (max-width: 40em) {
+const media = (breakpoint, args) => css`
+  @media (${ breakpoint }) {
     ${ css(...args) }
   }
 `
 
-const aboveSmall = (...args) => css`
-  @media (min-width: 40em) {
-    ${ css(...args) }
-  }
-`
+export const studio = (...args) => media(bp.STUDIO, args)
 
-const large = (...args) => css`
-  @media (min-width: 64em) {
-    ${ css(...args) }
-  }
-`
+export const flat = (...args) => media(bp.FLAT, args)
 
-export {
-  small,
-  aboveSmall,
-  large,
-}
+export const house = (...args) => media(bp.HOUSE, args)

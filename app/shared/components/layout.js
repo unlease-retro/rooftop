@@ -32,7 +32,7 @@ export const Grid = styled.div`
   & > * {
     flex: 0 0 100%;
     margin: ${ props => props.gutter || Grid.default.gutter };
-    ${ media.aboveSmall`
+    ${ media.flat`
       flex: ${ props => props.cell ? `1 0 ${props.cell}` : 1 };
     ` }
   }
