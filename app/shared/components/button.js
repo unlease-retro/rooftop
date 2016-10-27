@@ -8,7 +8,7 @@ export const Button = styled.button`
 `
 
 export const ButtonPrimary = styled(Button)`
-  color: ${ colours.blue };
+  color: ${ colours.primary };
 `
 
 Button.defaultProps = {
