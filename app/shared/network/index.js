@@ -42,7 +42,7 @@ const configureNetwork = store => new RelayNetworkLayer([
   loaderMiddleware({
     request: () => store.dispatch(relayRequest()),
     success: () => store.dispatch(relaySuccess()),
-    failure: error => store.dispatch(relayFailure({ meta: { error } } ))
+    failure: error => store.dispatch(relayFailure(error))
   }),
 
 ], { disableBatchQuery: true })

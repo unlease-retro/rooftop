@@ -11,6 +11,8 @@ export const relaySuccess = () => ({
 export const relayFailure = error => ({
   type: actions.RELAY_FAILURE,
   meta: {
-    error,
+    ui: {
+      error
+    }
   }
 })
