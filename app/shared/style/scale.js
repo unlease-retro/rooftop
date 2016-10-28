@@ -22,6 +22,6 @@ const scale = [
   144,
 ]
 
-const createScaledPropertyGetter = scale => prop => x => typeof x === 'number' && typeof scale[x] === 'number' ? { [prop]: `${ scale[x] }${ UNIT }` } : null
+const createScaledPropertyGetter = (scale, prop, x, unit) => typeof x === 'number' && typeof scale[x] === 'number' ? { [prop]: `${ scale[x] }${ unit }` } : null
 
-export const getScaledProperty = createScaledPropertyGetter(scale)
+export const getScaledProperty = (prop, x, unit=UNIT) => createScaledPropertyGetter(scale, prop, x, unit)

@@ -6,12 +6,12 @@ import { getScaledProperty } from './scale'
 
 // TODO - extend to include margin-top etc mt0{}
 
-const getWidth = getScaledProperty('width')
-const getHeight = getScaledProperty('height')
-const getMargin = getScaledProperty('margin')
-// const getBorder = getScaledProperty('border')
-const getPadding = getScaledProperty('padding')
-const getFontSize = getScaledProperty('font-size')
+const getWidth = (x, unit) => getScaledProperty('width', x, unit)
+const getHeight = (x, unit) => getScaledProperty('height', x, unit)
+const getMargin = (x, unit) => getScaledProperty('margin', x, unit)
+// const getBorder = (x, unit) => getScaledProperty('border', x, unit)
+const getPadding = (x, unit) => getScaledProperty('padding', x, unit)
+const getFontSize = (x, unit) => getScaledProperty('font-size', x, unit)
 
 export default {
   w: getWidth,
