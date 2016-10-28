@@ -10,14 +10,13 @@
 
 import styled from 'styled-components'
 
-import { media } from 'style'
-
-// TODO - add gutter to View using `space.p[*]`
+import { media, space } from 'style'
 
 export const View = styled.div`
   width: ${ props => props.width || View.default.width };
   max-width: ${ props => props.maxWidth || View.default.maxWidth };
   margin: 0 auto;
+  ${ space.p(3) }
 `
 
 // TODO - use `space` utility for defaults - work out ems if necessary
