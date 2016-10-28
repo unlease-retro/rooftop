@@ -2,8 +2,10 @@ import { RelayNetworkLayer, urlMiddleware, authMiddleware } from 'react-relay-ne
 
 import * as API from '../services/api'
 import { refreshTokenSuccess } from '../../auth/actions'
+import { relayRequest, relaySuccess, relayFailure } from '../actions'
 import { getAccessToken, getRefreshToken } from '../../auth/selectors'
 import { GRAPHQL_SERVER } from '../constants'
+import { loaderMiddleware } from './middleware'
 
 // custom middleware
 const corsMiddleware = (opts = {}) => next => req => next({ ...req, ...opts })
@@ -36,6 +38,12 @@ const configureNetwork = store => new RelayNetworkLayer([
   }),
 
   corsMiddleware({ credentials: 'same-origin' }),
+
+  loaderMiddleware({
+    request: () => store.dispatch(relayRequest()),
+    success: () => store.dispatch(relaySuccess()),
+    failure: error => store.dispatch(relayFailure({ meta: { error } } ))
+  }),
 
 ], { disableBatchQuery: true })
 

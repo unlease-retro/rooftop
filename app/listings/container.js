@@ -10,10 +10,28 @@ import { TitleText } from 'components/text'
 
 class Listings extends Component {
 
+  constructor() {
+
+    super()
+
+    this.onFilterClick = this.onFilterClick.bind(this)
+
+  }
+
+  onFilterClick({ lng, lat }) {
+
+    const { relay } = this.props
+
+    return relay.setVariables({ lng, lat })
+
+  }
+
   render() {
 
-    const { relay, query } = this.props
+    const { query } = this.props
     const { listings } = query
+
+    const onFilterClick = this.onFilterClick
 
     console.log(listings)
 
@@ -24,8 +42,8 @@ class Listings extends Component {
 
         <Grid>
 
-          <Button onClick={ () => relay.setVariables({ lng: -0.12775829999998223, lat: 51.5073509 }) }>London</Button>
-          <Button onClick={ () => relay.setVariables({ lng: -1.257652, lat: 51.751990 }) }>Oxford</Button>
+          <Button onClick={ () => onFilterClick({ lng: -0.12775829999998223, lat: 51.5073509 }) }>London</Button>
+          <Button onClick={ () => onFilterClick({ lng: -1.257652, lat: 51.751990 }) }>Oxford</Button>
 
         </Grid>
 

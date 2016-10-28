@@ -1,15 +1,22 @@
 import React, { Component } from 'react'
+import { createStructuredSelector } from 'reselect'
+import { connect } from 'react-redux'
 
-export default class App extends Component {
+import { selectors } from '../../ui'
+import { Loader } from 'components/loader'
+
+class App extends Component {
 
   render() {
 
-    const { children } = this.props
+    const { children, requesting } = this.props
+
+    const renderApp = requesting ? <Loader /> : children
 
     return (
       <div id='App'>
 
-        { children }
+        { renderApp }
 
       </div>
     )
@@ -17,3 +24,8 @@ export default class App extends Component {
   }
 
 }
+
+
+export default connect(
+  createStructuredSelector({ ...selectors })
+)(App)

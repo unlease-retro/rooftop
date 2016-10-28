@@ -7,6 +7,7 @@ const getError = createSelector( getAll, state => state.get('error') )
 const getRequesting = createSelector( getAll, state => state.get('requesting') )
 
 export default {
+  all: getAll,
   error: getError,
   requesting: getRequesting,
 }
