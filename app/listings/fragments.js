@@ -10,6 +10,9 @@ export const query = () => Relay.QL`
         firstName
         lastName
         avatar
+        notifications {
+          numberOfUnread
+        }
       }
     },
   }
