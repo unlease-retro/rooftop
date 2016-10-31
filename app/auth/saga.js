@@ -2,10 +2,12 @@ import { takeLatest } from 'redux-saga'
 import { call, put, fork, select } from 'redux-saga/effects'
 
 import * as API from '../shared/services/api'
+import { decodeToken } from '../shared/util'
 
 import * as actions from './actions'
 import * as actionType from './actionTypes'
 import selectors from './selectors'
+import { ADMIN_AUTH, AUTH_ERROR } from './constants'
 
 // -----
 // LOGIN
@@ -26,9 +28,13 @@ function* fetchLogin({ payload }) {
     const res = yield call(API.post, 'auth/login', { username, password })
     const user = res
 
-    if (user.error) {
+    // check for ADMIN permissions
+    const { authorities } = decodeToken(user.access_token)
+    const hasAdminAuth = authorities.includes(ADMIN_AUTH)
 
-      throw new Error(user.error_description)
+    if (user.error || !hasAdminAuth) {
+
+      throw new Error(user.error_description || AUTH_ERROR)
 
     } else {
 
