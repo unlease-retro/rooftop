@@ -3,6 +3,12 @@
 */
 
 // -----
+// CORS
+// -----
+
+export const corsMiddleware = (opts = {}) => next => req => next({ ...req, ...opts })
+
+// -----
 // LOADER
 // -----
 

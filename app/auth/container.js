@@ -15,9 +15,25 @@ import { Text, TitleText } from 'components/text'
 
 export class Auth extends Component {
 
-  componentWillReceiveProps(nextProps) {
+  componentWillMount() {
 
-    const { authorised, router } = nextProps
+    const { authorised } = this.props
+
+    this.redirectToIndex(authorised)
+
+  }
+
+  componentWillUpdate(nextProps) {
+
+    const { authorised } = nextProps
+
+    this.redirectToIndex(authorised)
+
+  }
+
+  redirectToIndex(authorised) {
+
+    const { router } = this.props
 
     // redirect authorised users to `/`
     if ( authorised ) return router.push('/')

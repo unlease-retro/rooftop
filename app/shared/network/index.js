@@ -5,10 +5,7 @@ import { refreshTokenSuccess } from '../../auth/actions'
 import { relayRequest, relaySuccess, relayFailure } from '../actions'
 import { getAccessToken, getRefreshToken } from '../../auth/selectors'
 import { GRAPHQL_SERVER } from '../constants'
-import { loaderMiddleware } from './middleware'
-
-// custom middleware
-const corsMiddleware = (opts = {}) => next => req => next({ ...req, ...opts })
+import { corsMiddleware, loaderMiddleware } from './middleware'
 
 // custom Relay network layer
 const configureNetwork = store => new RelayNetworkLayer([

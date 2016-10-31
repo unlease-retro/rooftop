@@ -41,7 +41,7 @@ module.exports = {
 
   devServer: {
     contentBase: PATHS.dist,
-    port: 3000,
+    port: 7000,
     inline: true,
     stats: 'errors-only',
     historyApiFallback: true
