@@ -8,9 +8,25 @@ import { selectors, actions } from '../../auth'
 
 class Protected extends Component {
 
-  componentWillReceiveProps(nextProps) {
+  componentWillMount() {
 
-    const { authorised, router } = nextProps
+    const { authorised } = this.props
+
+    this.redirectToLogin(authorised)
+
+  }
+
+  componentWillUpdate(nextProps) {
+
+    const { authorised } = nextProps
+
+    this.redirectToLogin(authorised)
+
+  }
+
+  redirectToLogin(authorised) {
+
+    const { router } = this.props
 
     // redirect unauthorised scoundrels to `/login`
     if ( !authorised ) return router.push('login')
