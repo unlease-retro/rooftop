@@ -1,11 +1,11 @@
-import { RelayNetworkLayer, urlMiddleware, authMiddleware } from 'react-relay-network-layer'
+import { RelayNetworkLayer, urlMiddleware } from 'react-relay-network-layer'
 
 import * as API from '../services/api'
 import { refreshTokenSuccess } from '../../auth/actions'
 import { relayRequest, relaySuccess, relayFailure } from '../actions'
 import { getAccessToken, getRefreshToken } from '../../auth/selectors'
 import { GRAPHQL_SERVER } from '../constants'
-import { corsMiddleware, loaderMiddleware } from './middleware'
+import { authMiddleware, corsMiddleware, loaderMiddleware } from './middleware'
 
 // custom Relay network layer
 const configureNetwork = store => new RelayNetworkLayer([
@@ -32,6 +32,7 @@ const configureNetwork = store => new RelayNetworkLayer([
         })
 
     }),
+    failure: error => store.dispatch(relayFailure(error)),
   }),
 
   corsMiddleware({ credentials: 'same-origin' }),
