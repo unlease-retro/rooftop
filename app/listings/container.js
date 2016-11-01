@@ -22,22 +22,25 @@ class Listings extends Component {
 
   }
 
-  onFilterClick({ lng, lat }) {
+  onFilterClick(variables) {
 
     const { relay } = this.props
 
-    return relay.setVariables({ lng, lat })
+    return relay.setVariables(variables)
 
   }
 
   render() {
 
-    const { query } = this.props
+    const { query, relay } = this.props
     const { listings } = query
 
     const onFilterClick = this.onFilterClick
 
     console.log(listings)
+
+    // TODO - will need to observe disenfranchised (nonResponsive) & disintermediated (leakage) variables changes and ensure listings are filtered accordingly
+    console.log(relay.variables)
 
     return (
       <View>
@@ -61,8 +64,16 @@ class Listings extends Component {
 
         <Grid>
 
-          <Button onClick={ () => onFilterClick({ lng: -0.12775829999998223, lat: 51.5073509 }) }>London</Button>
-          <Button onClick={ () => onFilterClick({ lng: -1.2577263000000585, lat: 51.7520209 }) }>Oxford</Button>
+          <Button onClick={ () => onFilterClick({ listed: true }) }>Active</Button>
+          <Button onClick={ () => onFilterClick({ listed: false }) }>Inactive</Button>
+
+          <Button onClick={ () => onFilterClick({ lat: null, lng: null }) }>Anywhere</Button>
+          <Button onClick={ () => onFilterClick({ lat: 51.5073509, lng: -0.12775829999998223 }) }>London</Button>
+          <Button onClick={ () => onFilterClick({ lat: 51.7520209, lng: -1.2577263000000585 }) }>Oxford</Button>
+
+          {/* TODO - only display if variables.inactive */}
+          <Button onClick={ () => onFilterClick({ disenfranchised: true, disintermediated: false }) }>Disenfranchised</Button>
+          <Button onClick={ () => onFilterClick({ disintermediated: true, disenfranchised: false }) }>Disintermediated</Button>
 
         </Grid>
 
