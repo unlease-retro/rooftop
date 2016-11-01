@@ -62,7 +62,7 @@ class Listings extends Component {
         <Grid>
 
           <Button onClick={ () => onFilterClick({ lng: -0.12775829999998223, lat: 51.5073509 }) }>London</Button>
-          <Button onClick={ () => onFilterClick({ lng: -1.257652, lat: 51.751990 }) }>Oxford</Button>
+          <Button onClick={ () => onFilterClick({ lng: -1.2577263000000585, lat: 51.7520209 }) }>Oxford</Button>
 
         </Grid>
 
