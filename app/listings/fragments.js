@@ -4,9 +4,18 @@ export const query = () => Relay.QL`
   fragment on Query {
     listings(lng: $lng, lat: $lat, radius: $radius, startDateInNextDays: $startDateInNextDays, listed: $listed) {
       id
+      availableFrom
+      availableTo
+      createdAt
       location
       leakage
       nonResponsive
+      postcode
+      title
+      weeklyRent
+      photos {
+        s3Link
+      }
       user {
         id
         avatar
