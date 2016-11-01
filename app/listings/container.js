@@ -82,7 +82,7 @@ class Listings extends Component {
       <Grid key={ uuid.v4() }>
 
         <TitleText>{ title }</TitleText>
-        <Text>{ availableFrom } &rarr; { availableTo }</Text>
+        <Text>{ formatTimestamp(availableFrom) } &rarr; { formatTimestamp(availableTo) }</Text>
         <Text>Created at: { formatTimestamp(createdAt) }</Text>
 
         <Text>User: { firstName } { lastName }</Text>
