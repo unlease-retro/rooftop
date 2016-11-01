@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
+import uuid from 'node-uuid'
+
+import { formatTimestamp } from '../shared/util'
 
 import * as fragments from './fragments'
 import variables from './variables'
 
 import { Button } from 'components/button'
 import { View, Grid } from 'components/layout'
-import { TitleText } from 'components/text'
+import { Text, TitleText } from 'components/text'
+import { Image } from 'components/image'
 
 class Listings extends Component {
 
@@ -58,7 +62,42 @@ class Listings extends Component {
 
         </Grid>
 
+        <Grid>
+
+          { listings.map( l => this.renderListing(l) ) }
+
+        </Grid>
+
       </View>
+    )
+
+  }
+
+  renderListing(listing) {
+
+    const { availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, photos, user } = listing
+    const { email, firstName, lastName, lastLoggedInAt, phoneVerification: { contactNumber }, notifications: { numberOfUnread } } = user
+
+    return (
+      <Grid key={ uuid.v4() }>
+
+        <TitleText>{ title }</TitleText>
+        <Text>{ availableFrom } &rarr; { availableTo }</Text>
+        <Text>Created at: { formatTimestamp(createdAt) }</Text>
+
+        <Text>User: { firstName } { lastName }</Text>
+        <Text>Contact: { email } or { contactNumber }</Text>
+        <Text>Last seen: { formatTimestamp(lastLoggedInAt) }</Text>
+        <Text>Messages: { numberOfUnread }</Text>
+
+        <Text>{ weeklyRent }</Text>
+        <Text>{ location } { postcode }</Text>
+
+        <Grid>
+          { photos.map( ({ s3Link }) => <Image key={ uuid.v4() } source={s3Link} width={400} height={200} backgroundSize='contain' /> ) }
+        </Grid>
+
+      </Grid>
     )
 
   }
