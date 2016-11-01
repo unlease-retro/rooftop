@@ -9,9 +9,14 @@ export const query = () => Relay.QL`
       nonResponsive
       user {
         id
+        avatar
+        email
         firstName
         lastName
-        avatar
+        lastLoggedInAt
+        phoneVerification {
+          contactNumber
+        }
         notifications {
           numberOfUnread
         }
