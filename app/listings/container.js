@@ -90,7 +90,7 @@ class Listings extends Component {
         <Text>Last seen: { formatTimestamp(lastLoggedInAt) }</Text>
         <Text>Messages: { numberOfUnread }</Text>
 
-        <Text>{ weeklyRent }</Text>
+        <Text>£{ weeklyRent }</Text>
         <Text>{ location } { postcode }</Text>
 
         <Grid>
