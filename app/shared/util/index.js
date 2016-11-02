@@ -8,7 +8,7 @@ export const isDevelopment = process.env.NODE_ENV === 'development'
 
 export const decodeToken = token => jwt_decode(token)
 
-export const formatTimestamp = ts => {
+export const getFormattedTimestamp = ts => {
 
   let date = new Date(ts)
   let day = date.getDate().toString()

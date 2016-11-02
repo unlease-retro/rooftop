@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Relay from 'react-relay'
 import uuid from 'node-uuid'
 
-import { formatTimestamp } from '../shared/util'
+import { getFormattedTimestamp } from '../shared/util'
 
 import * as fragments from './fragments'
 import variables from './variables'
@@ -105,12 +105,12 @@ class Listings extends Component {
       <Grid key={ uuid.v4() }>
 
         <TitleText>{ title }</TitleText>
-        <Text>{ formatTimestamp(availableFrom) } &rarr; { formatTimestamp(availableTo) }</Text>
-        <Text>Created at: { formatTimestamp(createdAt) }</Text>
+        <Text>{ getFormattedTimestamp(availableFrom) } &rarr; { getFormattedTimestamp(availableTo) }</Text>
+        <Text>Created at: { getFormattedTimestamp(createdAt) }</Text>
 
         <Text>User: { firstName } { lastName }</Text>
         <Text>Contact: { email } or { contactNumber }</Text>
-        <Text>Last seen: { formatTimestamp(lastLoggedInAt) }</Text>
+        <Text>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</Text>
         <Text>Messages: { numberOfUnread }</Text>
 
         <Text>£{ weeklyRent }</Text>
