@@ -33,15 +33,16 @@ class Listings extends Component {
 
   render() {
 
-    const { query, relay } = this.props
-    const { listings } = query
+    const { query, relay: { variables } } = this.props
+    const { listed, area, hostStatus } = variables
+    let { listings } = query
 
     const onFilterClick = this.onFilterClick
 
-    console.log(listings)
+    // TODO - could do better but I'm tired!!
+    if ( !listed && hostStatus !== 'unspecified' ) listings = listings.filter( l => l[hostStatus] )
 
-    // TODO - will need to observe hostStatus [disenfranchised (nonResponsive) & disintermediated (leakage)] and filter listings accordingly
-    const { listed, area, hostStatus } = relay.variables
+    console.log(listings)
 
     return (
       <View>
@@ -70,16 +71,17 @@ class Listings extends Component {
             onChange={ ({ value }) => onFilterClick({ area: value }) }
           />
 
-          {/* TODO - only display if !listed */}
-          <Select
-            name='hostStatus'
-            value={hostStatus}
-            options={FILTERS.hostStatus}
-            autoBlur={true}
-            clearable={false}
-            searchable={true}
-            onChange={ ({ value }) => onFilterClick({ hostStatus: value }) }
-          />
+          { !listed ? (
+            <Select
+              name='hostStatus'
+              value={hostStatus}
+              options={FILTERS.hostStatus}
+              autoBlur={true}
+              clearable={false}
+              searchable={true}
+              onChange={ ({ value }) => onFilterClick({ hostStatus: value }) }
+            />
+          ) : null }
 
         </Grid>
 

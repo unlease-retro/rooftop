@@ -10,8 +10,8 @@ export const FILTERS = {
   ],
   hostStatus: [
     { value: 'unspecified', label: '' },
-    { value: 'disenfranchised', label: 'Disenfranchised' },
-    { value: 'disintermediated', label: 'Disintermediated' },
+    { value: 'nonResponsive', label: 'Disenfranchised' },
+    { value: 'leakage', label: 'Disintermediated' },
   ],
 }
 
@@ -22,9 +22,3 @@ export const AREAS = {
   london: { lat: 51.5073509, lng: -0.12775829999998223 },
   oxford: { lat: 51.7520209, lng: -1.2577263000000585 },
 }
-
-// export const HOST_STATUS = {
-//   unspecified: { disenfranchised: false, disintermediated: false },
-//   disenfranchised: { disenfranchised: true, disintermediated: false },
-//   disintermediated: { disintermediated: true, disenfranchised: false },
-// }
