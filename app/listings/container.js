@@ -6,8 +6,9 @@ import { formatTimestamp } from '../shared/util'
 
 import * as fragments from './fragments'
 import variables from './variables'
+import { FILTERS } from './constants'
 
-import { Button } from 'components/button'
+import Select from 'react-select'
 import { View, Grid } from 'components/layout'
 import { Text, TitleText } from 'components/text'
 import { Image } from 'components/image'
@@ -39,8 +40,8 @@ class Listings extends Component {
 
     console.log(listings)
 
-    // TODO - will need to observe disenfranchised (nonResponsive) & disintermediated (leakage) variables changes and ensure listings are filtered accordingly
-    console.log(relay.variables)
+    // TODO - will need to observe hostStatus [disenfranchised (nonResponsive) & disintermediated (leakage)] and filter listings accordingly
+    const { listed, area, hostStatus } = relay.variables
 
     return (
       <View>
@@ -49,16 +50,36 @@ class Listings extends Component {
 
         <Grid>
 
-          <Button onClick={ () => onFilterClick({ listed: true }) }>Active</Button>
-          <Button onClick={ () => onFilterClick({ listed: false }) }>Inactive</Button>
+          <Select
+            name='listed'
+            value={listed}
+            options={FILTERS.listed}
+            autoBlur={true}
+            clearable={false}
+            searchable={true}
+            onChange={ ({ value }) => onFilterClick({ listed: value }) }
+          />
 
-          <Button onClick={ () => onFilterClick({ lat: null, lng: null }) }>Anywhere</Button>
-          <Button onClick={ () => onFilterClick({ lat: 51.5073509, lng: -0.12775829999998223 }) }>London</Button>
-          <Button onClick={ () => onFilterClick({ lat: 51.7520209, lng: -1.2577263000000585 }) }>Oxford</Button>
+          <Select
+            name='area'
+            value={area}
+            options={FILTERS.area}
+            autoBlur={true}
+            clearable={false}
+            searchable={true}
+            onChange={ ({ value }) => onFilterClick({ area: value }) }
+          />
 
-          {/* TODO - only display if variables.inactive */}
-          <Button onClick={ () => onFilterClick({ disenfranchised: true, disintermediated: false }) }>Disenfranchised</Button>
-          <Button onClick={ () => onFilterClick({ disintermediated: true, disenfranchised: false }) }>Disintermediated</Button>
+          {/* TODO - only display if !listed */}
+          <Select
+            name='hostStatus'
+            value={hostStatus}
+            options={FILTERS.hostStatus}
+            autoBlur={true}
+            clearable={false}
+            searchable={true}
+            onChange={ ({ value }) => onFilterClick({ hostStatus: value }) }
+          />
 
         </Grid>
 

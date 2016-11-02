@@ -1,3 +1,5 @@
+import { AREAS } from './constants'
+
 const variables = {
 
   initialVariables: {
@@ -6,9 +8,19 @@ const variables = {
     radius: 21,
     lng: null,
     lat: null,
-    disenfranchised: false,
-    disintermediated: false,
+    area: 'anywhere',
+    hostStatus: 'unspecified',
   },
+
+  prepareVariables: ({ area, ...prevVariables }) => {
+
+    return {
+      area,
+      ...prevVariables,
+      ...AREAS[area],
+    }
+
+  }
 
 }
 
