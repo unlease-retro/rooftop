@@ -2,7 +2,7 @@ import { takeLatest } from 'redux-saga'
 import { call, put, fork, select } from 'redux-saga/effects'
 
 import * as API from '../shared/services/api'
-import { decodeToken } from '../shared/util'
+import { getDecodedToken } from '../shared/util'
 
 import * as actions from './actions'
 import * as actionType from './actionTypes'
@@ -29,7 +29,7 @@ function* fetchLogin({ payload }) {
     const user = res
 
     // check for ADMIN permissions
-    const { authorities } = decodeToken(user.access_token)
+    const { authorities } = getDecodedToken(user.access_token)
     const hasAdminAuth = authorities.includes(ADMIN_AUTH)
 
     if (user.error || !hasAdminAuth) {

@@ -4,13 +4,13 @@
 
 import jwt_decode from 'jwt-decode'
 
+const padLeft = str => Array(3 - str.length).join('0') + str
+
 export const isDevelopment = process.env.NODE_ENV === 'development'
 
-export const decodeToken = token => jwt_decode(token)
+export const getDecodedToken = token => jwt_decode(token)
 
 export const getCapitalised = str => str.replace( /\b\w/g, l => l.toUpperCase() )
-
-const padLeft = str => Array(3 - str.length).join('0') + str
 
 export const getFormattedTimestamp = ts => {
 
