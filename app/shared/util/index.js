@@ -8,15 +8,18 @@ export const isDevelopment = process.env.NODE_ENV === 'development'
 
 export const decodeToken = token => jwt_decode(token)
 
+const padLeft = str => Array(3 - str.length).join('0') + str
+
 export const getFormattedTimestamp = ts => {
 
-  let date = new Date(ts)
-  let day = date.getDate().toString()
+  const date = new Date(ts)
+  const day = date.getDate().toString()
+  const month = (date.getMonth() + 1).toString()
 
-  let DD = Array(3 - day.length).join('0') + day
-  let MM = date.getMonth() + 1
-  let YY = date.getFullYear()
+  const DD = padLeft(day)
+  const MM = padLeft(month)
+  const YYYY = date.getFullYear()
 
-  return `${DD}/${MM}/${YY}`
+  return `${DD}/${MM}/${YYYY}`
 
 }
