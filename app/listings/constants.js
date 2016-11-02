@@ -1,3 +1,5 @@
+import { getCapitalised } from '../shared/util'
+
 export const AREAS = {
   anywhere: { lat: null, lng: null },
   london: { lat: 51.5073509, lng: -0.12775829999998223 },
@@ -10,7 +12,7 @@ export const FILTERS = {
     { value: false, label: 'Inactive' },
   ],
   area: [
-    ...Object.keys(AREAS).map( a => ({ value: a, label: a }))
+    ...Object.keys(AREAS).map( a => ({ value: a, label: getCapitalised(a) }) )
   ],
   hostStatus: [
     { value: 'unspecified', label: '' },
