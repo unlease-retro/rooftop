@@ -92,22 +92,26 @@ export const loaderMiddleware = ({ request, success, failure }) => next => req =
   // fire request action
   request()
 
-  return next(req).then(res => {
+  // send request
+  return next(req)
+  .then( res => {
 
-    // check for GraphQL errors
-    if ( res.json.errors ) {
+    // check for GraphQL errors and throw
+    if (res.json.errors) throw new Error(res.json.errors[0].message)
 
-      // fire failure action
-      failure(res.json.errors[0])
+    // otherwise fire success action
+    success()
 
-    } else {
-
-      // fire success action
-      success()
-
-    }
-
+    // and respond OK
     return res
+
+  }).catch( err => {
+
+    // fire failure action
+    failure(err)
+
+    // and throw the error
+    throw err
 
   })
 
