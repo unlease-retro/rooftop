@@ -11,12 +11,14 @@ class App extends Component {
 
     const { children, requesting } = this.props
 
-    const renderApp = requesting ? <Loader /> : children
+    const renderLoader = requesting ? <Loader /> : null
 
     return (
       <div id='App'>
 
-        { renderApp }
+        { renderLoader }
+
+        { children }
 
       </div>
     )
