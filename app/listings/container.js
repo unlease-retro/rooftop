@@ -6,6 +6,7 @@ import { getFormattedTimestamp } from '../shared/util'
 
 import * as fragments from './fragments'
 import variables from './variables'
+import mutation from './mutation'
 import { FILTERS } from './constants'
 
 import Select from 'react-select'
@@ -28,6 +29,20 @@ class Listings extends Component {
     const { relay } = this.props
 
     return relay.setVariables(variables)
+
+  }
+
+  onUpdateClick(id, data) {
+
+    Relay.Store.commitUpdate(
+      new mutation({
+        id,
+        ...data,
+      }), {
+        onSuccess: res => console.log(res),
+        onFailure: transaction => console.error(transaction),
+      }
+    )
 
   }
 
@@ -98,13 +113,17 @@ class Listings extends Component {
 
   renderListing(listing) {
 
-    const { availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, photos, user } = listing
+    const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user } = listing
     const { email, firstName, lastName, lastLoggedInAt, phoneVerification: { contactNumber }, notifications: { numberOfUnread } } = user
+
+    const onUpdateClick = this.onUpdateClick
+
+    console.log(leakage, nonResponsive)
 
     return (
       <Grid key={ uuid.v4() }>
 
-        <TitleText>{ title }</TitleText>
+        <TitleText onClick={ () => onUpdateClick(id, { leakage: !leakage, nonResponsive: !nonResponsive }) }>{ title }</TitleText>
         <Text>{ getFormattedTimestamp(availableFrom) } &rarr; { getFormattedTimestamp(availableTo) }</Text>
         <Text>Created at: { getFormattedTimestamp(createdAt) }</Text>
 
