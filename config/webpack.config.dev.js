@@ -1,11 +1,13 @@
 const path = require('path')
 const webpack = require('webpack')
+const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const PATHS = {
   src: path.join(__dirname, '../app'),
   dist: path.join(__dirname, '../public'),
   static: path.join(__dirname, '../static'),
+  img: path.join(__dirname, '../static/img'),
   components: 'shared/components',
   style: 'shared/style',
 }
@@ -36,6 +38,7 @@ module.exports = {
         'NODE_ENV': JSON.stringify('development')
       }
     }),
+    new CopyPlugin([ { from: PATHS.img } ]),
     new HtmlWebpackPlugin({ favicon: path.resolve(PATHS.static, 'favicon.ico'), template: path.resolve(PATHS.static, 'index.html') })
   ],
 
