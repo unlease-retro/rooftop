@@ -12,6 +12,12 @@ const configureNetwork = store => new RelayNetworkLayer([
 
   urlMiddleware({ url: () => GRAPHQL_SERVER }),
 
+  loaderMiddleware({
+    request: () => store.dispatch(relayRequest()),
+    success: () => store.dispatch(relaySuccess()),
+    failure: error => store.dispatch(relayFailure(error))
+  }),
+
   authMiddleware({
     token: () => getAccessToken(store.getState()),
     tokenRefreshPromise: () => new Promise( (resolve, reject) => {
@@ -35,12 +41,6 @@ const configureNetwork = store => new RelayNetworkLayer([
   }),
 
   corsMiddleware({ credentials: 'same-origin' }),
-
-  loaderMiddleware({
-    request: () => store.dispatch(relayRequest()),
-    success: () => store.dispatch(relaySuccess()),
-    failure: error => store.dispatch(relayFailure(error))
-  }),
 
 ], { disableBatchQuery: true })
 
