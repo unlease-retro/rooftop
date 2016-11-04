@@ -37,11 +37,7 @@ export default class ListingsMutation extends Relay.Mutation {
     return [{
       type: 'FIELDS_CHANGE',
       fieldIDs: {
-        listing: {
-          id: this.props.id,
-          leakage: this.props.leakage,
-          nonResponsive: this.props.nonResponsive,
-        },
+        listing: this.props.id,
       },
     }]
 
