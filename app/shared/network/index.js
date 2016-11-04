@@ -32,7 +32,6 @@ const configureNetwork = store => new RelayNetworkLayer([
         })
 
     }),
-    failure: error => store.dispatch(relayFailure(error)),
   }),
 
   corsMiddleware({ credentials: 'same-origin' }),

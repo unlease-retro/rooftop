@@ -19,7 +19,7 @@ class InvalidTokenError extends Error {
 
 }
 
-export const authMiddleware = ({ token: getToken, tokenRefreshPromise, prefix='Bearer', failure }) => next => req => {
+export const authMiddleware = ({ token: getToken, tokenRefreshPromise, prefix='Bearer' }) => next => req => {
 
   return new Promise( (resolve, reject) => {
 
@@ -66,9 +66,6 @@ export const authMiddleware = ({ token: getToken, tokenRefreshPromise, prefix='B
         })
 
     }
-
-    // otherwise run failure action
-    failure(err)
 
     // and throw the error
     throw err
