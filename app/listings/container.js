@@ -118,8 +118,6 @@ class Listings extends Component {
 
     const onUpdateClick = this.onUpdateClick
 
-    console.log(leakage, nonResponsive)
-
     return (
       <Grid key={ uuid.v4() }>
 
