@@ -1,5 +1,8 @@
+import React from 'react'
 import styled from 'styled-components'
 
-export const Icon = styled.i`
-  
+const MaterialIcon = ({ children }) => <i className='material-icons'>{ children }</i>
+
+export const Icon = styled(MaterialIcon)`
+  color: black;
 `

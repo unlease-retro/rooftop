@@ -6,6 +6,9 @@ import { withRouter } from 'react-router'
 
 import { selectors, actions } from '../../auth'
 
+import { Button } from 'components/button'
+import { Icon } from 'components/icon'
+
 class Protected extends Component {
 
   componentWillMount() {
@@ -41,7 +44,9 @@ class Protected extends Component {
     return (
       <div id='Protected'>
 
-        <a onClick={ () => logout() }>Logout</a>
+        <Button onClick={ () => logout() }>
+          <Icon>lock</Icon>
+        </Button>
 
         { children }
 

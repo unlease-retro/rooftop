@@ -47,7 +47,7 @@ export class Auth extends Component {
     return (
       <View>
 
-        <TitleText><Icon className='material-icons'>lock</Icon> Auth</TitleText>
+        <TitleText><Icon>lock</Icon> Auth</TitleText>
         <Text>Please login</Text>
 
         <Grid>
