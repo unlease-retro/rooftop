@@ -1027,6 +1027,10 @@ chokidar@^1.0.0:
   optionalDependencies:
     fsevents "^1.0.0"
 
+chroma-js:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/chroma-js/-/chroma-js-1.2.1.tgz#83d44f1aa5c7633e2de3d2c143b9089fc22ba987"
+
 circular-json@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.1.tgz#be8b36aefccde8b3ca7aa2d6afc07a37242c0d2d"

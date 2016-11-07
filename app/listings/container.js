@@ -9,10 +9,11 @@ import variables from './variables'
 import mutation from './mutation'
 import { FILTERS } from './constants'
 
-import Select from 'react-select'
-import { View, Grid } from 'components/layout'
-import { Text, TitleText } from 'components/text'
+import { Icon } from 'components/icon'
 import { Image } from 'components/image'
+import { View, Grid } from 'components/layout'
+import { Select } from 'components/select'
+import { Text, TitleText } from 'components/text'
 
 class Listings extends Component {
 
@@ -64,41 +65,48 @@ class Listings extends Component {
 
         <TitleText>Listings</TitleText>
 
-        <Grid>
+        <Text display='inline-block'>
+          <Icon>tune</Icon> Show me
+        </Text>
 
+        <Select
+          name='listed'
+          value={ listed }
+          options={ FILTERS.listed }
+          autoBlur={ true }
+          clearable={ false }
+          searchable={ true }
+          onChange={ ({ value }) => onFilterClick({ listed: value }) }
+        />
+
+        <Text display='inline-block'>listings in</Text>
+
+        <Select
+          name='area'
+          value={ area }
+          options={ FILTERS.area }
+          autoBlur={ true }
+          clearable={ false }
+          searchable={ true }
+          onChange={ ({ value }) => onFilterClick({ area: value }) }
+        />
+
+        { !listed ? (
+          <Text display='inline-block'>where the host is</Text>
+        ) : null }
+
+        { !listed ? (
           <Select
-            name='listed'
-            value={listed}
-            options={FILTERS.listed}
-            autoBlur={true}
-            clearable={false}
-            searchable={true}
-            onChange={ ({ value }) => onFilterClick({ listed: value }) }
+            width='160px'
+            name='hostStatus'
+            value={ hostStatus }
+            options={ FILTERS.hostStatus }
+            autoBlur={ true }
+            clearable={ false }
+            searchable={ true }
+            onChange={ ({ value }) => onFilterClick({ hostStatus: value }) }
           />
-
-          <Select
-            name='area'
-            value={area}
-            options={FILTERS.area}
-            autoBlur={true}
-            clearable={false}
-            searchable={true}
-            onChange={ ({ value }) => onFilterClick({ area: value }) }
-          />
-
-          { !listed ? (
-            <Select
-              name='hostStatus'
-              value={hostStatus}
-              options={FILTERS.hostStatus}
-              autoBlur={true}
-              clearable={false}
-              searchable={true}
-              onChange={ ({ value }) => onFilterClick({ hostStatus: value }) }
-            />
-          ) : null }
-
-        </Grid>
+        ) : null }
 
         <Grid>
 
