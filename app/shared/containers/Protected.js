@@ -6,8 +6,9 @@ import { withRouter } from 'react-router'
 
 import { selectors, actions } from '../../auth'
 
-import { Button } from 'components/button'
-import { Icon } from 'components/icon'
+import { Anchor } from 'components/anchor'
+import { Footer } from 'components/footer'
+import { Image } from 'components/image'
 
 class Protected extends Component {
 
@@ -44,11 +45,17 @@ class Protected extends Component {
     return (
       <div id='Protected'>
 
-        <Button onClick={ () => logout() }>
-          <Icon>lock</Icon>
-        </Button>
-
         { children }
+
+        <Footer>
+
+          <Image source='unlease.png' width='40' height='40' center />
+
+          <Anchor onClick={ () => logout() }>
+            Logout
+          </Anchor>
+
+        </Footer>
 
       </div>
     )

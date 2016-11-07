@@ -1,3 +1,9 @@
 import styled from 'styled-components'
 
-export const Footer = styled.footer``
+import { space } from 'style'
+
+export const Footer = styled.footer`
+  ${ space.p(3) }
+  ${ space.fs(2) }
+  text-align: center;
+`
