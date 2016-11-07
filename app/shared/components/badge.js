@@ -5,12 +5,12 @@ import { colours, scale } from 'style'
 export const Badge = styled.span`
   width: ${ scale.getScaledValue(5) };
   height: ${ scale.getScaledValue(5) };
-  margin-left: ${ scale.getScaledValue(4) };
+  margin-left: ${ props => props.margin ? scale.getScaledValue(props.margin) : Badge.default.marginLeft };
   border-radius: 50%;
   display: inline-block;
   vertical-align: middle;
   color: ${ colours.light };
-  background-color: ${ colours.secondary };
+  background-color: ${ props => props.colour ? colours[props.colour] : colours.secondary };
 
   &:after {
     content: '${ props => props.label }';
@@ -23,3 +23,7 @@ export const Badge = styled.span`
     align-self: center;
   }
 `
+
+Badge.default = {
+  marginLeft: scale.getScaledValue(4),
+}

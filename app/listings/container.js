@@ -14,7 +14,7 @@ import { Icon } from 'components/icon'
 import { Image } from 'components/image'
 import { View, Grid } from 'components/layout'
 import { Select } from 'components/select'
-import { Text, TitleText } from 'components/text'
+import { Text, SmallText, TitleText } from 'components/text'
 
 class Listings extends Component {
 
@@ -130,22 +130,32 @@ class Listings extends Component {
     const onUpdateClick = this.onUpdateClick
 
     return (
-      <Grid key={ uuid.v4() }>
+      <Grid key={ uuid.v4() } cell='100%'>
 
-        <TitleText onClick={ () => onUpdateClick(id, { leakage: !leakage, nonResponsive: !nonResponsive }) }>{ title }</TitleText>
-        <Text>{ getFormattedTimestamp(availableFrom) } &rarr; { getFormattedTimestamp(availableTo) }</Text>
-        <Text>Created at: { getFormattedTimestamp(createdAt) }</Text>
-
-        <Text>User: { firstName } { lastName }</Text>
-        <Text>Contact: { email } or { contactNumber }</Text>
-        <Text>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</Text>
-        <Text>Messages: { numberOfUnread }</Text>
-
-        <Text>£{ weeklyRent }</Text>
-        <Text>{ location } { postcode }</Text>
+        <Grid>
+          <TitleText>{ title }</TitleText>
+          <Icon onClick={ () => onUpdateClick(id, { leakage: !leakage, nonResponsive: !nonResponsive }) }>tag_faces</Icon>
+        </Grid>
 
         <Grid>
           { photos.map( ({ s3Link }) => <Image key={ uuid.v4() } source={s3Link} width={400} height={200} backgroundSize='contain' /> ) }
+          <Text>User: { firstName } { lastName }</Text>
+          <Text>Contact: { email } or { contactNumber }</Text>
+          <Text>£{ weeklyRent }</Text>
+        </Grid>
+
+        <Grid cell='100%'>
+          <Text>{ getFormattedTimestamp(availableFrom) } &rarr; { getFormattedTimestamp(availableTo) }</Text>
+          <Text><Icon>location_city</Icon> { location } { postcode }</Text>
+          <Text>
+            <Icon>mail_outline</Icon>
+            <Badge label={ numberOfUnread } margin={1} colour='primary' />
+          </Text>
+        </Grid>
+
+        <Grid cell='100%' gutter='0'>
+          <SmallText>Created at: { getFormattedTimestamp(createdAt) }</SmallText>
+          <SmallText>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</SmallText>
         </Grid>
 
       </Grid>
