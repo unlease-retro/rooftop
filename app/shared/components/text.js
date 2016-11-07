@@ -1,11 +1,12 @@
 import styled from 'styled-components'
 
-import { colours, space, typography } from 'style'
+import { colours, scale, space, typography } from 'style'
 
 export const Text = styled.p`
-  ${ space.m(3) }
   ${ space.fs(3) }
   ${ typography.ff() }
+  margin-top: ${ scale.getScaledValue(3) }
+  margin-bottom: ${ scale.getScaledValue(3) }
   display: ${ ({ display }) => display || Text.default.display };
   color: ${ colours.dark };
 `

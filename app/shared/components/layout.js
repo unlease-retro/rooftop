@@ -26,13 +26,15 @@ export const View = styled.div`
 export const Grid = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: -${ props => props.gutter || Grid.default.gutter };
+  ${ media.flat`
+    margin: -${ props => props.gutter || Grid.default.gutter };
+  ` }
 
   & > * {
     flex: 0 0 100%;
-    margin: ${ props => props.gutter || Grid.default.gutter };
     ${ media.flat`
       flex: ${ props => props.cell ? `1 0 ${props.cell}` : 1 };
+      margin: ${ props => props.gutter || Grid.default.gutter };
     ` }
   }
 `
