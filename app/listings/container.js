@@ -9,6 +9,7 @@ import variables from './variables'
 import mutation from './mutation'
 import { FILTERS } from './constants'
 
+import { Badge } from 'components/badge'
 import { Icon } from 'components/icon'
 import { Image } from 'components/image'
 import { View, Grid } from 'components/layout'
@@ -107,6 +108,8 @@ class Listings extends Component {
             onChange={ ({ value }) => onFilterClick({ hostStatus: value }) }
           />
         ) : null }
+
+        <Badge label={ listings.length } />
 
         <Grid>
 
