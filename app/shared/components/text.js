@@ -18,6 +18,10 @@ export const TitleText = styled.h2`
   text-align: center;
 `
 
+export const SmallText = styled(Text)`
+  ${ space.fs(2) }
+`
+
 Text.default = {
   backgroundSize: '100% auto',
   display: 'block',

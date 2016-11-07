@@ -10,7 +10,7 @@
 
 import styled from 'styled-components'
 
-import { media, space } from 'style'
+import { media, scale, space } from 'style'
 
 export const View = styled.div`
   width: ${ props => props.width || View.default.width };
@@ -19,9 +19,8 @@ export const View = styled.div`
   ${ space.p(3) }
 `
 
-// TODO - use `space` utility for defaults - work out ems if necessary
-// TODO - variable cell widths => `& > *:nth-child(n) { flex-basis: 10em; }`
-// TODO - percentage cell widths => `> *:nth-child(n) { flex-basis: calc(100% - gutter); }` || columns: `calc(100% * 1 / 12)`
+// TODO - variable cells `cells={[ 20, 1/0.12, 11/0.12 ]}` rather than just `cell='x'`
+// TODO - shameful use of !important to fix elements that are both Grids and Cells. Need better solution
 
 export const Grid = styled.div`
   display: flex;
@@ -33,8 +32,8 @@ export const Grid = styled.div`
   & > * {
     flex: 0 0 100%;
     ${ media.flat`
-      flex: ${ props => props.cell ? `1 0 ${props.cell}` : 1 };
-      margin: ${ props => props.gutter || Grid.default.gutter };
+      flex: 1 1 ${ props => props.cell ? props.cell : '0%' };
+      margin: ${ props => props.gutter || Grid.default.gutter } !important;
     ` }
   }
 `
@@ -45,7 +44,7 @@ View.default = {
 }
 
 Grid.default = {
-  gutter: '0.5em',
+  gutter: scale.getScaledValue(0),
 }
 
 // NOTE: flex: [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
