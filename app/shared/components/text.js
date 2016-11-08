@@ -9,6 +9,7 @@ export const Text = styled.p`
   margin-bottom: ${ scale.getScaledValue(3) }
   display: ${ ({ display }) => display || Text.default.display };
   color: ${ colours.dark };
+  text-align: ${ props => props.align || Text.default.textAlign };
 `
 
 export const BoxedText = styled(Text)`
@@ -39,4 +40,5 @@ export const SubtitleText = styled(TitleText)`
 Text.default = {
   backgroundSize: '100% auto',
   display: 'block',
+  textAlign: 'left',
 }

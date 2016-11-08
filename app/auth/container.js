@@ -7,10 +7,11 @@ import { withRouter } from 'react-router'
 import * as actions from './actions'
 import selectors from './selectors'
 
-import { ButtonPrimary } from 'components/button'
-import { Icon } from 'components/icon'
+import { Button } from 'components/button'
+import { Footer } from 'components/footer'
+import { Image } from 'components/image'
 import { Input } from 'components/input'
-import { View, Grid } from 'components/layout'
+import { View } from 'components/layout'
 import { Text, TitleText } from 'components/text'
 
 export class Auth extends Component {
@@ -47,17 +48,27 @@ export class Auth extends Component {
     return (
       <View>
 
-        <TitleText><Icon>lock</Icon> Auth</TitleText>
-        <Text>Please login</Text>
+        <TitleText>
+          Rooftop
+        </TitleText>
 
-        <Grid>
+        <Text align='center'>
+          a good place for an overview
+        </Text>
 
-          <Input type='email' placeholder='Email' innerRef={ r => this.email = r } />
-          <Input type='password' placeholder='Password' innerRef={ r => this.password = r } />
+        <Input type='email' placeholder='Email' innerRef={ r => this.email = r } />
 
-          <ButtonPrimary onClick={ () => login({ username: this.email.value, password: this.password.value }) }>Login</ButtonPrimary>
+        <Input type='password' placeholder='Password' innerRef={ r => this.password = r } />
 
-        </Grid>
+        <Button onClick={ () => login({ username: this.email.value, password: this.password.value }) }>
+          Login
+        </Button>
+
+        <Footer>
+
+          <Image source='unlease.png' width='40px' height='40px' center />
+
+        </Footer>
 
       </View>
     )
