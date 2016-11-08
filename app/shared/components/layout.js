@@ -12,6 +12,15 @@ import styled from 'styled-components'
 
 import { media, scale, space } from 'style'
 
+const GRID_ALIGN = {
+  top: 'align-items: flex-start',
+  middle: 'align-items: center',
+  bottom: 'align-items: flex-end',
+  left: 'justify-content: flex-start',
+  center: 'justify-content: center',
+  right: ' justify-content: flex-end',
+}
+
 export const View = styled.div`
   width: ${ props => props.width || View.default.width };
   max-width: ${ props => props.maxWidth || View.default.maxWidth };
@@ -19,23 +28,28 @@ export const View = styled.div`
   ${ space.p(3) }
 `
 
-// TODO - variable cells `cells={[ 20, 1/0.12, 11/0.12 ]}` rather than just `cell='x'`
-// TODO - shameful use of !important to fix elements that are both Grids and Cells. Need better solution
-
 export const Grid = styled.div`
   display: flex;
   flex-wrap: wrap;
   ${ media.flat`
-    margin: -${ props => props.gutter || Grid.default.gutter };
+    ${ props => props.align && GRID_ALIGN[props.align] }
+    margin: -${ props => scale.getScaledValue(props.gutter) || Grid.default.gutter };
   ` }
 
   & > * {
     flex: 0 0 100%;
     ${ media.flat`
-      flex: 1 1 ${ props => props.cell ? props.cell : '0%' };
-      margin: ${ props => props.gutter || Grid.default.gutter } !important;
+      flex: ${ props => props.cell ? 'none' : 1 };
+      width: ${ props => `calc(${ props.cell || 100 }% - ${ scale.getScaledValue(props.gutter) || Grid.default.gutter } * 2)` };
+      margin: ${ props => scale.getScaledValue(props.gutter) || Grid.default.gutter } !important;
     ` }
   }
+`
+
+export const Cell = styled.div`
+  ${ media.flat`
+    width: ${ props => `calc(${ props.cell || 100 }% - ${ scale.getScaledValue(props.gutter) || Grid.default.gutter } * 2)` };
+  ` }
 `
 
 View.default = {
@@ -46,5 +60,3 @@ View.default = {
 Grid.default = {
   gutter: scale.getScaledValue(0),
 }
-
-// NOTE: flex: [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
