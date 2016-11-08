@@ -13,8 +13,9 @@ import { Badge } from 'components/badge'
 import { Icon } from 'components/icon'
 import { Image } from 'components/image'
 import { View, Grid } from 'components/layout'
+import { Position } from 'components/position'
 import { Select } from 'components/select'
-import { Text, SmallText, TitleText } from 'components/text'
+import { Text, BoxedText, SmallText, SubtitleText, TitleText } from 'components/text'
 
 class Listings extends Component {
 
@@ -130,33 +131,56 @@ class Listings extends Component {
     const onUpdateClick = this.onUpdateClick
 
     return (
-      <Grid key={ uuid.v4() } cell='100%'>
+      <Grid key={ uuid.v4() } direction='column' flush>
 
-        <Grid>
-          <TitleText>{ title }</TitleText>
-          <Icon onClick={ () => onUpdateClick(id, { leakage: !leakage, nonResponsive: !nonResponsive }) }>tag_faces</Icon>
-        </Grid>
+        <SubtitleText>
+          { title }
+        </SubtitleText>
 
-        <Grid>
-          { photos.map( ({ s3Link }) => <Image key={ uuid.v4() } source={s3Link} width={400} height={200} backgroundSize='contain' /> ) }
-          <Text>User: { firstName } { lastName }</Text>
-          <Text>Contact: { email } or { contactNumber }</Text>
-          <Text>£{ weeklyRent }</Text>
-        </Grid>
+        <Position position='relative'>
+          <Image source={ photos[0].s3Link } width='100%' height='200px' backgroundSize='cover' center />
+          <Position position='absolute' bottom='0px' right='0px'>
+            <BoxedText>
+              £{ weeklyRent }
+            </BoxedText>
+          </Position>
+        </Position>
 
-        <Grid cell='100%'>
-          <Text>{ getFormattedTimestamp(availableFrom) } &rarr; { getFormattedTimestamp(availableTo) }</Text>
-          <Text><Icon>location_city</Icon> { location } { postcode }</Text>
-          <Text>
-            <Icon>mail_outline</Icon>
-            <Badge label={ numberOfUnread } margin={1} colour='primary' />
-          </Text>
-        </Grid>
+        <Text>
+          { firstName } { lastName }
+        </Text>
 
-        <Grid cell='100%' gutter='0'>
-          <SmallText>Created at: { getFormattedTimestamp(createdAt) }</SmallText>
-          <SmallText>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</SmallText>
-        </Grid>
+        {/* <Select
+          width='160px'
+          name='hostStatus'
+          value={ hostStatus }
+          options={ FILTERS.hostStatus }
+          autoBlur={ true }
+          clearable={ false }
+          searchable={ false }
+          onChange={ ({ value }) => onUpdateClick({ [`${value}`]: true }) }
+        /> */}
+
+        <Text>
+          { email }
+        </Text>
+
+        <Text>
+          { contactNumber }
+        </Text>
+
+        <Text>{ getFormattedTimestamp(availableFrom) } &rarr; { getFormattedTimestamp(availableTo) }</Text>
+
+        <Text><Icon>location_city</Icon> { location } { postcode }</Text>
+
+        <Text>
+          <Icon>mail_outline</Icon>
+          <Badge label={ numberOfUnread } margin={1} colour='primary' />
+        </Text>
+
+        <SmallText>Created at: { getFormattedTimestamp(createdAt) }</SmallText>
+
+        <SmallText>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</SmallText>
 
       </Grid>
     )

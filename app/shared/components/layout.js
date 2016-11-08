@@ -34,6 +34,7 @@ export const Grid = styled.div`
   ${ media.flat`
     ${ props => props.align && GRID_ALIGN[props.align] }
     margin: -${ props => scale.getScaledValue(props.gutter) || Grid.default.gutter };
+    flex-direction: ${ props => props.direction || Grid.default.direction };
   ` }
 
   & > * {
@@ -41,7 +42,7 @@ export const Grid = styled.div`
     ${ media.flat`
       flex: ${ props => props.cell ? 'none' : 1 };
       width: ${ props => `calc(${ props.cell || 100 }% - ${ scale.getScaledValue(props.gutter) || Grid.default.gutter } * 2)` };
-      margin: ${ props => scale.getScaledValue(props.gutter) || Grid.default.gutter } !important;
+      margin: ${ props => props.flush ? 0 : scale.getScaledValue(props.gutter) || Grid.default.gutter } !important;
     ` }
   }
 `
@@ -58,5 +59,6 @@ View.default = {
 }
 
 Grid.default = {
+  direction: 'row',
   gutter: scale.getScaledValue(0),
 }

@@ -20,7 +20,7 @@ class App extends Component {
     return (
       <div id='App'>
 
-        <Image source='logo.png' width='102' height='74' center />
+        <Image source='logo.png' width='102px' height='74px' center />
 
         { renderError }
 

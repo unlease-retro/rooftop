@@ -11,6 +11,17 @@ export const Text = styled.p`
   color: ${ colours.dark };
 `
 
+export const BoxedText = styled(Text)`
+  ${ space.p(0) }
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: ${ colours.light };
+`
+
+export const SmallText = styled(Text)`
+  ${ space.fs(2) }
+`
+
 export const TitleText = styled.h2`
   ${ space.fs(5) }
   ${ typography.ff() }
@@ -18,8 +29,11 @@ export const TitleText = styled.h2`
   text-align: center;
 `
 
-export const SmallText = styled(Text)`
-  ${ space.fs(2) }
+export const SubtitleText = styled(TitleText)`
+  ${ space.fs(3) }
+  margin: 0;
+  color: ${ colours.dark };
+  text-align: left;
 `
 
 Text.default = {

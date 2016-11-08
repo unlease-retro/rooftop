@@ -49,7 +49,7 @@ class Protected extends Component {
 
         <Footer>
 
-          <Image source='unlease.png' width='40' height='40' center />
+          <Image source='unlease.png' width='40px' height='40px' center />
 
           <Anchor onClick={ () => logout() }>
             Logout
