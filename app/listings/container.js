@@ -146,7 +146,7 @@ class Listings extends Component {
           </Position>
         </Position>
 
-        <Text>
+        <Text atomic={{ ta:'c' }}>
           { firstName } { lastName }
         </Text>
 

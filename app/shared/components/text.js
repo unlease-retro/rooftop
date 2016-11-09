@@ -1,15 +1,18 @@
 import styled from 'styled-components'
+import Atomic from 'style/atomic'
 
 import { colours, scale, space, typography } from 'style'
 
 export const Text = styled.p`
-  ${ space.fs(3) }
   ${ typography.ff() }
+  ${ space.fs(3) }
   margin-top: ${ scale.getScaledValue(3) }
   margin-bottom: ${ scale.getScaledValue(3) }
   display: ${ ({ display }) => display || Text.default.display };
   color: ${ colours.dark };
   text-align: ${ props => props.align || Text.default.textAlign };
+
+  ${ ({ atomic }) => Atomic(atomic) }
 `
 
 export const BoxedText = styled(Text)`

@@ -1,12 +1,11 @@
 import styled from 'styled-components'
+import Atomic from 'style/atomic'
 
 import { colours, scale, space, typography } from 'style'
 
 export const Button = styled.button`
   ${ space.fs(3) }
   ${ typography.ff() }
-  ${ () => scale.getScaledProperty('padding-left', 3) }
-  ${ () => scale.getScaledProperty('padding-right', 3) }
   width: 100px;
   margin: ${ () => scale.getScaledValue(3) } auto;
   display: block;
@@ -21,8 +20,13 @@ export const Button = styled.button`
   text-transform: uppercase;
   cursor: pointer;
   outline: 0;
+
+  ${ ({ atomic }) => Atomic({ ...atomic, ...Button.default.atomic }) }
 `
 
-Button.defaultProps = {
-  color: 'hotpink',
+Button.default = {
+  atomic: {
+    pr: 3,
+    pl: 3,
+  },
 }
