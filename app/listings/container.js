@@ -193,9 +193,13 @@ class Listings extends Component {
           { location } { postcode }
         </Text>
 
-        <Text atomic={{ pt:3, pr:1, pl:1, fs:3 }}>Created at: { getFormattedTimestamp(createdAt) }</Text>
+        <Text atomic={{ pt:3, pr:1, pl:1, fs:3 }}>
+          Created at: { getFormattedTimestamp(createdAt) }
+        </Text>
 
-        <Text atomic={{ pr:3, pb:1, pl:1, fs:3 }}>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</Text>
+        <Text atomic={{ pr:3, pb:1, pl:1, fs:3 }}>
+          Last seen: { getFormattedTimestamp(lastLoggedInAt) }
+        </Text>
 
       </Grid>
     )
