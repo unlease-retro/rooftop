@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import ReactSelect from 'react-select'
-import Color from 'color'
 
 import { colours } from 'style'
 
@@ -33,7 +32,7 @@ export const Select = styled(ReactSelect)`
   }
 
   & .Select-option.is-focused {
-    background-color: ${ Color(colours.primary).lighten(1) }
+    background-color: ${ colours.lighten(colours.primary, 0.75) }
   }
 `
 
