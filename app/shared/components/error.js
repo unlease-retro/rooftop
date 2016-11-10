@@ -20,8 +20,8 @@ export const Error = styled.div`
 
 Error.default = {
   atomic: {
-    fs: 3,
-    m: 3,
-    p: 3,
+    fs: 4,
+    m: 4,
+    p: 4,
   },
 }

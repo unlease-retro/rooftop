@@ -11,7 +11,7 @@
 import styled from 'styled-components'
 import Atomic from 'style/atomic'
 
-import { media, scale } from 'style'
+import { colours, media, scale } from 'style'
 
 const GRID_ALIGN = {
   top: 'align-items: flex-start',
@@ -33,6 +33,7 @@ export const View = styled.div`
 export const Grid = styled.div`
   display: flex;
   flex-wrap: wrap;
+  border: ${ props => props.border && Grid.default.border || 'none' };
   ${ media.flat`
     ${ props => props.align && GRID_ALIGN[props.align] }
     margin: -${ props => scale.getScaledValue(props.gutter) || Grid.default.gutter };
@@ -55,15 +56,20 @@ export const Cell = styled.div`
   ` }
 `
 
+export const Section = styled.section`
+  ${ ({ atomic }) => Atomic({ ...atomic }) }
+`
+
 View.default = {
   width: '100%',
   maxWidth: '1280px',
   atomic: {
-    p: 3,
+    p: 4,
   }
 }
 
 Grid.default = {
+  border: `1px solid ${ colours.dark }`,
   direction: 'row',
-  gutter: scale.getScaledValue(0),
+  gutter: scale.getScaledValue(1),
 }

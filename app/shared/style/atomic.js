@@ -4,7 +4,10 @@
 
 import { SCALE, UNIT } from 'style/scale'
 
-// TODO - map all supported props here
+// -----
+// PROPERTY SHORTHAND
+// -----
+
 const properties = {
   b: 'bottom',
   bw: 'border-width',
@@ -33,7 +36,10 @@ const properties = {
   w: 'width',
 }
 
-// TODO - static (non-scaled, non-computed) props only
+// -----
+// STATIC VALUES
+// -----
+
 const values = {
   d: {
     b: 'block',
@@ -72,7 +78,10 @@ const values = {
   },
 }
 
-// TODO - add getters for all supported props
+// -----
+// PROPERTY RESOLVERS
+// -----
+
 const getters = {
   b: value => getScaledProperty('b', value),
   bw: value => getComputedProperty('bw', value),
@@ -101,17 +110,29 @@ const getters = {
   w: value => getScaledProperty('w', value),
 }
 
+// -----
+// RESOLVE METHODS
+// -----
+
 const createScaledPropertyGetter = (property, value, unit, scale=SCALE) => typeof value === 'number' && typeof scale[value] === 'number' && typeof properties[property] === 'string' ? { [`${ properties[property] }`]: `${ scale[value] }${ unit }` } : null
 
 const createComputedPropertyGetter = (property, value, unit) => typeof value === 'number' && typeof properties[property] === 'string' ? { [`${ properties[property] }`]: `${ value }${ unit }` } : null
 
 const createStaticPropertyGetter = (property, value) =>  typeof properties[property] === 'string' && typeof values[property] === 'object' && typeof values[property][value] !== 'undefined' ? { [`${ properties[property] }`]: `${ values[property][value] }` } : null
 
+// -----
+// RESOLVE METHOD CREATORS
+// -----
+
 const getScaledProperty = (property, value, unit=UNIT) => createScaledPropertyGetter(property, value, unit)
 
 const getComputedProperty = (property, value, unit=UNIT) => createComputedPropertyGetter(property, value, unit)
 
 const getStaticProperty = (property, value) => createStaticPropertyGetter(property, value)
+
+// -----
+// ATOMIC STYLE HANDLER
+// -----
 
 const Atomic = atomic => {
 

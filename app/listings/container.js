@@ -12,7 +12,7 @@ import { FILTERS } from './constants'
 import { Badge } from 'components/badge'
 import { Icon } from 'components/icon'
 import { Image } from 'components/image'
-import { View, Grid } from 'components/layout'
+import { Grid, Section, View } from 'components/layout'
 import { Position } from 'components/position'
 import { Select } from 'components/select'
 import { Text } from 'components/text'
@@ -65,52 +65,60 @@ class Listings extends Component {
     return (
       <View>
 
-        <Text atomic={{ fs:5, fw:'b', ta:'c' }} color='primary'>Listings</Text>
+        <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>Listings</Text>
 
-        <Text atomic={{ d:'ib' }}>
-          <Icon>tune</Icon> Show me
-        </Text>
+        <Section atomic={{ mt:8, mb:8, ta:'c' }}>
 
-        <Select
-          name='listed'
-          value={ listed }
-          options={ FILTERS.listed }
-          autoBlur={ true }
-          clearable={ false }
-          searchable={ true }
-          onChange={ ({ value }) => onFilterClick({ listed: value }) }
-        />
+          <Text atomic={{ d:'ib' }}>
 
-        <Text atomic={{ d:'ib' }}>listings in</Text>
+            <Icon>tune</Icon> Show
 
-        <Select
-          name='area'
-          value={ area }
-          options={ FILTERS.area }
-          autoBlur={ true }
-          clearable={ false }
-          searchable={ true }
-          onChange={ ({ value }) => onFilterClick({ area: value }) }
-        />
+          </Text>
 
-        { !listed ? (
-          <Text atomic={{ d:'ib' }}>where the host is</Text>
-        ) : null }
-
-        { !listed ? (
           <Select
-            width='160px'
-            name='hostStatus'
-            value={ hostStatus }
-            options={ FILTERS.hostStatus }
+            name='listed'
+            value={ listed }
+            options={ FILTERS.listed }
             autoBlur={ true }
             clearable={ false }
             searchable={ true }
-            onChange={ ({ value }) => onFilterClick({ hostStatus: value }) }
+            onChange={ ({ value }) => onFilterClick({ listed: value }) }
           />
-        ) : null }
 
-        <Badge label={ listings.length } />
+          <Text atomic={{ d:'ib' }}>
+            listings in
+          </Text>
+
+          <Select
+            name='area'
+            value={ area }
+            options={ FILTERS.area }
+            autoBlur={ true }
+            clearable={ false }
+            searchable={ true }
+            onChange={ ({ value }) => onFilterClick({ area: value }) }
+          />
+
+          { !listed ? (
+            <Text atomic={{ d:'ib' }}>where the host is</Text>
+          ) : null }
+
+          { !listed ? (
+            <Select
+              width='160px'
+              name='hostStatus'
+              value={ hostStatus }
+              options={ FILTERS.hostStatus }
+              autoBlur={ true }
+              clearable={ false }
+              searchable={ true }
+              onChange={ ({ value }) => onFilterClick({ hostStatus: value }) }
+            />
+          ) : null }
+
+          <Badge label={ listings.length } />
+
+        </Section>
 
         <Grid>
 
@@ -131,19 +139,24 @@ class Listings extends Component {
     const onUpdateClick = this.onUpdateClick
 
     return (
-      <Grid key={ uuid.v4() } direction='column' flush>
+      <Grid key={ uuid.v4() } border direction='column' flush>
 
-        <Text atomic={{ fs:3, mt:0, mb:0 }}>
+        <Text atomic={{ fs:4, fw:'b', mt:1, mb:1 }}>
           { title }
         </Text>
 
         <Position position='relative'>
+
           <Image source={ photos[0].s3Link } width='100%' height='200px' backgroundSize='cover' center />
+
           <Position position='absolute' bottom='0px' right='0px'>
-            <Text atomic={{ p:0 }} color='light' backgroundColor='dark'>
+
+            <Text atomic={{ m:0, p:1 }} color='light' backgroundColor='dark'>
               £{ weeklyRent }
             </Text>
+
           </Position>
+
         </Position>
 
         <Text atomic={{ ta:'c' }}>
@@ -171,16 +184,23 @@ class Listings extends Component {
 
         <Text>{ getFormattedTimestamp(availableFrom) } &rarr; { getFormattedTimestamp(availableTo) }</Text>
 
-        <Text><Icon>location_city</Icon> { location } { postcode }</Text>
-
         <Text>
-          <Icon>mail_outline</Icon>
-          <Badge label={ numberOfUnread } margin={1} backgroundColor='primary' />
+
+          <Icon>location_city</Icon> { location } { postcode }
+
         </Text>
 
-        <Text atomic={{ fs:2 }}>Created at: { getFormattedTimestamp(createdAt) }</Text>
+        <Text>
 
-        <Text atomic={{ fs:2 }}>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</Text>
+          <Icon>mail_outline</Icon>
+
+          <Badge label={ numberOfUnread } backgroundColor='primary' />
+
+        </Text>
+
+        <Text atomic={{ fs:3 }}>Created at: { getFormattedTimestamp(createdAt) }</Text>
+
+        <Text atomic={{ fs:3 }}>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</Text>
 
       </Grid>
     )

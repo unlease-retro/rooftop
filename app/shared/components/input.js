@@ -24,9 +24,9 @@ export const Input = styled.input`
 Input.default = {
   atomic: {
     d: 'b',
-    fs: 4,
-    mt: 3,
-    mb: 3,
-    p: 3,
+    fs: 5,
+    mt: 4,
+    mb: 4,
+    p: 4,
   },
 }

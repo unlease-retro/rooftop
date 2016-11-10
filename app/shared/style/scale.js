@@ -6,6 +6,7 @@
 export const UNIT = 'px'
 
 export const SCALE = [
+  0,
   8,
   9,
   12,

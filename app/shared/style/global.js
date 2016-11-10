@@ -10,7 +10,7 @@ injectGlobal`
 
   body {
     ${ typography.ff() }
-    font-size: ${ scale.getScaledValue(3) };
+    font-size: ${ scale.getScaledValue(4) };
     line-height: 1.625;
     color: ${ colours.dark };
     -webkit-font-smoothing: antialiased;
