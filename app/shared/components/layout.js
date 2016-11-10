@@ -55,6 +55,10 @@ export const Cell = styled.div`
   ` }
 `
 
+export const Section = styled.section`
+  ${ ({ atomic }) => Atomic({ ...atomic }) }
+`
+
 View.default = {
   width: '100%',
   maxWidth: '1280px',

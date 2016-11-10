@@ -9,6 +9,7 @@ export const Select = styled(ReactSelect)`
   &.Select {
     width: ${ ({ width }) => width || Select.default.width };
     display: inline-block;
+    text-align: left;
   }
 
   & > .Select-control {
