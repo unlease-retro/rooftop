@@ -139,7 +139,7 @@ class Listings extends Component {
     const onUpdateClick = this.onUpdateClick
 
     return (
-      <Grid key={ uuid.v4() } direction='column' flush>
+      <Grid key={ uuid.v4() } border direction='column' flush>
 
         <Text atomic={{ fs:4, fw:'b', mt:1, mb:1 }}>
           { title }
