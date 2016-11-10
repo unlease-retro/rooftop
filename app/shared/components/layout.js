@@ -9,8 +9,9 @@
 */
 
 import styled from 'styled-components'
+import Atomic from 'style/atomic'
 
-import { media, scale, space } from 'style'
+import { media, scale } from 'style'
 
 const GRID_ALIGN = {
   top: 'align-items: flex-start',
@@ -25,7 +26,8 @@ export const View = styled.div`
   width: ${ props => props.width || View.default.width };
   max-width: ${ props => props.maxWidth || View.default.maxWidth };
   margin: 0 auto;
-  ${ space.p(3) }
+
+  ${ ({ atomic }) => Atomic({ ...View.default.atomic, ...atomic }) }
 `
 
 export const Grid = styled.div`
@@ -56,6 +58,9 @@ export const Cell = styled.div`
 View.default = {
   width: '100%',
   maxWidth: '1280px',
+  atomic: {
+    p: 3,
+  }
 }
 
 Grid.default = {

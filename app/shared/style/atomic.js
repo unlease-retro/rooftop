@@ -7,7 +7,9 @@ import { SCALE, UNIT } from 'style/scale'
 // TODO - map all supported props here
 const properties = {
   bw: 'border-width',
+  fd: 'flex-direction',
   fs: 'font-size',
+  p: 'padding',
   pr: 'padding-right',
   pl: 'padding-left',
   ta: 'text-align',
@@ -15,6 +17,10 @@ const properties = {
 
 // TODO - static (non-scaled, non-computed) props only
 const values = {
+  fd: {
+    c: 'column',
+    r: 'row',
+  },
   ta: {
     c: 'center',
     l: 'left',
@@ -26,7 +32,9 @@ const values = {
 // TODO - add getters for all supported props
 const getters = {
   bw: value => getComputedProperty('bw', value),
+  fd: value => getStaticProperty('fd', value),
   fs: value => getScaledProperty('fs', value),
+  p: value => getScaledProperty('p', value),
   pr: value => getScaledProperty('pr', value),
   pl: value => getScaledProperty('pl', value),
   ta: value => getStaticProperty('ta', value),
