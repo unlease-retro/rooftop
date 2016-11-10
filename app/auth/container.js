@@ -48,7 +48,7 @@ export class Auth extends Component {
     return (
       <View>
 
-        <Text atomic={{ fs:5, fw:'b', ta:'c' }} color='primary'>
+        <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>
           Rooftop
         </Text>
 
@@ -60,7 +60,7 @@ export class Auth extends Component {
 
         <Input type='password' placeholder='Password' innerRef={ r => this.password = r } />
 
-        <Button atomic={{ mt:6 }} onClick={ () => login({ username: this.email.value, password: this.password.value }) }>
+        <Button atomic={{ mt:7 }} onClick={ () => login({ username: this.email.value, password: this.password.value }) }>
           Login
         </Button>
 

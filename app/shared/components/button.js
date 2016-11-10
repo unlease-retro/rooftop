@@ -22,14 +22,14 @@ export const Button = styled.button`
 Button.default = {
   atomic: {
     d: 'b',
-    fs: 3,
+    fs: 4,
     fw: 'b',
-    lh: 7,
-    mt: 3,
-    mb: 3,
-    pr: 3,
-    pl: 3,
+    lh: 8,
+    mt: 4,
+    mb: 4,
+    pr: 4,
+    pl: 4,
     tt: 'u',
-    w: 11,
+    w: 12,
   },
 }

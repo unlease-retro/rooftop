@@ -26,8 +26,8 @@ export const Badge = styled.span`
 
 Badge.default = {
   atomic: {
-    h: 5,
-    ml: 4,
-    w: 5,
+    h: 6,
+    ml: 5,
+    w: 6,
   },
 }

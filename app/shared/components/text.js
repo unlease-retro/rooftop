@@ -17,9 +17,9 @@ Text.default = {
   backgroundColor: 'transparent',
   atomic: {
     d: 'b',
-    fs: 3,
-    mt: 3,
-    mb: 3,
+    fs: 4,
+    mt: 4,
+    mb: 4,
     ta: 'l',
   },
 }

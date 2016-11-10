@@ -65,7 +65,7 @@ class Listings extends Component {
     return (
       <View>
 
-        <Text atomic={{ fs:5, fw:'b', ta:'c' }} color='primary'>Listings</Text>
+        <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>Listings</Text>
 
         <Text atomic={{ d:'ib' }}>
           <Icon>tune</Icon> Show me
@@ -133,14 +133,14 @@ class Listings extends Component {
     return (
       <Grid key={ uuid.v4() } direction='column' flush>
 
-        <Text atomic={{ fs:3, mt:0, mb:0 }}>
+        <Text atomic={{ fs:4, fw:'b', mt:1, mb:1 }}>
           { title }
         </Text>
 
         <Position position='relative'>
           <Image source={ photos[0].s3Link } width='100%' height='200px' backgroundSize='cover' center />
           <Position position='absolute' bottom='0px' right='0px'>
-            <Text atomic={{ p:0 }} color='light' backgroundColor='dark'>
+            <Text atomic={{ m:0, p:1 }} color='light' backgroundColor='dark'>
               £{ weeklyRent }
             </Text>
           </Position>
@@ -175,12 +175,12 @@ class Listings extends Component {
 
         <Text>
           <Icon>mail_outline</Icon>
-          <Badge label={ numberOfUnread } margin={1} backgroundColor='primary' />
+          <Badge label={ numberOfUnread } backgroundColor='primary' />
         </Text>
 
-        <Text atomic={{ fs:2 }}>Created at: { getFormattedTimestamp(createdAt) }</Text>
+        <Text atomic={{ fs:3 }}>Created at: { getFormattedTimestamp(createdAt) }</Text>
 
-        <Text atomic={{ fs:2 }}>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</Text>
+        <Text atomic={{ fs:3 }}>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</Text>
 
       </Grid>
     )

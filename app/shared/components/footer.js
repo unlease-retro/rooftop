@@ -9,7 +9,7 @@ export const Footer = styled.footer`
 
 Footer.default = {
   atomic: {
-    fs: 2,
-    p: 3,
+    fs: 3,
+    p: 4,
   },
 }

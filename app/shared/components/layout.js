@@ -59,11 +59,11 @@ View.default = {
   width: '100%',
   maxWidth: '1280px',
   atomic: {
-    p: 3,
+    p: 4,
   }
 }
 
 Grid.default = {
   direction: 'row',
-  gutter: scale.getScaledValue(0),
+  gutter: scale.getScaledValue(1),
 }
