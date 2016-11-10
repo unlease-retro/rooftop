@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import Relay from 'react-relay'
 import uuid from 'node-uuid'
 
+import { FILTERS } from './constants'
 import { getFormattedTimestamp } from '../shared/util'
 
 import * as fragments from './fragments'
 import variables from './variables'
 import mutation from './mutation'
-import { FILTERS } from './constants'
 
+import { Anchor } from 'components/anchor'
 import { Badge } from 'components/badge'
 import { Icon } from 'components/icon'
 import { Image } from 'components/image'
@@ -116,7 +117,7 @@ class Listings extends Component {
             />
           ) : null }
 
-          <Badge label={ listings.length } />
+          <Badge label={ listings.length } atomic={{ ml:5 }} />
 
         </Section>
 
@@ -141,7 +142,7 @@ class Listings extends Component {
     return (
       <Grid key={ uuid.v4() } border direction='column' flush>
 
-        <Text atomic={{ fs:4, fw:'b', mt:1, mb:1 }}>
+        <Text atomic={{ fs:4, fw:'b', mt:1, mb:1, p:1 }}>
           { title }
         </Text>
 
@@ -159,8 +160,12 @@ class Listings extends Component {
 
         </Position>
 
-        <Text atomic={{ ta:'c' }}>
+        <Text atomic={{ pt:1, pr:1, pl:1, ta:'c' }}>
+
+          <Badge label={ numberOfUnread } backgroundColor='primary' />
+
           { firstName } { lastName }
+
         </Text>
 
         {/* <Select
@@ -174,33 +179,23 @@ class Listings extends Component {
           onChange={ ({ value }) => onUpdateClick({ [`${value}`]: true }) }
         /> */}
 
-        <Text>
-          { email }
-        </Text>
+        <Text atomic={{ d:'ib', fs:3, pl:1, pr:1, ta:'c' }}>
 
-        <Text>
-          { contactNumber }
-        </Text>
-
-        <Text>{ getFormattedTimestamp(availableFrom) } &rarr; { getFormattedTimestamp(availableTo) }</Text>
-
-        <Text>
-
-          <Icon>location_city</Icon> { location } { postcode }
+          <Anchor href={`mailto:${email}`}>{ email }</Anchor> | <Anchor href={`tel:${contactNumber}`}>{ contactNumber }</Anchor>
 
         </Text>
 
-        <Text>
-
-          <Icon>mail_outline</Icon>
-
-          <Badge label={ numberOfUnread } backgroundColor='primary' />
-
+        <Text atomic={{ pt:3, pr:1, pl:1, ta:'c' }}>
+          { getFormattedTimestamp(availableFrom) } &rarr; { getFormattedTimestamp(availableTo) }
         </Text>
 
-        <Text atomic={{ fs:3 }}>Created at: { getFormattedTimestamp(createdAt) }</Text>
+        <Text atomic={{ pr:1, pl:1, ta:'c' }}>
+          { location } { postcode }
+        </Text>
 
-        <Text atomic={{ fs:3 }}>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</Text>
+        <Text atomic={{ pt:3, pr:1, pl:1, fs:3 }}>Created at: { getFormattedTimestamp(createdAt) }</Text>
+
+        <Text atomic={{ pr:3, pb:1, pl:1, fs:3 }}>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</Text>
 
       </Grid>
     )
