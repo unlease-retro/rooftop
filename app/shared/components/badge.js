@@ -1,16 +1,16 @@
 import styled from 'styled-components'
+import Atomic from 'style/atomic'
 
-import { colours, scale } from 'style'
+import { colours } from 'style'
 
 export const Badge = styled.span`
-  width: ${ scale.getScaledValue(5) };
-  height: ${ scale.getScaledValue(5) };
-  margin-left: ${ props => props.margin ? scale.getScaledValue(props.margin) : Badge.default.marginLeft };
   border-radius: 50%;
   display: inline-block;
   vertical-align: middle;
   color: ${ colours.light };
-  background-color: ${ props => props.colour ? colours[props.colour] : colours.secondary };
+  background-color: ${ props => props.backgroundColor ? colours[props.backgroundColor] : colours.secondary };
+
+  ${ ({ atomic }) => Atomic({ ...Badge.default.atomic, ...atomic }) }
 
   &:after {
     content: '${ props => props.label }';
@@ -25,5 +25,9 @@ export const Badge = styled.span`
 `
 
 Badge.default = {
-  marginLeft: scale.getScaledValue(4),
+  atomic: {
+    h: 5,
+    ml: 4,
+    w: 5,
+  },
 }

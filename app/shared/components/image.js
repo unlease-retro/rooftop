@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Atomic from 'style/atomic'
 
 export const Image = styled.div`
   background: url( ${ props => props.source } ) no-repeat center;
@@ -6,10 +7,13 @@ export const Image = styled.div`
   width: ${ props => props.width };
   height: ${ props => props.height };
   margin: ${ props => props.center ? '0 auto' : '0' };
-  display: ${ ({ display }) => display || Image.default.display };
+
+  ${ ({ atomic }) => Atomic({ ...Image.default.atomic, ...atomic }) }
 `
 
 Image.default = {
   backgroundSize: '100% auto',
-  display: 'block',
+  atomic: {
+    d: 'b',
+  },
 }

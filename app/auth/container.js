@@ -12,7 +12,7 @@ import { Footer } from 'components/footer'
 import { Image } from 'components/image'
 import { Input } from 'components/input'
 import { View } from 'components/layout'
-import { Text, TitleText } from 'components/text'
+import { Text } from 'components/text'
 
 export class Auth extends Component {
 
@@ -48,11 +48,11 @@ export class Auth extends Component {
     return (
       <View>
 
-        <TitleText>
+        <Text atomic={{ fs:5, fw:'b', ta:'c' }} color='primary'>
           Rooftop
-        </TitleText>
+        </Text>
 
-        <Text align='center'>
+        <Text atomic={{ ta:'c' }}>
           a good place for an overview
         </Text>
 
@@ -60,7 +60,7 @@ export class Auth extends Component {
 
         <Input type='password' placeholder='Password' innerRef={ r => this.password = r } />
 
-        <Button onClick={ () => login({ username: this.email.value, password: this.password.value }) }>
+        <Button atomic={{ mt:6 }} onClick={ () => login({ username: this.email.value, password: this.password.value }) }>
           Login
         </Button>
 

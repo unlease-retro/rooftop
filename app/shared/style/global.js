@@ -1,6 +1,6 @@
 import { injectGlobal } from 'styled-components'
 
-import { colours, space, typography } from '../style'
+import { colours, scale, typography } from '../style'
 
 injectGlobal`
   html, body, #root {
@@ -10,7 +10,7 @@ injectGlobal`
 
   body {
     ${ typography.ff() }
-    ${ space.fs(3) }
+    font-size: ${ scale.getScaledValue(3) };
     line-height: 1.625;
     color: ${ colours.dark };
     -webkit-font-smoothing: antialiased;

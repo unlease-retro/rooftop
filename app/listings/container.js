@@ -15,7 +15,7 @@ import { Image } from 'components/image'
 import { View, Grid } from 'components/layout'
 import { Position } from 'components/position'
 import { Select } from 'components/select'
-import { Text, BoxedText, SmallText, SubtitleText, TitleText } from 'components/text'
+import { Text } from 'components/text'
 
 class Listings extends Component {
 
@@ -65,9 +65,9 @@ class Listings extends Component {
     return (
       <View>
 
-        <TitleText>Listings</TitleText>
+        <Text atomic={{ fs:5, fw:'b', ta:'c' }} color='primary'>Listings</Text>
 
-        <Text display='inline-block'>
+        <Text atomic={{ d:'ib' }}>
           <Icon>tune</Icon> Show me
         </Text>
 
@@ -81,7 +81,7 @@ class Listings extends Component {
           onChange={ ({ value }) => onFilterClick({ listed: value }) }
         />
 
-        <Text display='inline-block'>listings in</Text>
+        <Text atomic={{ d:'ib' }}>listings in</Text>
 
         <Select
           name='area'
@@ -94,7 +94,7 @@ class Listings extends Component {
         />
 
         { !listed ? (
-          <Text display='inline-block'>where the host is</Text>
+          <Text atomic={{ d:'ib' }}>where the host is</Text>
         ) : null }
 
         { !listed ? (
@@ -133,16 +133,16 @@ class Listings extends Component {
     return (
       <Grid key={ uuid.v4() } direction='column' flush>
 
-        <SubtitleText>
+        <Text atomic={{ fs:3, mt:0, mb:0 }}>
           { title }
-        </SubtitleText>
+        </Text>
 
         <Position position='relative'>
           <Image source={ photos[0].s3Link } width='100%' height='200px' backgroundSize='cover' center />
           <Position position='absolute' bottom='0px' right='0px'>
-            <BoxedText>
+            <Text atomic={{ p:0 }} color='light' backgroundColor='dark'>
               £{ weeklyRent }
-            </BoxedText>
+            </Text>
           </Position>
         </Position>
 
@@ -175,12 +175,12 @@ class Listings extends Component {
 
         <Text>
           <Icon>mail_outline</Icon>
-          <Badge label={ numberOfUnread } margin={1} colour='primary' />
+          <Badge label={ numberOfUnread } margin={1} backgroundColor='primary' />
         </Text>
 
-        <SmallText>Created at: { getFormattedTimestamp(createdAt) }</SmallText>
+        <Text atomic={{ fs:2 }}>Created at: { getFormattedTimestamp(createdAt) }</Text>
 
-        <SmallText>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</SmallText>
+        <Text atomic={{ fs:2 }}>Last seen: { getFormattedTimestamp(lastLoggedInAt) }</Text>
 
       </Grid>
     )

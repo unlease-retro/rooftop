@@ -1,47 +1,26 @@
 import styled from 'styled-components'
+import Color from 'color'
 import Atomic from 'style/atomic'
 
-import { colours, scale, space, typography } from 'style'
+import { colours, typography } from 'style'
 
 export const Text = styled.p`
   ${ typography.ff() }
-  ${ space.fs(3) }
-  margin-top: ${ scale.getScaledValue(3) }
-  margin-bottom: ${ scale.getScaledValue(3) }
-  display: ${ ({ display }) => display || Text.default.display };
-  color: ${ colours.dark };
-  text-align: ${ props => props.align || Text.default.textAlign };
+  color: ${ props => props.color && colours[props.color] || Text.default.color };
+  background-color: ${ props => props.backgroundColor && Color(colours[props.backgroundColor]).alpha(0.5) || Text.default.backgroundColor };
 
-  ${ ({ atomic }) => Atomic(atomic) }
-`
-
-export const BoxedText = styled(Text)`
-  ${ space.p(0) }
-  margin: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: ${ colours.light };
-`
-
-export const SmallText = styled(Text)`
-  ${ space.fs(2) }
-`
-
-export const TitleText = styled.h2`
-  ${ space.fs(5) }
-  ${ typography.ff() }
-  color: ${ colours.primary };
-  text-align: center;
-`
-
-export const SubtitleText = styled(TitleText)`
-  ${ space.fs(3) }
-  margin: 0;
-  color: ${ colours.dark };
-  text-align: left;
+  ${ ({ atomic }) => Atomic({ ...Text.default.atomic, ...atomic }) }
 `
 
 Text.default = {
   backgroundSize: '100% auto',
-  display: 'block',
-  textAlign: 'left',
+  color: colours.dark,
+  backgroundColor: 'transparent',
+  atomic: {
+    d: 'b',
+    fs: 3,
+    mt: 3,
+    mb: 3,
+    ta: 'l',
+  },
 }

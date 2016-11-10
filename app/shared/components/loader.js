@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Atomic from 'style/atomic'
 
 import { animation, colours } from 'style'
 
@@ -9,8 +10,16 @@ export const Loader = styled.div`
   border-style: solid;
   border-color: transparent transparent ${ colours.accent } transparent;
   position: absolute;
-  top: 20px;
-  left: 20px;
   transform-origin: center center;
   animation: ${ animation.rotate360 } 0.5s linear infinite;
+
+  ${ ({ atomic }) => Atomic({ ...Loader.default.atomic, ...atomic }) }
 `
+
+Loader.default = {
+  backgroundSize: '100% auto',
+  atomic: {
+    l: 5,
+    t: 5,
+  },
+}
