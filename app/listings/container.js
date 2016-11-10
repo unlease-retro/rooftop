@@ -160,7 +160,7 @@ class Listings extends Component {
 
         </Position>
 
-        <Position position='relative' top='-25px'>
+        <Position position='relative' top='-15px'>
 
           <Position position='absolute' bottom='-5px' left='52%'>
 
@@ -173,9 +173,7 @@ class Listings extends Component {
         </Position>
 
         <Text atomic={{ m:0, pt:1, pr:1, pl:1, ta:'c' }}>
-
           { firstName } { lastName }
-
         </Text>
 
         {/* <Select
@@ -203,7 +201,7 @@ class Listings extends Component {
           { location } { postcode }
         </Text>
 
-        <Text atomic={{ m:0, pt:3, pr:1, pl:1, fs:3 }}>
+        <Text atomic={{ m:0, pt:4, pr:1, pl:1, fs:3 }}>
           Created at: { getFormattedTimestamp(createdAt) }
         </Text>
 
