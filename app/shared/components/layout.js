@@ -33,7 +33,6 @@ export const View = styled.div`
 export const Grid = styled.div`
   display: flex;
   flex-wrap: wrap;
-  border: ${ props => props.border && Grid.default.border || 'none' };
   ${ media.flat`
     ${ props => props.align && GRID_ALIGN[props.align] }
     margin: -${ props => scale.getScaledValue(props.gutter) || Grid.default.gutter };
@@ -57,6 +56,8 @@ export const Cell = styled.div`
 `
 
 export const Section = styled.section`
+  border: ${ props => props.border && Section.default.border || 'none' };
+
   ${ ({ atomic }) => Atomic({ ...atomic }) }
 `
 
@@ -69,7 +70,10 @@ View.default = {
 }
 
 Grid.default = {
-  border: `1px solid ${ colours.dark }`,
   direction: 'row',
   gutter: scale.getScaledValue(1),
+}
+
+Section.default = {
+  border: `1px solid ${ colours.dark }`,
 }

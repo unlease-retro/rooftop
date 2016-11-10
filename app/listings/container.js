@@ -117,7 +117,7 @@ class Listings extends Component {
             />
           ) : null }
 
-          <Badge label={ listings.length } atomic={{ ml:5 }} />
+          <Badge label={ listings.length } backgroundColor='primary' atomic={{ ml:5 }} />
 
         </Section>
 
@@ -135,14 +135,14 @@ class Listings extends Component {
   renderListing(listing) {
 
     const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user } = listing
-    const { email, firstName, lastName, lastLoggedInAt, phoneVerification: { contactNumber }, notifications: { numberOfUnread } } = user
+    const { avatar, email, firstName, lastName, lastLoggedInAt, phoneVerification: { contactNumber }, notifications: { numberOfUnread } } = user
 
     const onUpdateClick = this.onUpdateClick
 
     return (
-      <Grid key={ uuid.v4() } border direction='column' flush>
+      <Section key={ uuid.v4() } border atomic={{ mt:1, mb:1 }}>
 
-        <Text atomic={{ fs:4, fw:'b', mt:1, mb:1, p:1 }}>
+        <Text atomic={{ fs:4, fw:'b', m:0, p:1 }}>
           { title }
         </Text>
 
@@ -160,9 +160,19 @@ class Listings extends Component {
 
         </Position>
 
-        <Text atomic={{ pt:1, pr:1, pl:1, ta:'c' }}>
+        <Position position='relative' top='-25px'>
 
-          <Badge label={ numberOfUnread } backgroundColor='primary' />
+          <Position position='absolute' bottom='-5px' left='52%'>
+
+            <Badge label={ numberOfUnread } />
+
+          </Position>
+
+          <Image source={ avatar } width='50px' height='50px' backgroundSize='cover' center circle />
+
+        </Position>
+
+        <Text atomic={{ m:0, pt:1, pr:1, pl:1, ta:'c' }}>
 
           { firstName } { lastName }
 
@@ -179,29 +189,29 @@ class Listings extends Component {
           onChange={ ({ value }) => onUpdateClick({ [`${value}`]: true }) }
         /> */}
 
-        <Text atomic={{ d:'ib', fs:3, pl:1, pr:1, ta:'c' }}>
+        <Text atomic={{ fs:3, m:0, pl:1, pr:1, ta:'c' }}>
 
           <Anchor href={`mailto:${email}`}>{ email }</Anchor> | <Anchor href={`tel:${contactNumber}`}>{ contactNumber }</Anchor>
 
         </Text>
 
-        <Text atomic={{ pt:3, pr:1, pl:1, ta:'c' }}>
+        <Text atomic={{ m:0, pt:3, pr:1, pl:1, ta:'c' }}>
           { getFormattedTimestamp(availableFrom) } &rarr; { getFormattedTimestamp(availableTo) }
         </Text>
 
-        <Text atomic={{ pr:1, pl:1, ta:'c' }}>
+        <Text atomic={{ m:0, pr:1, pl:1, ta:'c' }}>
           { location } { postcode }
         </Text>
 
-        <Text atomic={{ pt:3, pr:1, pl:1, fs:3 }}>
+        <Text atomic={{ m:0, pt:3, pr:1, pl:1, fs:3 }}>
           Created at: { getFormattedTimestamp(createdAt) }
         </Text>
 
-        <Text atomic={{ pr:3, pb:1, pl:1, fs:3 }}>
+        <Text atomic={{ m:0, pr:3, pb:1, pl:1, fs:3 }}>
           Last seen: { getFormattedTimestamp(lastLoggedInAt) }
         </Text>
 
-      </Grid>
+      </Section>
     )
 
   }
