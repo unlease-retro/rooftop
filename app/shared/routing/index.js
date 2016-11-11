@@ -5,6 +5,7 @@ import { Route, IndexRoute } from 'react-router'
 // containers
 import App from '../containers/App'
 import NotFound from '../containers/NotFound'
+import Protected from '../containers/Protected'
 import { Container as Auth } from '../../auth'
 import { Container as Bot } from '../../bot'
 import { Container as Listings } from '../../listings'
@@ -18,7 +19,7 @@ const RootQuery = { query: () => Relay.QL`query { query }` }
 const routes = store => (
   <Route path='/' component={App}>
     <Route path='login' component={Auth} />
-    <Route onEnter={ ( ...args ) => protectedOnEnter(store, ...args) }>
+    <Route component={Protected} onEnter={ ( ...args ) => protectedOnEnter(store, ...args) }>
       <IndexRoute component={Listings} queries={RootQuery} />
       <Route path='bot' component={Bot} queries={RootQuery} />
     </Route>
