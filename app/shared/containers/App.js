@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 
-import { actions } from '../../auth'
-import { selectors } from '../../ui'
+import { selectors as AuthSelectors, actions as AuthActions } from '../../auth'
+import { selectors as UISelectors } from '../../ui'
 
 import { Anchor } from 'components/anchor'
 import { Error } from 'components/error'
@@ -17,11 +17,12 @@ class App extends Component {
 
   render() {
 
-    const { actions, children, error, requesting } = this.props
+    const { actions, children, authorised, error, requesting } = this.props
     const { logout } = actions
 
     const renderError = error ? <Error>{ error.message }</Error> : null
     const renderLoader = requesting ? <Loader /> : null
+    const renderLogout = authorised ? <Anchor onClick={ () => logout() }>Logout</Anchor> : null
 
     return (
       <div id='App'>
@@ -42,9 +43,7 @@ class App extends Component {
 
           <Image source='unlease.png' width='40px' height='40px' center />
 
-          <Anchor onClick={ () => logout() }>
-            Logout
-          </Anchor>
+          { renderLogout }
 
         </Footer>
 
@@ -57,8 +56,8 @@ class App extends Component {
 
 
 export default connect(
-  createStructuredSelector({ ...selectors }),
+  createStructuredSelector({ ...AuthSelectors, ...UISelectors }),
   dispatch => ({
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators({ ...AuthActions }, dispatch)
   })
 )(App)
