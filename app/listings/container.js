@@ -144,7 +144,7 @@ class Listings extends Component {
     return (
       <Section key={ uuid.v4() } border atomic={{ mt:1, mb:1 }}>
 
-        <Text atomic={{ fs:4, fw:'b', m:0, p:1 }}>
+        <Text atomic={{ fs:4, fw:'b', m:0, o:'h', p:1, to:'e', ws:'n' }}>
           { title }
         </Text>
 

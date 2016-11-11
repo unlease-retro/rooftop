@@ -23,6 +23,7 @@ const properties = {
   mr: 'margin-right',
   mb: 'margin-bottom',
   ml: 'margin-left',
+  o: 'overflow',
   p: 'padding',
   pt: 'padding-top',
   pr: 'padding-right',
@@ -31,9 +32,11 @@ const properties = {
   r: 'right',
   t: 'top',
   ta: 'text-align',
+  to: 'text-overflow',
   tt: 'text-transform',
   va: 'vertical-align',
   w: 'width',
+  ws: 'white-space',
 }
 
 // -----
@@ -59,11 +62,21 @@ const values = {
     n: 400,
     b: 700,
   },
+  o: {
+    a: 'auto',
+    h: 'hidden',
+    s: 'scroll',
+    v: 'visible',
+  },
   ta: {
     c: 'center',
     l: 'left',
     r: 'right',
     j: 'justify',
+  },
+  to: {
+    c: 'clip',
+    e: 'ellipsis',
   },
   tt: {
     u: 'uppercase',
@@ -75,6 +88,12 @@ const values = {
     m: 'middle',
     t: 'top',
     b: 'bottom',
+  },
+  ws: {
+    n: 'nowrap',
+    p: 'pre',
+    pw: 'pre-wrap',
+    pl: 'pre-line',
   },
 }
 
@@ -97,6 +116,7 @@ const getters = {
   mr: value => getScaledProperty('mr', value),
   mb: value => getScaledProperty('mb', value),
   ml: value => getScaledProperty('ml', value),
+  o: value => getStaticProperty('o', value),
   p: value => getScaledProperty('p', value),
   pt: value => getScaledProperty('pt', value),
   pr: value => getScaledProperty('pr', value),
@@ -105,9 +125,11 @@ const getters = {
   r: value => getScaledProperty('r', value),
   t: value => getScaledProperty('t', value),
   ta: value => getStaticProperty('ta', value),
+  to: value => getStaticProperty('to', value),
   tt: value => getStaticProperty('tt', value),
   va: value => getStaticProperty('va', value),
   w: value => getScaledProperty('w', value),
+  ws: value => getStaticProperty('ws', value),
 }
 
 // -----
