@@ -61,8 +61,6 @@ class Listings extends Component {
     // TODO - could do better but I'm tired!!
     if ( !listed && hostStatus !== 'unspecified' ) listings = listings.filter( l => l[hostStatus] )
 
-    console.log(listings)
-
     return (
       <View>
 
