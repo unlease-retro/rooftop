@@ -61,6 +61,10 @@ export const Section = styled.section`
   ${ ({ atomic }) => Atomic({ ...atomic }) }
 `
 
+export const Main = styled.main`
+  flex: 1 0 auto;
+`
+
 View.default = {
   width: '100%',
   maxWidth: '1280px',

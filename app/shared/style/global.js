@@ -3,7 +3,7 @@ import { injectGlobal } from 'styled-components'
 import { colours, scale, typography } from '../style'
 
 injectGlobal`
-  html, body, #root {
+  html, body, #Root, #App {
     height: 100%;
     min-height: 100%;
   }
@@ -14,6 +14,11 @@ injectGlobal`
     line-height: 1.625;
     color: ${ colours.dark };
     -webkit-font-smoothing: antialiased;
+  }
+
+  #App {
+    display: flex;
+    flex-direction: column;
   }
 
   ::-moz-selection {

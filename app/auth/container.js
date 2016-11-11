@@ -8,8 +8,6 @@ import * as actions from './actions'
 import selectors from './selectors'
 
 import { Button } from 'components/button'
-import { Footer } from 'components/footer'
-import { Image } from 'components/image'
 import { Input } from 'components/input'
 import { View } from 'components/layout'
 import { Text } from 'components/text'
@@ -63,12 +61,6 @@ export class Auth extends Component {
         <Button atomic={{ mt:7 }} onClick={ () => login({ username: this.email.value, password: this.password.value }) }>
           Login
         </Button>
-
-        <Footer>
-
-          <Image source='unlease.png' width='40px' height='40px' center />
-
-        </Footer>
 
       </View>
     )

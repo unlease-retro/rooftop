@@ -1,14 +1,9 @@
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { withRouter } from 'react-router'
 
-import { selectors, actions } from '../../auth'
-
-import { Anchor } from 'components/anchor'
-import { Footer } from 'components/footer'
-import { Image } from 'components/image'
+import { selectors } from '../../auth'
 
 class Protected extends Component {
 
@@ -39,23 +34,12 @@ class Protected extends Component {
 
   render() {
 
-    const { actions, children } = this.props
-    const { logout } = actions
+    const { children } = this.props
 
     return (
       <div id='Protected'>
 
         { children }
-
-        <Footer>
-
-          <Image source='unlease.png' width='40px' height='40px' center />
-
-          <Anchor onClick={ () => logout() }>
-            Logout
-          </Anchor>
-
-        </Footer>
 
       </div>
     )
@@ -65,8 +49,5 @@ class Protected extends Component {
 }
 
 export default withRouter(connect(
-  createStructuredSelector({ ...selectors }),
-  dispatch => ({
-    actions: bindActionCreators(actions, dispatch)
-  })
+  createStructuredSelector({ ...selectors })
 )(Protected))

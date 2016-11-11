@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 
+import { actions } from '../../auth'
 import { selectors } from '../../ui'
 
+import { Anchor } from 'components/anchor'
 import { Error } from 'components/error'
+import { Footer } from 'components/footer'
 import { Image } from 'components/image'
+import { Main } from 'components/layout'
 import { Loader } from 'components/loader'
 
 class App extends Component {
 
   render() {
 
-    const { children, error, requesting } = this.props
+    const { actions, children, error, requesting } = this.props
+    const { logout } = actions
 
     const renderError = error ? <Error>{ error.message }</Error> : null
     const renderLoader = requesting ? <Loader /> : null
@@ -20,13 +26,27 @@ class App extends Component {
     return (
       <div id='App'>
 
-        <Image source='logo.png' width='102px' height='74px' center />
+        <Main>
 
-        { renderError }
+          <Image source='logo.png' width='102px' height='74px' center />
 
-        { renderLoader }
+          { renderError }
 
-        { children }
+          { renderLoader }
+
+          { children }
+
+        </Main>
+
+        <Footer>
+
+          <Image source='unlease.png' width='40px' height='40px' center />
+
+          <Anchor onClick={ () => logout() }>
+            Logout
+          </Anchor>
+
+        </Footer>
 
       </div>
     )
@@ -37,5 +57,8 @@ class App extends Component {
 
 
 export default connect(
-  createStructuredSelector({ ...selectors })
+  createStructuredSelector({ ...selectors }),
+  dispatch => ({
+    actions: bindActionCreators(actions, dispatch)
+  })
 )(App)
