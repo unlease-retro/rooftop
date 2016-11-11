@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { Router, browserHistory, applyRouterMiddleware } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
-import routes from '../../routes'
+import routes from '../routing'
 import configureStore from '../store'
 import configureNetwork from '../network'
 import createSelectLocationState from '../util/createSelectLocationState'
@@ -38,7 +38,7 @@ export default class Root extends Component {
           forceFetch
           environment={Relay.Store}
           render={applyRouterMiddleware(useRelay)}
-          routes={routes}
+          routes={routes(store)}
           history={history} />
       </Provider>
     )
