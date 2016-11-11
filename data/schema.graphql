@@ -1,0 +1,72 @@
+schema {
+  query: Query
+  mutation: Mutations
+}
+
+type Bot {
+  bot: String
+}
+
+type Listing {
+  id: String
+  availableFrom: Float
+  availableTo: Float
+  contactNumber: String
+  createdAt: Float
+  leakage: Boolean
+  location: String
+  nonResponsive: Boolean
+  postcode: String
+  title: String
+  weeklyRent: Int
+  photos: [Photo]
+  user: User
+}
+
+type Mutations {
+  updateHostStatus(input: UpdateHostStatusInput!): UpdateHostStatusPayload
+}
+
+type Notification {
+  numberOfUnread: Int
+}
+
+type PhoneVerification {
+  contactNumber: String
+}
+
+type Photo {
+  s3Link: String
+}
+
+type Query {
+  query: Query
+  botSample(token: String): Bot
+  listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
+  notificationById(id: String, token: String): Notification
+  users(token: String): [User]
+  userById(id: String, token: String): User
+}
+
+input UpdateHostStatusInput {
+  id: String
+  leakage: Boolean
+  nonResponsive: Boolean
+  clientMutationId: String
+}
+
+type UpdateHostStatusPayload {
+  listing: Listing
+  clientMutationId: String
+}
+
+type User {
+  id: String
+  avatar: String
+  email: String
+  firstName: String
+  lastName: String
+  lastLoggedInAt: Float
+  phoneVerification: PhoneVerification
+  notifications: Notification
+}

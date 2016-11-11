@@ -6,6 +6,7 @@ export const query = () => Relay.QL`
       id
       availableFrom
       availableTo
+      contactNumber
       createdAt
       location
       leakage

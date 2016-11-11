@@ -121,7 +121,7 @@ class Listings extends Component {
 
         </Section>
 
-        <Grid>
+        <Grid cell={3/0.12}>
 
           { listings.map( l => this.renderListing(l) ) }
 
@@ -135,7 +135,9 @@ class Listings extends Component {
   renderListing(listing) {
 
     const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user } = listing
-    const { avatar, email, firstName, lastName, lastLoggedInAt, phoneVerification: { contactNumber }, notifications: { numberOfUnread } } = user
+    const { avatar, email, firstName, lastName, lastLoggedInAt, phoneVerification, notifications: { numberOfUnread } } = user
+
+    const contactNumber = phoneVerification && phoneVerification.contactNumber || listing.contactNumber
 
     const onUpdateClick = this.onUpdateClick
 
