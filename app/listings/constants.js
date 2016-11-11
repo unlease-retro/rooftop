@@ -15,7 +15,7 @@ export const FILTERS = {
     ...Object.keys(AREAS).map( a => ({ value: a, label: getCapitalised(a) }) )
   ],
   hostStatus: [
-    { value: 'unspecified', label: '' },
+    { value: 'unspecified', label: 'OK' },
     { value: 'nonResponsive', label: 'Disenfranchised' },
     { value: 'leakage', label: 'Disintermediated' },
   ],

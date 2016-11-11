@@ -1,5 +1,6 @@
-import styled from 'styled-components'
 import ReactSelect from 'react-select'
+import styled from 'styled-components'
+import Atomic from 'style/atomic'
 
 import { colours } from 'style'
 
@@ -8,8 +9,11 @@ export const Select = styled(ReactSelect)`
 
   &.Select {
     width: ${ ({ width }) => width || Select.default.width };
+    margin: 0 auto;
     display: inline-block;
     text-align: left;
+
+    ${ ({ atomic }) => Atomic(atomic) }
   }
 
   & > .Select-control {

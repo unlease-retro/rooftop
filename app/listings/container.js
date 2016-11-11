@@ -178,17 +178,6 @@ class Listings extends Component {
           { firstName } { lastName }
         </Text>
 
-        <Select
-          width='160px'
-          name='hostStatus'
-          value={ leakage && 'leakage' || nonResponsive && 'nonResponsive' || 'unspecified' }
-          options={ FILTERS.hostStatus }
-          autoBlur={ true }
-          clearable={ false }
-          searchable={ false }
-          onChange={ ({ value }) => onUpdateClick(id, { [`${value}`]: true }) }
-        />
-
         <Text atomic={{ fs:3, m:0, pl:1, pr:1, ta:'c' }}>
 
           <Anchor href={`mailto:${email}`}>{ email }</Anchor> | <Anchor href={`tel:${contactNumber}`}>{ contactNumber }</Anchor>
@@ -202,6 +191,18 @@ class Listings extends Component {
         <Text atomic={{ m:0, pr:1, pl:1, ta:'c' }}>
           { location } { postcode }
         </Text>
+
+        <Select
+          atomic={{ d:'b', fs:3, ta:'c' }}
+          width='130px'
+          name='hostStatus'
+          value={ leakage && 'leakage' || nonResponsive && 'nonResponsive' || 'unspecified' }
+          options={ FILTERS.hostStatus }
+          autoBlur={ true }
+          clearable={ false }
+          searchable={ false }
+          onChange={ ({ value }) => onUpdateClick(id, { [`${value}`]: true }) }
+        />
 
         <Text atomic={{ m:0, pt:4, pr:1, pl:1, fs:3 }}>
           Created at: { getFormattedTimestamp(createdAt) }
