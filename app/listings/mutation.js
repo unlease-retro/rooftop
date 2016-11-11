@@ -43,17 +43,17 @@ export default class ListingsMutation extends Relay.Mutation {
 
   }
 
-  getOptimisticResponse() {
-
-    return {
-      listing: {
-        id: this.props.id,
-        leakage: this.props.leakage,
-        nonResponsive: this.props.nonResponsive,
-      },
-    }
-
-  }
+  // getOptimisticResponse() {
+  //
+  //   return {
+  //     listing: {
+  //       id: this.props.id,
+  //       leakage: this.props.leakage,
+  //       nonResponsive: this.props.nonResponsive,
+  //     },
+  //   }
+  //
+  // }
 
   // static fragments = {
   //

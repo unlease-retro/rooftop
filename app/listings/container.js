@@ -38,6 +38,8 @@ class Listings extends Component {
 
   onUpdateClick(id, data) {
 
+    if (data.unspecified) data = { leakage: false, nonResponsive: false }
+
     Relay.Store.commitUpdate(
       new mutation({
         id,
@@ -176,16 +178,16 @@ class Listings extends Component {
           { firstName } { lastName }
         </Text>
 
-        {/* <Select
+        <Select
           width='160px'
           name='hostStatus'
-          value={ hostStatus }
+          value={ leakage && 'leakage' || nonResponsive && 'nonResponsive' || 'unspecified' }
           options={ FILTERS.hostStatus }
           autoBlur={ true }
           clearable={ false }
           searchable={ false }
-          onChange={ ({ value }) => onUpdateClick({ [`${value}`]: true }) }
-        /> */}
+          onChange={ ({ value }) => onUpdateClick(id, { [`${value}`]: true }) }
+        />
 
         <Text atomic={{ fs:3, m:0, pl:1, pr:1, ta:'c' }}>
 
