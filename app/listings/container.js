@@ -168,7 +168,7 @@ class Listings extends Component {
 
         <Position position='relative'>
 
-          <Image source={ photos[0].s3Link } width='100%' height='200px' backgroundSize='cover' center onClick={ () => onListingImageClick(id) } />
+          <Image atomic={{ c:'p' }} source={ photos[0].s3Link } width='100%' height='200px' backgroundSize='cover' center onClick={ () => onListingImageClick(id) } />
 
           <Position position='absolute' bottom='0px' right='0px'>
 
@@ -188,7 +188,7 @@ class Listings extends Component {
 
           </Position>
 
-          <Image source={ avatar } width='50px' height='50px' backgroundSize='cover' center circle onClick={ () => onProfileImageClick(userId) } />
+          <Image atomic={{ c:'p' }} source={ avatar } width='50px' height='50px' backgroundSize='cover' center circle onClick={ () => onProfileImageClick(userId) } />
 
         </Position>
 
