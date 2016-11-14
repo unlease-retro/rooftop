@@ -8,7 +8,6 @@ const getRequesting = createSelector( getAll, state => state.get('requesting') )
 const getIsNavOpen = createSelector( getAll, state => state.get('isNavOpen') )
 
 export default {
-  all: getAll,
   error: getError,
   requesting: getRequesting,
   isNavOpen: getIsNavOpen,
