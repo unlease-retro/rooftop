@@ -3,7 +3,7 @@ import Relay from 'react-relay'
 import uuid from 'node-uuid'
 
 import { FILTERS } from './constants'
-import { getFormattedTimestamp, getListingUrl } from '../shared/util'
+import { getFormattedTimestamp, getListingUrl, getProfileUrl } from '../shared/util'
 
 import * as fragments from './fragments'
 import variables from './variables'
@@ -58,6 +58,15 @@ class Listings extends Component {
 
     // open listing in new tab
     return window.open(listingUrl)
+
+  }
+
+  onProfileImageClick(id) {
+
+    const profileUrl = getProfileUrl(id)
+
+    // open profile in new tab
+    return window.open(profileUrl)
 
   }
 
@@ -144,11 +153,11 @@ class Listings extends Component {
   renderListing(listing) {
 
     const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user } = listing
-    const { avatar, email, firstName, lastName, lastLoggedInAt, phoneVerification, notifications: { numberOfUnread } } = user
+    const { id: userId, avatar, email, firstName, lastName, lastLoggedInAt, phoneVerification, notifications: { numberOfUnread } } = user
 
     const contactNumber = phoneVerification && phoneVerification.contactNumber || listing.contactNumber
 
-    const { onUpdateClick, onListingImageClick } = this
+    const { onUpdateClick, onListingImageClick, onProfileImageClick } = this
 
     return (
       <Section key={ uuid.v4() } border atomic={{ mt:1, mb:1 }}>
@@ -179,7 +188,7 @@ class Listings extends Component {
 
           </Position>
 
-          <Image source={ avatar } width='50px' height='50px' backgroundSize='cover' center circle />
+          <Image source={ avatar } width='50px' height='50px' backgroundSize='cover' center circle onClick={ () => onProfileImageClick(userId) } />
 
         </Position>
 

@@ -29,3 +29,5 @@ export const getFormattedTimestamp = ts => {
 }
 
 export const getListingUrl = id => `${UI}/room/${id}`
+
+export const getProfileUrl = id => `${UI}/unleaser/${id}`
