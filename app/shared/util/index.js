@@ -4,6 +4,8 @@
 
 import jwt_decode from 'jwt-decode'
 
+import { UI } from '../constants'
+
 const padLeft = str => Array(3 - str.length).join('0') + str
 
 export const isDevelopment = process.env.NODE_ENV === 'development'
@@ -25,3 +27,5 @@ export const getFormattedTimestamp = ts => {
   return `${DD}/${MM}/${YYYY}`
 
 }
+
+export const getListingUrl = id => `${UI}/room/${id}`

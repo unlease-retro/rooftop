@@ -3,7 +3,7 @@ import Relay from 'react-relay'
 import uuid from 'node-uuid'
 
 import { FILTERS } from './constants'
-import { getFormattedTimestamp } from '../shared/util'
+import { getFormattedTimestamp, getListingUrl } from '../shared/util'
 
 import * as fragments from './fragments'
 import variables from './variables'
@@ -49,6 +49,15 @@ class Listings extends Component {
         onFailure: transaction => console.error(transaction),
       }
     )
+
+  }
+
+  onListingImageClick(id) {
+
+    const listingUrl = getListingUrl(id)
+
+    // open listing in new tab
+    return window.open(listingUrl)
 
   }
 
@@ -139,7 +148,7 @@ class Listings extends Component {
 
     const contactNumber = phoneVerification && phoneVerification.contactNumber || listing.contactNumber
 
-    const onUpdateClick = this.onUpdateClick
+    const { onUpdateClick, onListingImageClick } = this
 
     return (
       <Section key={ uuid.v4() } border atomic={{ mt:1, mb:1 }}>
@@ -150,7 +159,7 @@ class Listings extends Component {
 
         <Position position='relative'>
 
-          <Image source={ photos[0].s3Link } width='100%' height='200px' backgroundSize='cover' center />
+          <Image source={ photos[0].s3Link } width='100%' height='200px' backgroundSize='cover' center onClick={ () => onListingImageClick(id) } />
 
           <Position position='absolute' bottom='0px' right='0px'>
 
