@@ -166,7 +166,7 @@ class Listings extends Component {
 
           <Position position='absolute' bottom='-5px' left='52%'>
 
-            <Badge label={ numberOfUnread } />
+            <Badge label={ numberOfUnread - 1 } />
 
           </Position>
 
