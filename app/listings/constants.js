@@ -1,5 +1,7 @@
 import { getCapitalised } from '../shared/util'
 
+export const route = '/'
+
 export const AREAS = {
   anywhere: { lat: null, lng: null },
   london: { lat: 51.5073509, lng: -0.12775829999998223 },

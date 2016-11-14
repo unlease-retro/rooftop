@@ -6,6 +6,7 @@ import * as actions from './actionTypes'
 export const initialState = Immutable.fromJS({
   error: null,
   requesting: false,
+  isNavOpen: false,
 })
 
 export default createReducer(initialState, {

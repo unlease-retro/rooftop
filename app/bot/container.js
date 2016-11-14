@@ -6,7 +6,7 @@ import variables from './variables'
 // import mutation from './mutation'
 
 import { View } from 'components/layout'
-import { TitleText } from 'components/text'
+import { Text } from 'components/text'
 
 class Bot extends Component {
 
@@ -17,9 +17,9 @@ class Bot extends Component {
     return (
       <View>
 
-        <TitleText>
+        <Text>
           Bot
-        </TitleText>
+        </Text>
 
       </View>
     )

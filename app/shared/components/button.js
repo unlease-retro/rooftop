@@ -7,8 +7,8 @@ export const Button = styled.button`
   ${ typography.ff() }
   margin-left: auto;
   margin-right: auto;
-  background-color: ${ colours.primary };
-  color: ${ colours.light };
+  background-color: ${ props => props.backgroundColor && colours[props.backgroundColor] || Button.default.backgroundColor };
+  color: ${ props => props.color && colours[props.color] || Button.default.color };
   border: 0;
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px, rgba(0, 0, 0, 0.1) 0px 1px 4px;
@@ -20,6 +20,8 @@ export const Button = styled.button`
 `
 
 Button.default = {
+  backgroundColor: colours.primary,
+  color: colours.light,
   atomic: {
     d: 'b',
     fs: 4,

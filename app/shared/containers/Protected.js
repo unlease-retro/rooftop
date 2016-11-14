@@ -1,9 +1,18 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { withRouter } from 'react-router'
+import { Link, withRouter } from 'react-router'
 
-import { selectors } from '../../auth'
+import { selectors as AuthSelectors } from '../../auth'
+import { selectors as UISelectors, actions as UIActions } from '../../ui'
+
+import * as Bot from '../../bot'
+import * as Listings from '../../listings'
+
+import { Button } from 'components/button'
+import { Icon } from 'components/icon'
+import { Nav } from 'components/nav'
 
 class Protected extends Component {
 
@@ -18,10 +27,24 @@ class Protected extends Component {
 
   render() {
 
-    const { children } = this.props
+    const { actions, children, isNavOpen } = this.props
+    const { updateUI } = actions
+
+    const renderNav = isNavOpen ? (
+      <Nav>
+        <Link to={Bot.route}>Bot</Link>
+        <Link to={Listings.route}>Listings</Link>
+      </Nav>
+    ) : null
 
     return (
       <div id='Protected'>
+
+        <Button atomic={{ m:0, po:'a', t:4, l:4, w:10 }} backgroundColor='white' onClick={ () => updateUI({ isNavOpen: !isNavOpen }) }>
+          <Icon>menu</Icon>
+        </Button>
+
+        { renderNav }
 
         { children }
 
@@ -33,5 +56,8 @@ class Protected extends Component {
 }
 
 export default withRouter(connect(
-  createStructuredSelector({ ...selectors })
+  createStructuredSelector({ ...AuthSelectors, ...UISelectors }),
+  dispatch => ({
+    actions: bindActionCreators({ ...UIActions }, dispatch)
+  })
 )(Protected))

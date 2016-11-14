@@ -30,6 +30,7 @@ const properties = {
   pr: 'padding-right',
   pb: 'padding-bottom',
   pl: 'padding-left',
+  po: 'position',
   r: 'right',
   t: 'top',
   ta: 'text-align',
@@ -73,6 +74,12 @@ const values = {
     h: 'hidden',
     s: 'scroll',
     v: 'visible',
+  },
+  po: {
+    s: 'static',
+    r: 'relative',
+    a: 'absolute',
+    f: 'fixed',
   },
   ta: {
     c: 'center',
@@ -129,6 +136,7 @@ const getters = {
   pr: value => getScaledProperty('pr', value),
   pb: value => getScaledProperty('pb', value),
   pl: value => getScaledProperty('pl', value),
+  po: value => getStaticProperty('po', value),
   r: value => getScaledProperty('r', value),
   t: value => getScaledProperty('t', value),
   ta: value => getStaticProperty('ta', value),
