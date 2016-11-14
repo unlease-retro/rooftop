@@ -14,6 +14,14 @@ import { Text } from 'components/text'
 
 export class Auth extends Component {
 
+  constructor() {
+
+    super()
+
+    this.onPasswordKeyUp = this.onPasswordKeyUp.bind(this)
+
+  }
+
   componentWillMount() {
 
     const { authorised } = this.props
@@ -39,7 +47,20 @@ export class Auth extends Component {
 
   }
 
+  onPasswordKeyUp(e) {
+
+    const { login } = this.props.actions
+
+    const key = e.keyCode
+
+    // submit login form if `Enter` key pressed
+    if ( key === 13 ) return login({ username: this.email.value, password: this.password.value })
+
+  }
+
   render() {
+
+    const onPasswordKeyUp = this.onPasswordKeyUp
 
     const { login } = this.props.actions
 
@@ -56,7 +77,7 @@ export class Auth extends Component {
 
         <Input type='email' placeholder='Email' innerRef={ r => this.email = r } />
 
-        <Input type='password' placeholder='Password' innerRef={ r => this.password = r } />
+        <Input type='password' placeholder='Password' innerRef={ r => this.password = r } onKeyUp={ onPasswordKeyUp } />
 
         <Button atomic={{ mt:7 }} onClick={ () => login({ username: this.email.value, password: this.password.value }) }>
           Login
