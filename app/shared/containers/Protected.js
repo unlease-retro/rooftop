@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Link, withRouter } from 'react-router'
+import Transition from 'react-addons-css-transition-group'
 
 import { selectors as AuthSelectors } from '../../auth'
 import { selectors as UISelectors, actions as UIActions } from '../../ui'
@@ -31,7 +32,7 @@ class Protected extends Component {
     const { updateUI } = actions
 
     const renderNav = isNavOpen ? (
-      <Nav>
+      <Nav onClick={ () => updateUI({ isNavOpen: false }) }>
         <Link to={Bot.route}>Bot</Link>
         <Link to={Listings.route}>Listings</Link>
       </Nav>
@@ -40,11 +41,13 @@ class Protected extends Component {
     return (
       <div id='Protected'>
 
-        <Button atomic={{ m:0, po:'a', t:4, l:4, w:10 }} backgroundColor='white' onClick={ () => updateUI({ isNavOpen: !isNavOpen }) }>
+        <Button atomic={{ m:0, po:'a', t:4, l:4, w:10, z:2 }} backgroundColor='white' onClick={ () => updateUI({ isNavOpen: !isNavOpen }) }>
           <Icon>menu</Icon>
         </Button>
 
-        { renderNav }
+        <Transition transitionName='slide-right' transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+          { renderNav }
+        </Transition>
 
         { children }
 

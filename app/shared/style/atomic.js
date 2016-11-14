@@ -39,6 +39,7 @@ const properties = {
   va: 'vertical-align',
   w: 'width',
   ws: 'white-space',
+  z: 'z-index',
 }
 
 // -----
@@ -145,6 +146,7 @@ const getters = {
   va: value => getStaticProperty('va', value),
   w: value => getScaledProperty('w', value),
   ws: value => getStaticProperty('ws', value),
+  z: value => getActualProperty('z', value),
 }
 
 // -----
@@ -157,6 +159,8 @@ const createComputedPropertyGetter = (property, value, unit) => typeof value ===
 
 const createStaticPropertyGetter = (property, value) =>  typeof properties[property] === 'string' && typeof values[property] === 'object' && typeof values[property][value] !== 'undefined' ? { [`${ properties[property] }`]: `${ values[property][value] }` } : null
 
+const createActualPropertyGetter = (property, value) => typeof properties[property] === 'string' ? { [`${ properties[property] }`]: value } : null
+
 // -----
 // RESOLVE METHOD CREATORS
 // -----
@@ -166,6 +170,8 @@ const getScaledProperty = (property, value, unit=UNIT) => createScaledPropertyGe
 const getComputedProperty = (property, value, unit=UNIT) => createComputedPropertyGetter(property, value, unit)
 
 const getStaticProperty = (property, value) => createStaticPropertyGetter(property, value)
+
+const getActualProperty = (property, value) => createActualPropertyGetter(property, value)
 
 // -----
 // ATOMIC STYLE HANDLER
