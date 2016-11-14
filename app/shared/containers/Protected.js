@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { Link, withRouter } from 'react-router'
+import { withRouter } from 'react-router'
 import Transition from 'react-addons-css-transition-group'
 
 import { selectors as AuthSelectors } from '../../auth'
@@ -11,6 +11,7 @@ import { selectors as UISelectors, actions as UIActions } from '../../ui'
 import * as Bot from '../../bot'
 import * as Listings from '../../listings'
 
+import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
 import { Icon } from 'components/icon'
 import { Nav } from 'components/nav'
@@ -33,8 +34,8 @@ class Protected extends Component {
 
     const renderNav = isNavOpen ? (
       <Nav onClick={ () => updateUI({ isNavOpen: false }) }>
-        <Link to={Bot.route}>Bot</Link>
-        <Link to={Listings.route}>Listings</Link>
+        <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>🤖 Bot</Anchor>
+        <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Listings.route}>🏠 Listings</Anchor>
       </Nav>
     ) : null
 

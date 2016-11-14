@@ -34,6 +34,7 @@ const properties = {
   r: 'right',
   t: 'top',
   ta: 'text-align',
+  td: 'text-decoration',
   to: 'text-overflow',
   tt: 'text-transform',
   va: 'vertical-align',
@@ -88,6 +89,11 @@ const values = {
     r: 'right',
     j: 'justify',
   },
+  td: {
+    u: 'underline',
+    o: 'overline',
+    n: 'none',
+  },
   to: {
     c: 'clip',
     e: 'ellipsis',
@@ -141,6 +147,7 @@ const getters = {
   r: value => getScaledProperty('r', value),
   t: value => getScaledProperty('t', value),
   ta: value => getStaticProperty('ta', value),
+  td: value => getStaticProperty('td', value),
   to: value => getStaticProperty('to', value),
   tt: value => getStaticProperty('tt', value),
   va: value => getStaticProperty('va', value),
