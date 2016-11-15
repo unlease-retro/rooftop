@@ -4,14 +4,21 @@ schema {
 }
 
 type Bot {
-  bot: String
+  _id: String
+  url: String
+  title: String
+  price: String
+  author: String
+  postcode: String
+  phoneNumber: String
+  disabled: Boolean
+  submited: Boolean
 }
 
 type Listing {
   id: String
   availableFrom: Float
   availableTo: Float
-  contactNumber: String
   createdAt: Float
   leakage: Boolean
   location: String
@@ -25,6 +32,8 @@ type Listing {
 
 type Mutations {
   updateHostStatus(input: UpdateHostStatusInput!): UpdateHostStatusPayload
+  updateAdvert(input: UpdateAdvertInput!): UpdateAdvertPayload
+  sendMessage(input: SendMessageInput!): SendMessagePayload
 }
 
 type Notification {
@@ -41,11 +50,32 @@ type Photo {
 
 type Query {
   query: Query
-  botSample(token: String): Bot
+  adverts(crawled: Boolean): [Bot]
   listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
   notificationById(id: String, token: String): Notification
   users(token: String): [User]
   userById(id: String, token: String): User
+}
+
+input SendMessageInput {
+  id: String
+  clientMutationId: String
+}
+
+type SendMessagePayload {
+  advert: Bot
+  clientMutationId: String
+}
+
+input UpdateAdvertInput {
+  id: String
+  disabled: Boolean
+  clientMutationId: String
+}
+
+type UpdateAdvertPayload {
+  advert: Bot
+  clientMutationId: String
 }
 
 input UpdateHostStatusInput {

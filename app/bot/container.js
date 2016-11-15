@@ -12,15 +12,21 @@ class Bot extends Component {
 
   render() {
 
-    // const { query, relay: { variables } } = this.props
+    const { query: { adverts } } = this.props
+
+    const renderAdverts = adverts.map((advert, index) => (
+      <View key={index}>
+        <Text>{advert.title}</Text>
+        <Text>{advert.name}</Text>
+        <Text>{advert.price}</Text>
+      </View>
+    ))
+
+    console.log(adverts)
 
     return (
       <View>
-
-        <Text>
-          Bot
-        </Text>
-
+        {renderAdverts}
       </View>
     )
 

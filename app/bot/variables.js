@@ -1,7 +1,7 @@
 const variables = {
 
   initialVariables: {
-
+    crawled: true
   },
 
   prepareVariables: prevVariables => prevVariables
