@@ -15,7 +15,7 @@ const PATHS = {
 
 module.exports = {
 
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
 
   profile: true,
 
