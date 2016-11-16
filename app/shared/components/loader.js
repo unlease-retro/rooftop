@@ -19,7 +19,7 @@ export const Loader = styled.div`
 Loader.default = {
   backgroundSize: '100% auto',
   atomic: {
-    l: 6,
+    r: 6,
     t: 6,
   },
 }
