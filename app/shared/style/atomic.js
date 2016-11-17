@@ -9,6 +9,7 @@ import { SCALE, UNIT } from 'style/scale'
 // -----
 
 const properties = {
+  ai: 'align-items',
   b: 'bottom',
   bw: 'border-width',
   c: 'cursor',
@@ -48,6 +49,9 @@ const properties = {
 // -----
 
 const values = {
+  ai: {
+    c: 'center'
+  },
   c: {
     a: 'auto',
     d: 'default',
@@ -122,6 +126,7 @@ const values = {
 // -----
 
 const getters = {
+  ai: value => getStaticProperty('ai', value),
   b: value => getScaledProperty('b', value),
   bw: value => getComputedProperty('bw', value),
   c: value => getStaticProperty('c', value),

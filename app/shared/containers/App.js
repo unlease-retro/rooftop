@@ -29,7 +29,7 @@ class App extends Component {
 
         <Main>
 
-          <Image source='logo.png' width='102px' height='74px' center />
+          <Image source='/logo.png' width='102px' height='74px' center />
 
           { renderError }
 
@@ -41,7 +41,7 @@ class App extends Component {
 
         <Footer>
 
-          <Image source='unlease.png' width='40px' height='40px' center />
+          <Image source='/unlease.png' width='40px' height='40px' center />
 
           { renderLogout }
 

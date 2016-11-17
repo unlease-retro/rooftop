@@ -7,7 +7,11 @@ export const query = () => Relay.QL`
       url,
       title,
       price,
-      postcode
+      postcode,
+      submited,
+      phoneNumber,
+      updatedAt,
+      createdAt
     }
   }
 `

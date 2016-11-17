@@ -3,14 +3,20 @@ import Relay from 'react-relay'
 
 import uuid from 'node-uuid'
 
+import { FILTERS } from './constants'
+import { getFormattedUnixTimestamp } from '../shared/util'
+
 import * as fragments from './fragments'
 import variables from './variables'
 // import mutation from './mutation'
 
+import { Icon } from 'components/icon'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
-import { View, Section } from 'components/layout'
+import { Grid, View, Section } from 'components/layout'
+import { Select } from 'components/select'
 import { Text } from 'components/text'
+
 
 class Adverts extends Component {
 
@@ -24,20 +30,48 @@ class Adverts extends Component {
 
   renderAdvert(a) {
 
-    const { _id, title, postcode, price } = a
+    const { _id, url, title, price, postcode, phoneNumber, submited, updatedAt } = a
 
     return (
       <Section border atomic={{ mt:1, mb:1, p:1 }} key={ uuid.v4() }>
 
-        <Text>{ title }</Text>
+        <View atomic={{ w:'f', p:0 }}>
+          <Text atomic={{ m:0, fw:'b' }}>
+            { title }
+          </Text>
+          <Anchor atomic={{ d:'f', fd:'r', td:'n', ai:'c' }} target='_blank' href={url}>
+            <Icon>link</Icon>
+            <Text atomic={{ m:0, ml:1, fs:3 }}>Advert url</Text>
+          </Anchor>
+        </View>
 
-        <Text>{ postcode }</Text>
+        <View atomic={{ w:'f', pl:0, pr:0 }}>
 
-        <Text>£{ price }</Text>
+          <View atomic={{ p:0, mb:1, d:'f' }}>
+            <Icon>done_all</Icon>
+            <Text atomic={{ m:0, ml:1 }}>{ submited ? `Sent at ${getFormattedUnixTimestamp(updatedAt)}` : 'Not sent' }</Text>
+          </View>
 
-        <Button atomic={{ w:'a', m:0 }}>
-          <Anchor href={`/advert/${_id}`}>Go to advert</Anchor>
-        </Button>
+          <View atomic={{ p:0, mb:1, d:'f' }}>
+            <Icon>my_location</Icon>
+            <Text atomic={{ m:0, ml:1 }}>{ postcode }</Text>
+          </View>
+
+          <View atomic={{ p:0, mb:1, d:'f' }}>
+            <Icon>attach_money</Icon>
+            <Text atomic={{ m:0, ml:1 }}>£{ price }</Text>
+          </View>
+
+          <View atomic={{ p:0, d:'f' }}>
+            <Icon>settings_phone</Icon>
+            <Text atomic={{ m:0, ml:1 }}>{ phoneNumber }</Text>
+          </View>
+
+        </View>
+
+        <Anchor atomic={{ d:'f', fd:'c', td:'n' }} href={`/advert/${_id}`}>
+          <Button color='white' atomic={{ w:'a', m:0 }}>View replies</Button>
+        </Anchor>
 
       </Section>
     )
@@ -53,7 +87,20 @@ class Adverts extends Component {
 
         <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>Crawled adverts</Text>
 
-        { adverts.map( a => this.renderAdvert(a) ) }
+        <Select
+          name='listed'
+          value={ FILTERS.listed[0] }
+          options={ FILTERS.listed }
+          autoBlur={ true }
+          clearable={ false }
+          searchable={ true }
+          atomic={{ d:'f', mt:5, mb:7, ta:'c' }}
+          onChange={ ({ value }) => console.log(value) }
+        />
+
+        <Grid cell={3/0.12}>
+          { adverts.map( a => this.renderAdvert(a) ) }
+        </Grid>
 
       </View>
     )

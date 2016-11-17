@@ -13,6 +13,12 @@ type Bot {
   phoneNumber: String
   disabled: Boolean
   submited: Boolean
+  preferences: Boolean
+  avability: Boolean
+  amenities: Boolean
+  submitedBy: String
+  createdAt: String
+  updatedAt: String
 }
 
 type Listing {
@@ -50,7 +56,8 @@ type Photo {
 
 type Query {
   query: Query
-  adverts(crawled: Boolean): [Bot]
+  adverts(crawled: Boolean, submited: Boolean, disabled: Boolean): [Bot]
+  advertById(id: String): Bot
   listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
   notificationById(id: String, token: String): Notification
   users(token: String): [User]
