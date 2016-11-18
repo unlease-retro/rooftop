@@ -1,1 +1,1 @@
-export const route = 'advert/:id'
+export const route = 'adverts/:id'

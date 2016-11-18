@@ -50,7 +50,9 @@ const properties = {
 
 const values = {
   ai: {
-    c: 'center'
+    c: 'center',
+    e: 'flex-end',
+    s: 'flex-start'
   },
   c: {
     a: 'auto',

@@ -3,22 +3,40 @@ schema {
   mutation: Mutations
 }
 
+type Amenities {
+  balcony: String
+  garden: String
+  parking: String
+}
+
+type Author {
+  name: String
+  type: String
+}
+
+type Avability {
+  avability: String
+  maximumTerm: String
+  minimumTerm: String
+}
+
 type Bot {
   _id: String
   url: String
   title: String
   price: String
-  author: String
-  postcode: String
   phoneNumber: String
   disabled: Boolean
   submited: Boolean
-  preferences: Boolean
-  avability: Boolean
-  amenities: Boolean
+  location: Location
+  author: Author
+  preferences: Preferences
+  avability: Avability
+  amenities: Amenities
   submitedBy: String
   createdAt: String
   updatedAt: String
+  replies: [Reply]
 }
 
 type Listing {
@@ -34,6 +52,11 @@ type Listing {
   weeklyRent: Int
   photos: [Photo]
   user: User
+}
+
+type Location {
+  postcode: String
+  area: String
 }
 
 type Mutations {
@@ -54,6 +77,11 @@ type Photo {
   s3Link: String
 }
 
+type Preferences {
+  couples: String
+  gender: String
+}
+
 type Query {
   query: Query
   adverts(crawled: Boolean, submited: Boolean, disabled: Boolean): [Bot]
@@ -62,6 +90,14 @@ type Query {
   notificationById(id: String, token: String): Notification
   users(token: String): [User]
   userById(id: String, token: String): User
+}
+
+type Reply {
+  _id: String
+  from: String
+  thread: String
+  message: String
+  createdAt: String
 }
 
 input SendMessageInput {
