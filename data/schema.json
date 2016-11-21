@@ -31,27 +31,7 @@
               "description": null,
               "args": [
                 {
-                  "name": "crawled",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Boolean",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
                   "name": "submited",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Boolean",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "disabled",
                   "description": null,
                   "type": {
                     "kind": "SCALAR",
@@ -1167,7 +1147,7 @@
               "deprecationReason": null
             },
             {
-              "name": "updateAdvert",
+              "name": "updateAdvertStatus",
               "description": null,
               "args": [
                 {
@@ -1178,7 +1158,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "UpdateAdvertInput",
+                      "name": "UpdateAdvertStatusInput",
                       "ofType": null
                     }
                   },
@@ -1187,7 +1167,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "UpdateAdvertPayload",
+                "name": "UpdateAdvertStatusPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1314,7 +1294,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "UpdateAdvertInput",
+          "name": "UpdateAdvertStatusInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -1330,6 +1310,16 @@
             },
             {
               "name": "disabled",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "submited",
               "description": null,
               "type": {
                 "kind": "SCALAR",
@@ -1355,7 +1345,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "UpdateAdvertPayload",
+          "name": "UpdateAdvertStatusPayload",
           "description": null,
           "fields": [
             {

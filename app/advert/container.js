@@ -12,7 +12,7 @@ import variables from './variables'
 import selectors from '../ui/selectors'
 import * as fragments from './fragments'
 import * as actions from '../ui/actions'
-// import mutation from './mutation'
+import mutation from './mutation/index'
 
 import { Grid, View, Section } from 'components/layout'
 import { Button } from 'components/button'
@@ -20,6 +20,7 @@ import { Anchor } from 'components/anchor'
 import { Icon } from 'components/icon'
 import { Textarea } from 'components/textarea'
 import { Text } from 'components/text'
+
 
 class Advert extends Component {
 
@@ -31,11 +32,25 @@ class Advert extends Component {
 
   }
 
+  onUpdateClick(id, data) {
+
+    Relay.Store.commitUpdate(
+      new mutation.update({
+        id,
+        ...data,
+      }), {
+        onSuccess: res => console.log(res),
+        onFailure: transaction => console.error(transaction),
+      }
+    )
+
+  }
+
   renderReply(r) {
 
     const { _id, from, thread, message, createdAt } = r
 
-    const isHost = from === thread
+    const isHost = (from === thread)
 
     return (
       <Section border key={ _id } atomic={{ m:0, mb:1 }}>
@@ -55,7 +70,10 @@ class Advert extends Component {
 
   render() {
 
-    const { advertTab, actions: { updateUI }, query: { advertById: { replies, title, url, price, submited, submitedBy, phoneNumber, location: { postcode, area }, amenities: { balcony, garden, parking }, avability: { avability, minimumTerm, maximumTerm }, author: { name, type }, preferences: { couples, gender } } } } = this.props
+    const { advertTab, actions: { updateUI }, query: { advertById } } = this.props
+    const { _id, replies, title, url, price, submited, submitedBy, phoneNumber, disabled, location: { postcode, area }, amenities: { balcony, garden, parking }, avability: { avability, minimumTerm, maximumTerm }, author: { name, type }, preferences: { couples, gender } } = advertById
+
+    const onUpdateClick = this.onUpdateClick
 
     return (
       <View>
@@ -143,15 +161,15 @@ class Advert extends Component {
 
               <View atomic={{ p:0, m:0 }}>
 
-                <View atomic={{ p:0, m:0, d:'f', fc:'r' }}>
+                { !disabled && <View atomic={{ p:0, m:0, d:'f', fc:'r' }}>
 
-                  <Button atomic={{ m:0, w:'a' }} backgroundColor='error' color='white'>Mark as disabled</Button>
+                  <Button atomic={{ m:0, w:'a' }} backgroundColor='error' onClick={ () => onUpdateClick(_id, { disabled: true }) } color='white'>Mark as disabled</Button>
 
-                </View>
+                </View> }
 
                 { !submited && <View atomic={{ p:0, m:0, mt:1, d:'f', fc:'r' }}>
 
-                  <Button atomic={{ m:0, w:'a' }} backgroundColor='accent' color='white'>Mark as sent</Button>
+                  <Button atomic={{ m:0, w:'a' }} backgroundColor='accent' onClick={ () => onUpdateClick(_id, { submited: true }) } color='white'>Mark as sent</Button>
 
                 </View> }
 

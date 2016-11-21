@@ -61,7 +61,7 @@ type Location {
 
 type Mutations {
   updateHostStatus(input: UpdateHostStatusInput!): UpdateHostStatusPayload
-  updateAdvert(input: UpdateAdvertInput!): UpdateAdvertPayload
+  updateAdvertStatus(input: UpdateAdvertStatusInput!): UpdateAdvertStatusPayload
   sendMessage(input: SendMessageInput!): SendMessagePayload
 }
 
@@ -84,7 +84,7 @@ type Preferences {
 
 type Query {
   query: Query
-  adverts(crawled: Boolean, submited: Boolean, disabled: Boolean): [Bot]
+  adverts(submited: Boolean): [Bot]
   advertById(id: String): Bot
   listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
   notificationById(id: String, token: String): Notification
@@ -110,13 +110,14 @@ type SendMessagePayload {
   clientMutationId: String
 }
 
-input UpdateAdvertInput {
+input UpdateAdvertStatusInput {
   id: String
   disabled: Boolean
+  submited: Boolean
   clientMutationId: String
 }
 
-type UpdateAdvertPayload {
+type UpdateAdvertStatusPayload {
   advert: Bot
   clientMutationId: String
 }

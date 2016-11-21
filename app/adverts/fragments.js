@@ -8,6 +8,7 @@ export const query = () => Relay.QL`
       title,
       price,
       submited,
+      disabled,
       phoneNumber,
       updatedAt,
       createdAt,

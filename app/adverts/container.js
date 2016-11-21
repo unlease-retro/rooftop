@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
 
-import uuid from 'node-uuid'
-
 import { FILTERS } from './constants'
 import { getFormattedUnixTimestamp } from '../shared/util'
 
@@ -25,6 +23,7 @@ class Adverts extends Component {
     super(props)
 
     this.renderAdvert = this.renderAdvert.bind(this)
+
     this.onFilterClick = this.onFilterClick.bind(this)
 
   }
@@ -39,17 +38,21 @@ class Adverts extends Component {
 
   renderAdvert(a) {
 
-    const { _id, url, title, price, phoneNumber, submited, updatedAt } = a
+    const { _id, url, title, price, phoneNumber, disabled, submited, updatedAt } = a
 
     const renderButton = submited ? <Button color='white' atomic={{ w:'a', m:0 }}>View replies</Button> : <Button backgroundColor='error' color='white' atomic={{ w:'a', m:0 }}>Send message</Button>
 
     return (
-      <Section border atomic={{ mt:1, mb:1, p:1 }} key={ uuid.v4() }>
+      <Section border atomic={{ mt:1, mb:1, p:1 }} key={ _id }>
 
         <View atomic={{ w:'f', p:0 }}>
 
           <Text atomic={{ m:0, fw:'b' }}>
+
             { title }
+
+            { disabled && ' (Disabled)' }
+
           </Text>
 
           <Anchor atomic={{ d:'f', fd:'r', td:'n', ai:'c' }} target='_blank' href={url}>
