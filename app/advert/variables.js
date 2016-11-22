@@ -1,7 +1,7 @@
 const variables = {
 
   initialVariables: {
-    id: '5821a4d2b511f407a426e89e'
+    id: null
   },
 
   prepareVariables: prevVariables => prevVariables

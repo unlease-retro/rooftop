@@ -3,7 +3,7 @@ import Relay from 'react-relay'
 export const query = () => Relay.QL`
   fragment on Query {
     advertById(id: $id) {
-      _id,
+      id,
       url,
       title,
       price,
@@ -36,7 +36,7 @@ export const query = () => Relay.QL`
       createdAt,
       updatedAt,
       replies {
-        _id,
+        id,
         from,
         thread,
         message,

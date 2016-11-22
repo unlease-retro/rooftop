@@ -48,12 +48,12 @@ class Advert extends Component {
 
   renderReply(r) {
 
-    const { _id, from, thread, message, createdAt } = r
+    const { id, from, thread, message, createdAt } = r
 
     const isHost = (from === thread)
 
     return (
-      <Section border key={ _id } atomic={{ m:0, mb:1 }}>
+      <Section border key={ id } atomic={{ m:0, mb:1 }}>
 
         <View backgroundColor={ isHost ? 'dark' : 'white' } atomic={{ p:1 }}>
 
@@ -71,7 +71,7 @@ class Advert extends Component {
   render() {
 
     const { advertTab, actions: { updateUI }, query: { advertById } } = this.props
-    const { _id, replies, title, url, price, submited, submitedBy, phoneNumber, disabled, location: { postcode, area }, amenities: { balcony, garden, parking }, avability: { avability, minimumTerm, maximumTerm }, author: { name, type }, preferences: { couples, gender } } = advertById
+    const { id, replies, title, url, price, submited, submitedBy, phoneNumber, disabled, location: { postcode, area }, amenities: { balcony, garden, parking }, avability: { avability, minimumTerm, maximumTerm }, author: { name, type }, preferences: { couples, gender } } = advertById
 
     const onUpdateClick = this.onUpdateClick
 
@@ -163,13 +163,13 @@ class Advert extends Component {
 
                 { !disabled && <View atomic={{ p:0, m:0, d:'f', fc:'r' }}>
 
-                  <Button atomic={{ m:0, w:'a' }} backgroundColor='error' onClick={ () => onUpdateClick(_id, { disabled: true }) } color='white'>Mark as disabled</Button>
+                  <Button atomic={{ m:0, w:'a' }} backgroundColor='error' onClick={ () => onUpdateClick(id, { disabled: true }) } color='white'>Mark as disabled</Button>
 
                 </View> }
 
                 { !submited && <View atomic={{ p:0, m:0, mt:1, d:'f', fc:'r' }}>
 
-                  <Button atomic={{ m:0, w:'a' }} backgroundColor='accent' onClick={ () => onUpdateClick(_id, { submited: true }) } color='white'>Mark as sent</Button>
+                  <Button atomic={{ m:0, w:'a' }} backgroundColor='accent' onClick={ () => onUpdateClick(id, { submited: true }) } color='white'>Mark as sent</Button>
 
                 </View> }
 

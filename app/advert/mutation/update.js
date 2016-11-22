@@ -24,7 +24,7 @@ export default class AdvertMutation extends Relay.Mutation {
     return Relay.QL`
       fragments on UpdateAdvertStatusPayload {
         advert {
-          _id,
+          id,
           disabled,
           submited
         }

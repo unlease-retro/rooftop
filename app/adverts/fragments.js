@@ -3,7 +3,7 @@ import Relay from 'react-relay'
 export const query = () => Relay.QL`
   fragment on Query {
     adverts(submited: $submited) {
-      _id,
+      id,
       url,
       title,
       price,

@@ -22,7 +22,7 @@ export default class AdvertMutation extends Relay.Mutation {
   getFatQuery() {
 
     return Relay.QL`
-      fragments on SendMessage {
+      fragments on SendMessagePayload {
         advert {
           disabled,
           submited

@@ -38,12 +38,12 @@ class Adverts extends Component {
 
   renderAdvert(a) {
 
-    const { _id, url, title, price, phoneNumber, disabled, submited, updatedAt } = a
+    const { id, url, title, price, phoneNumber, disabled, submited, updatedAt } = a
 
     const renderButton = submited ? <Button color='white' atomic={{ w:'a', m:0 }}>View replies</Button> : <Button backgroundColor='error' color='white' atomic={{ w:'a', m:0 }}>Send message</Button>
 
     return (
-      <Section border atomic={{ mt:1, mb:1, p:1 }} key={ _id }>
+      <Section border atomic={{ mt:1, mb:1, p:1 }} key={ id }>
 
         <View atomic={{ w:'f', p:0 }}>
 
@@ -93,7 +93,7 @@ class Adverts extends Component {
 
         </View>
 
-        <Anchor atomic={{ d:'f', fd:'c', td:'n' }} href={`/adverts/${_id}`}>
+        <Anchor atomic={{ d:'f', fd:'c', td:'n' }} href={`/adverts/${id}`}>
 
           {renderButton}
 

@@ -21,7 +21,7 @@ type Avability {
 }
 
 type Bot {
-  _id: String
+  id: String
   url: String
   title: String
   price: String
@@ -63,6 +63,7 @@ type Mutations {
   updateHostStatus(input: UpdateHostStatusInput!): UpdateHostStatusPayload
   updateAdvertStatus(input: UpdateAdvertStatusInput!): UpdateAdvertStatusPayload
   sendMessage(input: SendMessageInput!): SendMessagePayload
+  sendSelectedMessage(input: SendSelectedMessageInput!): SendSelectedMessagePayload
 }
 
 type Notification {
@@ -93,7 +94,7 @@ type Query {
 }
 
 type Reply {
-  _id: String
+  id: String
   from: String
   thread: String
   message: String
@@ -102,10 +103,22 @@ type Reply {
 
 input SendMessageInput {
   id: String
+  message: String
   clientMutationId: String
 }
 
 type SendMessagePayload {
+  advert: Bot
+  clientMutationId: String
+}
+
+input SendSelectedMessageInput {
+  adverts: String
+  message: String
+  clientMutationId: String
+}
+
+type SendSelectedMessagePayload {
   advert: Bot
   clientMutationId: String
 }
