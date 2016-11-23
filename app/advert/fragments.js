@@ -9,7 +9,7 @@ export const query = () => Relay.QL`
       price,
       phoneNumber,
       disabled,
-      submited,
+      submitted,
       location {
         area,
         postcode
@@ -23,21 +23,21 @@ export const query = () => Relay.QL`
         gender
       },
       avability {
-        avability,
-        maximumTerm,
-        minimumTerm
+        date,
+        maximum,
+        minimum
       },
       amenities {
         balcony,
         garden,
         parking
       },
-      submitedBy,
+      submittedBy,
       createdAt,
       updatedAt,
       replies {
         id,
-        from,
+        host,
         thread,
         message,
         createdAt

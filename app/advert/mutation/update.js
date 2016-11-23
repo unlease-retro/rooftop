@@ -14,7 +14,7 @@ export default class AdvertMutation extends Relay.Mutation {
     return {
       id: this.props.id,
       disabled: this.props.disabled,
-      submited: this.props.submited
+      submitted: this.props.submitted
     }
 
   }
@@ -26,7 +26,7 @@ export default class AdvertMutation extends Relay.Mutation {
         advert {
           id,
           disabled,
-          submited
+          submitted
         }
       }
     `

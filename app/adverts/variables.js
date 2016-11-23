@@ -1,7 +1,8 @@
 const variables = {
 
   initialVariables: {
-    submited: false
+    submitted: false,
+    disabled: false
   },
 
   prepareVariables: prevVariables => prevVariables

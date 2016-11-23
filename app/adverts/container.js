@@ -38,9 +38,9 @@ class Adverts extends Component {
 
   renderAdvert(a) {
 
-    const { id, url, title, price, phoneNumber, disabled, submited, updatedAt } = a
+    const { id, url, title, price, phoneNumber, disabled, submitted, updatedAt } = a
 
-    const renderButton = submited ? <Button color='white' atomic={{ w:'a', m:0 }}>View replies</Button> : <Button backgroundColor='error' color='white' atomic={{ w:'a', m:0 }}>Send message</Button>
+    const renderButton = submitted ? <Button color='white' atomic={{ w:'a', m:0 }}>View replies</Button> : <Button backgroundColor='error' color='white' atomic={{ w:'a', m:0 }}>Send message</Button>
 
     return (
       <Section border atomic={{ mt:1, mb:1, p:1 }} key={ id }>
@@ -71,7 +71,7 @@ class Adverts extends Component {
 
             <Icon>done_all</Icon>
 
-            <Text atomic={{ m:0, ml:1 }}>{ submited ? `Sent at ${getFormattedUnixTimestamp(updatedAt)}` : 'Not sent' }</Text>
+            <Text atomic={{ m:0, ml:1 }}>{ submitted ? `Sent at ${getFormattedUnixTimestamp(updatedAt)}` : 'Not sent' }</Text>
 
           </View>
 
@@ -110,23 +110,50 @@ class Adverts extends Component {
 
     const onFilterClick = this.onFilterClick
 
-    const { submited } = variables
+    const { submitted, disabled } = variables
 
     return (
       <View>
 
         <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>Crawled adverts</Text>
 
-        <Select
-          name='submited'
-          value={ submited }
-          options={ FILTERS.listed }
-          autoBlur={ true }
-          clearable={ false }
-          searchable={ false }
-          atomic={{ d:'f', mt:5, mb:7, ta:'c' }}
-          onChange={ ({ value }) => onFilterClick({ submited: value }) }
-        />
+        <Section atomic={{ mt:8, mb:8, ta:'c' }}>
+
+          <Text atomic={{ d:'ib' }}>
+
+            <Icon>tune</Icon> Show adverts
+
+          </Text>
+
+          <Select
+            name='submitted'
+            value={ submitted }
+            options={ FILTERS.submitted }
+            autoBlur={ true }
+            clearable={ false }
+            searchable={ false }
+            atomic={{ d:'f', mt:5, mb:7, ta:'c' }}
+            onChange={ ({ value }) => onFilterClick({ submitted: value }) }
+          />
+
+          <Text atomic={{ d:'ib' }}>
+
+            and
+
+          </Text>
+
+          <Select
+            name='disabled'
+            value={ disabled }
+            options={ FILTERS.disabled }
+            autoBlur={ true }
+            clearable={ false }
+            searchable={ false }
+            atomic={{ d:'f', mt:5, mb:7, ta:'c' }}
+            onChange={ ({ value }) => onFilterClick({ disabled: value }) }
+          />
+
+        </Section>
 
         <Grid cell={3/0.12}>
 

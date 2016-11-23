@@ -15,9 +15,9 @@ type Author {
 }
 
 type Avability {
-  avability: String
-  maximumTerm: String
-  minimumTerm: String
+  date: String
+  maximum: String
+  minimum: String
 }
 
 type Bot {
@@ -27,13 +27,13 @@ type Bot {
   price: String
   phoneNumber: String
   disabled: Boolean
-  submited: Boolean
+  submitted: Boolean
   location: Location
   author: Author
   preferences: Preferences
   avability: Avability
   amenities: Amenities
-  submitedBy: String
+  submittedBy: String
   createdAt: String
   updatedAt: String
   replies: [Reply]
@@ -85,7 +85,7 @@ type Preferences {
 
 type Query {
   query: Query
-  adverts(submited: Boolean): [Bot]
+  adverts(submitted: Boolean, disabled: Boolean): [Bot]
   advertById(id: String): Bot
   listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
   notificationById(id: String, token: String): Notification
@@ -95,7 +95,7 @@ type Query {
 
 type Reply {
   id: String
-  from: String
+  host: Boolean
   thread: String
   message: String
   createdAt: String

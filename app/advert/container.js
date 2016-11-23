@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
+import uuid from 'node-uuid'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -30,6 +31,10 @@ class Advert extends Component {
 
     this.renderReply = this.renderReply.bind(this)
 
+    this.onUpdateClick = this.onUpdateClick.bind(this)
+
+    this.onSendClick = this.onSendClick.bind(this)
+
   }
 
   onUpdateClick(id, data) {
@@ -46,20 +51,32 @@ class Advert extends Component {
 
   }
 
+  onSendClick(id, data) {
+
+    Relay.Store.commitUpdate(
+      new mutation.send({
+        id,
+        ...data
+      }), {
+        onSuccess: res => console.log(res),
+        onFailure: transation => console.error(transation),
+      }
+    )
+
+  }
+
   renderReply(r) {
 
-    const { id, from, thread, message, createdAt } = r
-
-    const isHost = (from === thread)
+    const { message, host, createdAt } = r
 
     return (
-      <Section border key={ id } atomic={{ m:0, mb:1 }}>
+      <Section border key={ uuid.v4() } atomic={{ m:0, mb:1 }}>
 
-        <View backgroundColor={ isHost ? 'dark' : 'white' } atomic={{ p:1 }}>
+        <View backgroundColor={ host ? 'dark' : 'white' } atomic={{ p:1 }}>
 
-          <Text color={ isHost ? 'white' : 'dark' } atomic={{ m:0 }}>{ message }</Text>
+          <Text color={ host ? 'white' : 'dark' } atomic={{ m:0 }}>{ message }</Text>
 
-          <Text color={ isHost ? 'white' : 'dark' } atomic={{ mt:1, mb:0, fs:3 }}>{ isHost ? 'Recived at:' : 'Sent at:' } { getFormattedUnixTimestamp(createdAt) }</Text>
+          <Text color={ host ? 'white' : 'dark' } atomic={{ mt:1, mb:0, fs:3 }}>{ host ? 'Recived at:' : 'Sent at:' } { getFormattedUnixTimestamp(createdAt) }</Text>
 
         </View>
 
@@ -71,8 +88,9 @@ class Advert extends Component {
   render() {
 
     const { advertTab, actions: { updateUI }, query: { advertById } } = this.props
-    const { id, replies, title, url, price, submited, submitedBy, phoneNumber, disabled, location: { postcode, area }, amenities: { balcony, garden, parking }, avability: { avability, minimumTerm, maximumTerm }, author: { name, type }, preferences: { couples, gender } } = advertById
+    const { id, replies, title, url, price, submitted, submittedBy, phoneNumber, disabled, location: { postcode, area }, amenities: { balcony, garden, parking }, avability: { date, maximum, minimum }, author: { name, type }, preferences: { couples, gender } } = advertById
 
+    const onSendClick = this.onSendClick
     const onUpdateClick = this.onUpdateClick
 
     return (
@@ -108,15 +126,9 @@ class Advert extends Component {
 
           <View atomic={{ p:0, mt:1 }}>
 
-            <Textarea maxWidth='initial' placeholder='Type your message here..' atomic={{ p:1, mt:0, mb:1 }}></Textarea>
+            <Textarea maxWidth='initial' placeholder='Type your message here..' onChange={ e => this.message = e.target.value } atomic={{ p:1, mt:0, mb:1 }}></Textarea>
 
-            <Grid>
-
-              <Button backgroundColor='error' atomic={{ w:'a' }} color='white'>Send message</Button>
-
-              <Button backgroundColor='accent' atomic={{ w:'a' }} color='white'>Generate message</Button>
-
-            </Grid>
+            <Button backgroundColor='error' atomic={{ w:'a' }} color='white' onClick={ () => onSendClick(id, { message: this.message }) }>Send message</Button>
 
           </View>
 
@@ -137,7 +149,7 @@ class Advert extends Component {
 
                   <Icon>done_all</Icon>
 
-                  <Text atomic={{ m:0, ml:1 }}>Status: { submited ? 'Submited' : 'Not sent' }</Text>
+                  <Text atomic={{ m:0, ml:1 }}>Status: { submitted ? 'Submitted' : 'Not sent' }</Text>
 
                 </View>
 
@@ -149,11 +161,11 @@ class Advert extends Component {
 
                 </View>
 
-                { submited && <View atomic={{ p:0, m:0, d:'f' }}>
+                { submitted && <View atomic={{ p:0, m:0, d:'f' }}>
 
                   <Icon>accessibility</Icon>
 
-                  <Text atomic={{ m:0, ml:1 }}>Submited by: { submitedBy }</Text>
+                  <Text atomic={{ m:0, ml:1 }}>Submitted by: { submittedBy }</Text>
 
                 </View> }
 
@@ -167,9 +179,9 @@ class Advert extends Component {
 
                 </View> }
 
-                { !submited && <View atomic={{ p:0, m:0, mt:1, d:'f', fc:'r' }}>
+                { !submitted && <View atomic={{ p:0, m:0, mt:1, d:'f', fc:'r' }}>
 
-                  <Button atomic={{ m:0, w:'a' }} backgroundColor='accent' onClick={ () => onUpdateClick(id, { submited: true }) } color='white'>Mark as sent</Button>
+                  <Button atomic={{ m:0, w:'a' }} backgroundColor='accent' onClick={ () => onUpdateClick(id, { submitted: true }) } color='white'>Mark as sent</Button>
 
                 </View> }
 
@@ -265,7 +277,7 @@ class Advert extends Component {
 
               <Icon>access_time</Icon>
 
-              <Text atomic={{ m:0, ml:1 }}>Avability: { avability }</Text>
+              <Text atomic={{ m:0, ml:1 }}>Avability: { date }</Text>
 
             </View>
 
@@ -273,7 +285,7 @@ class Advert extends Component {
 
               <Icon>timer</Icon>
 
-              <Text atomic={{ m:0, ml:1 }}>Minimum term: { minimumTerm }</Text>
+              <Text atomic={{ m:0, ml:1 }}>Minimum term: { minimum }</Text>
 
             </View>
 
@@ -281,7 +293,7 @@ class Advert extends Component {
 
               <Icon>timer_off</Icon>
 
-              <Text atomic={{ m:0, ml:1 }}>Maximum term: { maximumTerm }</Text>
+              <Text atomic={{ m:0, ml:1 }}>Maximum term: { maximum }</Text>
 
             </View>
 

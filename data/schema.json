@@ -31,7 +31,17 @@
               "description": null,
               "args": [
                 {
-                  "name": "submited",
+                  "name": "submitted",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "disabled",
                   "description": null,
                   "type": {
                     "kind": "SCALAR",
@@ -350,7 +360,7 @@
               "deprecationReason": null
             },
             {
-              "name": "submited",
+              "name": "submitted",
               "description": null,
               "args": [],
               "type": {
@@ -422,7 +432,7 @@
               "deprecationReason": null
             },
             {
-              "name": "submitedBy",
+              "name": "submittedBy",
               "description": null,
               "args": [],
               "type": {
@@ -600,7 +610,7 @@
           "description": null,
           "fields": [
             {
-              "name": "avability",
+              "name": "date",
               "description": null,
               "args": [],
               "type": {
@@ -612,7 +622,7 @@
               "deprecationReason": null
             },
             {
-              "name": "maximumTerm",
+              "name": "maximum",
               "description": null,
               "args": [],
               "type": {
@@ -624,7 +634,7 @@
               "deprecationReason": null
             },
             {
-              "name": "minimumTerm",
+              "name": "minimum",
               "description": null,
               "args": [],
               "type": {
@@ -706,12 +716,12 @@
               "deprecationReason": null
             },
             {
-              "name": "from",
+              "name": "host",
               "description": null,
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "Boolean",
                 "ofType": null
               },
               "isDeprecated": false,

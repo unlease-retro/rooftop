@@ -13,8 +13,7 @@ export default class AdvertMutation extends Relay.Mutation {
 
     return {
       id: this.props.id,
-      disabled: this.props.disabled,
-      submited: this.props.submited
+      message: this.props.message
     }
 
   }
@@ -24,8 +23,13 @@ export default class AdvertMutation extends Relay.Mutation {
     return Relay.QL`
       fragments on SendMessagePayload {
         advert {
-          disabled,
-          submited
+          replies {
+            id,
+            host,
+            thread,
+            message,
+            createdAt
+          }
         }
       }
     `

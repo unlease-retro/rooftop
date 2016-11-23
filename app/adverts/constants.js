@@ -1,8 +1,12 @@
 export const route = 'adverts'
 
 export const FILTERS = {
-  listed: [
-    { value: false, label: 'Active' },
-    { value: true, label: 'Submited' }
+  disabled: [
+    { value: true, label: 'Disabled' },
+    { value: false, label: 'Active' }
   ],
+  submitted: [
+    { value: true, label: 'Submitted' },
+    { value: false, label: 'Not submitted' }
+  ]
 }
