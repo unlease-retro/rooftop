@@ -40,14 +40,23 @@ class Adverts extends Component {
 
   onSendClick(adverts, data) {
 
-    const { actions: { updateUI } } = this.props
+    const { actions: { updateUI, resetUI } } = this.props
 
     Relay.Store.commitUpdate(
       new mutation({
         adverts,
         ...data,
       }), {
-        onSuccess: () => updateUI({ snackbar: SNACKBAR.success, adverts: { message: '', chosen: [] } }),
+        onSuccess: () => {
+
+          // need to do this
+          // becase updateUI({ adverts: { chosen: [] } }) dosent work
+          resetUI()
+
+          // display success message
+          updateUI({ snackbar: SNACKBAR.success })
+
+        },
         onFailure: transation => updateUI({ error: new Error(transation) }),
       }
     )
