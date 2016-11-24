@@ -1,7 +1,7 @@
 const variables = {
 
   initialVariables: {
-    submitted: false,
+    submitted: true,
     disabled: false
   },
 

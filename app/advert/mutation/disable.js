@@ -5,7 +5,7 @@ export default class AdvertMutation extends Relay.Mutation {
 
   getMutation() {
 
-    return Relay.QL`mutation{ sendAdvertMessage }`
+    return Relay.QL`mutation{ disableAdvert }`
 
   }
 
@@ -13,7 +13,8 @@ export default class AdvertMutation extends Relay.Mutation {
 
     return {
       id: this.props.id,
-      message: this.props.message
+      disabled: this.props.disabled,
+      submitted: this.props.submitted
     }
 
   }
@@ -21,15 +22,10 @@ export default class AdvertMutation extends Relay.Mutation {
   getFatQuery() {
 
     return Relay.QL`
-      fragments on SendAdvertMessagePayload {
+      fragments on DisableAdvertPayload {
         advert {
-          replies {
-            id,
-            host,
-            thread,
-            message,
-            createdAt
-          }
+          id,
+          disabled
         }
       }
     `

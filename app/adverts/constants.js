@@ -1,5 +1,9 @@
 export const route = 'adverts'
 
+export const SNACKBAR = {
+  success: 'Message sent',
+}
+
 export const FILTERS = {
   disabled: [
     { value: true, label: 'Disabled' },

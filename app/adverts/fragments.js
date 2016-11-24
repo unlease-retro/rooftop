@@ -6,13 +6,16 @@ export const query = () => Relay.QL`
       id,
       url,
       title,
-      price,
       submitted,
       disabled,
       phoneNumber,
       updatedAt,
       createdAt,
       submittedBy,
+      price {
+        unit,
+        value
+      },
       location {
         postcode,
         area

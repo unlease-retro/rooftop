@@ -24,19 +24,29 @@ type Bot {
   id: String
   url: String
   title: String
-  price: String
-  phoneNumber: String
   disabled: Boolean
   submitted: Boolean
+  phoneNumber: String
+  createdAt: String
+  updatedAt: String
+  submittedBy: String
+  price: Price
   location: Location
   author: Author
   preferences: Preferences
   avability: Avability
   amenities: Amenities
-  submittedBy: String
-  createdAt: String
-  updatedAt: String
   replies: [Reply]
+}
+
+input DisableAdvertInput {
+  id: String
+  clientMutationId: String
+}
+
+type DisableAdvertPayload {
+  advert: Bot
+  clientMutationId: String
 }
 
 type Listing {
@@ -59,11 +69,22 @@ type Location {
   area: String
 }
 
+input MarkAdvertInput {
+  id: String
+  clientMutationId: String
+}
+
+type MarkAdvertPayload {
+  advert: Bot
+  clientMutationId: String
+}
+
 type Mutations {
   updateHostStatus(input: UpdateHostStatusInput!): UpdateHostStatusPayload
-  updateAdvertStatus(input: UpdateAdvertStatusInput!): UpdateAdvertStatusPayload
-  sendMessage(input: SendMessageInput!): SendMessagePayload
-  sendSelectedMessage(input: SendSelectedMessageInput!): SendSelectedMessagePayload
+  disableAdvert(input: DisableAdvertInput!): DisableAdvertPayload
+  markAdvert(input: MarkAdvertInput!): MarkAdvertPayload
+  sendAdvertMessage(input: SendAdvertMessageInput!): SendAdvertMessagePayload
+  sendAdvertsMessages(input: SendAdvertsMessagesInput!): SendAdvertsMessagesPayload
 }
 
 type Notification {
@@ -81,6 +102,11 @@ type Photo {
 type Preferences {
   couples: String
   gender: String
+}
+
+type Price {
+  value: String
+  unit: String
 }
 
 type Query {
@@ -101,37 +127,25 @@ type Reply {
   createdAt: String
 }
 
-input SendMessageInput {
+input SendAdvertMessageInput {
   id: String
   message: String
   clientMutationId: String
 }
 
-type SendMessagePayload {
+type SendAdvertMessagePayload {
   advert: Bot
   clientMutationId: String
 }
 
-input SendSelectedMessageInput {
+input SendAdvertsMessagesInput {
   adverts: String
   message: String
   clientMutationId: String
 }
 
-type SendSelectedMessagePayload {
-  advert: Bot
-  clientMutationId: String
-}
-
-input UpdateAdvertStatusInput {
-  id: String
-  disabled: Boolean
-  submited: Boolean
-  clientMutationId: String
-}
-
-type UpdateAdvertStatusPayload {
-  advert: Bot
+type SendAdvertsMessagesPayload {
+  advert: [Bot]
   clientMutationId: String
 }
 

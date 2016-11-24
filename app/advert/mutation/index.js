@@ -1,7 +1,9 @@
-import update from './update'
+import disable from './disable'
 import send from './send'
+import mark from './mark'
 
 export default {
-  update,
+  disable,
+  mark,
   send
 }

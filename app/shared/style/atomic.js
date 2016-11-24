@@ -58,6 +58,7 @@ const values = {
     a: 'auto',
     d: 'default',
     p: 'pointer',
+    c: 'copy',
   },
   d: {
     b: 'block',

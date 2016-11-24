@@ -5,7 +5,7 @@ export default class AdvertMutation extends Relay.Mutation {
 
   getMutation() {
 
-    return Relay.QL`mutation{ updateAdvertStatus }`
+    return Relay.QL`mutation{ markAdvert }`
 
   }
 
@@ -22,11 +22,11 @@ export default class AdvertMutation extends Relay.Mutation {
   getFatQuery() {
 
     return Relay.QL`
-      fragments on UpdateAdvertStatusPayload {
+      fragments on MarkAdvertPayload {
         advert {
           id,
-          disabled,
-          submitted
+          submitted,
+          submittedBy
         }
       }
     `

@@ -13,10 +13,12 @@ import variables from './variables'
 import selectors from '../ui/selectors'
 import * as fragments from './fragments'
 import * as actions from '../ui/actions'
+import { SNACKBAR } from './constants'
 import mutation from './mutation/index'
 
 import { Grid, View, Section } from 'components/layout'
 import { Button } from 'components/button'
+import { Loader } from 'components/loader'
 import { Anchor } from 'components/anchor'
 import { Icon } from 'components/icon'
 import { Textarea } from 'components/textarea'
@@ -31,20 +33,38 @@ class Advert extends Component {
 
     this.renderReply = this.renderReply.bind(this)
 
-    this.onUpdateClick = this.onUpdateClick.bind(this)
+    this.onDisableClick = this.onDisableClick.bind(this)
+
+    this.onMarkClick = this.onMarkClick.bind(this)
 
     this.onSendClick = this.onSendClick.bind(this)
 
   }
 
-  onUpdateClick(id, data) {
+  onDisableClick(id) {
+
+    const { actions: { updateUI } } = this.props
 
     Relay.Store.commitUpdate(
-      new mutation.update({
+      new mutation.disable({
         id,
-        ...data,
       }), {
-        onSuccess: res => console.log(res),
+        onSuccess: () => updateUI({ snackbar: SNACKBAR.update }),
+        onFailure: transaction => console.error(transaction),
+      }
+    )
+
+  }
+
+  onMarkClick(id) {
+
+    const { actions: { updateUI } } = this.props
+
+    Relay.Store.commitUpdate(
+      new mutation.mark({
+        id,
+      }), {
+        onSuccess: () => updateUI({ snackbar: SNACKBAR.update }),
         onFailure: transaction => console.error(transaction),
       }
     )
@@ -53,13 +73,15 @@ class Advert extends Component {
 
   onSendClick(id, data) {
 
+    const { actions: { updateUI } } = this.props
+
     Relay.Store.commitUpdate(
       new mutation.send({
         id,
-        ...data
+        ...data,
       }), {
-        onSuccess: res => console.log(res),
-        onFailure: transation => console.error(transation),
+        onSuccess: () => updateUI({ snackbar: SNACKBAR.sent, adverts: { message: '' } }),
+        onFailure: transation => updateUI({ error: new Error(transation) }),
       }
     )
 
@@ -87,11 +109,17 @@ class Advert extends Component {
 
   render() {
 
-    const { advertTab, actions: { updateUI }, query: { advertById } } = this.props
-    const { id, replies, title, url, price, submitted, submittedBy, phoneNumber, disabled, location: { postcode, area }, amenities: { balcony, garden, parking }, avability: { date, maximum, minimum }, author: { name, type }, preferences: { couples, gender } } = advertById
+    const { message, requesting, advertsTab, actions: { updateUI }, query: { advertById } } = this.props
+
+    const { id, replies, title, url, submitted, submittedBy, phoneNumber, disabled, price: { unit, value }, location: { postcode, area }, amenities: { balcony, garden, parking }, avability: { date, maximum, minimum }, author: { name, type }, preferences: { couples, gender } } = advertById
 
     const onSendClick = this.onSendClick
-    const onUpdateClick = this.onUpdateClick
+
+    const onMarkClick = this.onMarkClick
+
+    const onDisableClick = this.onDisableClick
+
+    const renderLoader = requesting ? <Loader atomic={{ m:2, po:'s', l:0, r:0 }}/> : null
 
     return (
       <View>
@@ -111,31 +139,33 @@ class Advert extends Component {
 
           <Grid cell={6/0.12}>
 
-            <Button onClick={ () => updateUI({ advert: { tab: 0 } }) } color='white'>Info</Button>
+            <Button onClick={ () => updateUI({ adverts: { tab: false } }) } color='white'>Info</Button>
 
-            <Button onClick={ () => updateUI({ advert: { tab: 1 } }) } backgroundColor='secondary' color='white'>Messages</Button>
+            <Button onClick={ () => updateUI({ adverts: { tab: true } }) } backgroundColor='secondary' color='white'>Messages</Button>
 
           </Grid>
 
         </View>
 
 
-        { advertTab ? (<View atomic={{ p:0 }}>
+        { advertsTab ? (<View atomic={{ p:0 }}>
 
           { replies.map(r => this.renderReply(r)) }
 
           <View atomic={{ p:0, mt:1 }}>
 
-            <Textarea maxWidth='initial' placeholder='Type your message here..' onChange={ e => this.message = e.target.value } atomic={{ p:1, mt:0, mb:1 }}></Textarea>
+            { renderLoader }
 
-            <Button backgroundColor='error' atomic={{ w:'a' }} color='white' onClick={ () => onSendClick(id, { message: this.message }) }>Send message</Button>
+            <Textarea disabled={ requesting } maxWidth='initial' placeholder='Your message here..' value={ message } onChange={ e => updateUI({ adverts: { message: e.target.value } }) } atomic={{ p:1, mt:0, mb:1 }}></Textarea>
+
+            <Button disabled={ requesting } backgroundColor='error' atomic={{ w:'a' }} color='white' onClick={ () => onSendClick(id, { message }) }>Send message</Button>
 
           </View>
 
         </View>) : null }
 
 
-        { !advertTab ? (<Grid cell={6/0.12}>
+        { !advertsTab ? (<Grid cell={6/0.12}>
 
           <Section border atomic={{ mt:1, mb:1, p:1 }}>
 
@@ -157,7 +187,7 @@ class Advert extends Component {
 
                   <Icon>attach_money</Icon>
 
-                  <Text atomic={{ m:0, ml:1 }}>Price: £{ price }</Text>
+                  <Text atomic={{ m:0, ml:1 }}>Price: £{ value } { unit }</Text>
 
                 </View>
 
@@ -175,13 +205,13 @@ class Advert extends Component {
 
                 { !disabled && <View atomic={{ p:0, m:0, d:'f', fc:'r' }}>
 
-                  <Button atomic={{ m:0, w:'a' }} backgroundColor='error' onClick={ () => onUpdateClick(id, { disabled: true }) } color='white'>Mark as disabled</Button>
+                  <Button atomic={{ m:0, w:'a' }} backgroundColor='error' onClick={ () => onDisableClick(id) } color='white'>Mark as disabled</Button>
 
                 </View> }
 
                 { !submitted && <View atomic={{ p:0, m:0, mt:1, d:'f', fc:'r' }}>
 
-                  <Button atomic={{ m:0, w:'a' }} backgroundColor='accent' onClick={ () => onUpdateClick(id, { submitted: true }) } color='white'>Mark as sent</Button>
+                  <Button atomic={{ m:0, w:'a' }} backgroundColor='accent' onClick={ () => onMarkClick(id) } color='white'>Mark as sent</Button>
 
                 </View> }
 

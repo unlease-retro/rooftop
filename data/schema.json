@@ -324,30 +324,6 @@
               "deprecationReason": null
             },
             {
-              "name": "price",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "phoneNumber",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "disabled",
               "description": null,
               "args": [],
@@ -366,6 +342,66 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "phoneNumber",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdAt",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "submittedBy",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "price",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Price",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -432,42 +468,6 @@
               "deprecationReason": null
             },
             {
-              "name": "submittedBy",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "createdAt",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "updatedAt",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "replies",
               "description": null,
               "args": [],
@@ -496,6 +496,41 @@
           "fields": null,
           "inputFields": null,
           "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "Price",
+          "description": null,
+          "fields": [
+            {
+              "name": "value",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "unit",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
           "enumValues": null,
           "possibleTypes": null
         },
@@ -1157,7 +1192,7 @@
               "deprecationReason": null
             },
             {
-              "name": "updateAdvertStatus",
+              "name": "disableAdvert",
               "description": null,
               "args": [
                 {
@@ -1168,7 +1203,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "UpdateAdvertStatusInput",
+                      "name": "DisableAdvertInput",
                       "ofType": null
                     }
                   },
@@ -1177,14 +1212,14 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "UpdateAdvertStatusPayload",
+                "name": "DisableAdvertPayload",
                 "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "sendMessage",
+              "name": "markAdvert",
               "description": null,
               "args": [
                 {
@@ -1195,7 +1230,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "SendMessageInput",
+                      "name": "MarkAdvertInput",
                       "ofType": null
                     }
                   },
@@ -1204,14 +1239,14 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "SendMessagePayload",
+                "name": "MarkAdvertPayload",
                 "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "sendSelectedMessage",
+              "name": "sendAdvertMessage",
               "description": null,
               "args": [
                 {
@@ -1222,7 +1257,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "SendSelectedMessageInput",
+                      "name": "SendAdvertMessageInput",
                       "ofType": null
                     }
                   },
@@ -1231,7 +1266,34 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "SendSelectedMessagePayload",
+                "name": "SendAdvertMessagePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "sendAdvertsMessages",
+              "description": null,
+              "args": [
+                {
+                  "name": "input",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "SendAdvertsMessagesInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "SendAdvertsMessagesPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1331,7 +1393,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "UpdateAdvertStatusInput",
+          "name": "DisableAdvertInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -1341,26 +1403,6 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "disabled",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "submited",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
                 "ofType": null
               },
               "defaultValue": null
@@ -1382,7 +1424,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "UpdateAdvertStatusPayload",
+          "name": "DisableAdvertPayload",
           "description": null,
           "fields": [
             {
@@ -1417,7 +1459,73 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "SendMessageInput",
+          "name": "MarkAdvertInput",
+          "description": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "id",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "clientMutationId",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "MarkAdvertPayload",
+          "description": null,
+          "fields": [
+            {
+              "name": "advert",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Bot",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "clientMutationId",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "SendAdvertMessageInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -1458,7 +1566,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "SendMessagePayload",
+          "name": "SendAdvertMessagePayload",
           "description": null,
           "fields": [
             {
@@ -1493,7 +1601,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "SendSelectedMessageInput",
+          "name": "SendAdvertsMessagesInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -1534,7 +1642,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "SendSelectedMessagePayload",
+          "name": "SendAdvertsMessagesPayload",
           "description": null,
           "fields": [
             {
@@ -1542,9 +1650,13 @@
               "description": null,
               "args": [],
               "type": {
-                "kind": "OBJECT",
-                "name": "Bot",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Bot",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
