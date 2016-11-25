@@ -53,6 +53,7 @@ type Listing {
   id: String
   availableFrom: Float
   availableTo: Float
+  contactNumber: String
   createdAt: Float
   leakage: Boolean
   location: String
