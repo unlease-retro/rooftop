@@ -24,12 +24,12 @@ type Bot {
   id: String
   url: String
   title: String
+  phoneNumber: String
   disabled: Boolean
   submitted: Boolean
-  phoneNumber: String
+  submittedBy: String
   createdAt: String
   updatedAt: String
-  submittedBy: String
   price: Price
   location: Location
   author: Author
@@ -105,8 +105,8 @@ type Preferences {
 }
 
 type Price {
-  value: String
   unit: String
+  value: String
 }
 
 type Query {

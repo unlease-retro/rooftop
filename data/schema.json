@@ -324,6 +324,18 @@
               "deprecationReason": null
             },
             {
+              "name": "phoneNumber",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "disabled",
               "description": null,
               "args": [],
@@ -348,7 +360,7 @@
               "deprecationReason": null
             },
             {
-              "name": "phoneNumber",
+              "name": "submittedBy",
               "description": null,
               "args": [],
               "type": {
@@ -373,18 +385,6 @@
             },
             {
               "name": "updatedAt",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "submittedBy",
               "description": null,
               "args": [],
               "type": {
@@ -505,7 +505,7 @@
           "description": null,
           "fields": [
             {
-              "name": "value",
+              "name": "unit",
               "description": null,
               "args": [],
               "type": {
@@ -517,7 +517,7 @@
               "deprecationReason": null
             },
             {
-              "name": "unit",
+              "name": "value",
               "description": null,
               "args": [],
               "type": {
