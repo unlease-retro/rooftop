@@ -7,7 +7,8 @@ import App from '../containers/App'
 import NotFound from '../containers/NotFound'
 import Protected from '../containers/Protected'
 import * as Auth from '../../auth'
-import * as Bot from '../../bot'
+import * as Adverts from '../../adverts'
+import * as Advert from '../../advert'
 import * as Listings from '../../listings'
 
 // hooks
@@ -21,7 +22,8 @@ const routes = store => (
     <Route path={Auth.route} component={Auth.Container} />
     <Route component={Protected} onEnter={ ( ...args ) => protectedOnEnter(store, ...args) }>
       <IndexRoute component={Listings.Container} queries={RootQuery} />
-      <Route path={Bot.route} component={Bot.Container} queries={RootQuery} />
+      <Route path={Adverts.route} component={Adverts.Container} queries={RootQuery} />
+      <Route path={Advert.route} component={Advert.Container} queries={RootQuery} />
     </Route>
     <Route path='*' component={NotFound} />
   </Route>

@@ -3,15 +3,56 @@ schema {
   mutation: Mutations
 }
 
+type Amenities {
+  balcony: String
+  garden: String
+  parking: String
+}
+
+type Author {
+  name: String
+  type: String
+}
+
+type Avability {
+  date: String
+  maximum: String
+  minimum: String
+}
+
 type Bot {
-  bot: String
+  id: String
+  url: String
+  title: String
+  phoneNumber: String
+  disabled: Boolean
+  submitted: Boolean
+  submittedBy: String
+  createdAt: String
+  updatedAt: String
+  price: Price
+  location: Location
+  author: Author
+  preferences: Preferences
+  avability: Avability
+  amenities: Amenities
+  replies: [Reply]
+}
+
+input DisableAdvertInput {
+  id: String
+  clientMutationId: String
+}
+
+type DisableAdvertPayload {
+  advert: Bot
+  clientMutationId: String
 }
 
 type Listing {
   id: String
   availableFrom: Float
   availableTo: Float
-  contactNumber: String
   createdAt: Float
   leakage: Boolean
   location: String
@@ -23,8 +64,27 @@ type Listing {
   user: User
 }
 
+type Location {
+  postcode: String
+  area: String
+}
+
+input MarkAdvertInput {
+  id: String
+  clientMutationId: String
+}
+
+type MarkAdvertPayload {
+  advert: Bot
+  clientMutationId: String
+}
+
 type Mutations {
   updateHostStatus(input: UpdateHostStatusInput!): UpdateHostStatusPayload
+  disableAdvert(input: DisableAdvertInput!): DisableAdvertPayload
+  markAdvert(input: MarkAdvertInput!): MarkAdvertPayload
+  sendAdvertMessage(input: SendAdvertMessageInput!): SendAdvertMessagePayload
+  sendAdvertsMessages(input: SendAdvertsMessagesInput!): SendAdvertsMessagesPayload
 }
 
 type Notification {
@@ -39,13 +99,54 @@ type Photo {
   s3Link: String
 }
 
+type Preferences {
+  couples: String
+  gender: String
+}
+
+type Price {
+  unit: String
+  value: String
+}
+
 type Query {
   query: Query
-  botSample(token: String): Bot
+  adverts(submitted: Boolean, disabled: Boolean): [Bot]
+  advertById(id: String): Bot
   listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
   notificationById(id: String, token: String): Notification
   users(token: String): [User]
   userById(id: String, token: String): User
+}
+
+type Reply {
+  id: String
+  host: Boolean
+  thread: String
+  message: String
+  createdAt: String
+}
+
+input SendAdvertMessageInput {
+  id: String
+  message: String
+  clientMutationId: String
+}
+
+type SendAdvertMessagePayload {
+  advert: Bot
+  clientMutationId: String
+}
+
+input SendAdvertsMessagesInput {
+  adverts: String
+  message: String
+  clientMutationId: String
+}
+
+type SendAdvertsMessagesPayload {
+  advert: [Bot]
+  clientMutationId: String
 }
 
 input UpdateHostStatusInput {
