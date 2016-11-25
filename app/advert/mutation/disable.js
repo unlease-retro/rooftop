@@ -12,9 +12,7 @@ export default class AdvertMutation extends Relay.Mutation {
   getVariables() {
 
     return {
-      id: this.props.id,
-      disabled: this.props.disabled,
-      submitted: this.props.submitted
+      id: this.props.id
     }
 
   }
