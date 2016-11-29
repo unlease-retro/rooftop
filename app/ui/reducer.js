@@ -10,6 +10,7 @@ export const initialState = Immutable.fromJS({
   requesting: false,
   adverts: {
     tab: false,
+    generic: false,
     message: '',
     chosen: []
   },
