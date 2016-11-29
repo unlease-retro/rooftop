@@ -19,7 +19,6 @@ import mutation from './mutation/index'
 import { Grid, View, Section } from 'components/layout'
 import { Button } from 'components/button'
 import { Loader } from 'components/loader'
-import { Anchor } from 'components/anchor'
 import { Icon } from 'components/icon'
 import { Textarea } from 'components/textarea'
 import { Text } from 'components/text'
@@ -111,7 +110,7 @@ class Advert extends Component {
 
     const { message, requesting, advertsTab, actions: { updateUI }, query: { advertById } } = this.props
 
-    const { id, replies, title, url, submitted, submittedBy, phoneNumber, disabled, price: { unit, value }, location: { postcode, area }, amenities: { balcony, garden, parking }, avability: { date, maximum, minimum }, author: { name, type }, preferences: { couples, gender } } = advertById
+    const { id, replies, title, submitted, submittedBy, phoneNumber, disabled, price: { unit, value }, location: { postcode, area }, amenities: { balcony, garden, parking }, avability: { date, maximum, minimum }, author: { name, type }, preferences: { couples, gender } } = advertById
 
     const onSendClick = this.onSendClick
 
@@ -124,15 +123,12 @@ class Advert extends Component {
     return (
       <View>
 
-        <Anchor href={url} target='_blank' atomic={{ td:'n' }}>
 
-          <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>
+        <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>
 
-            { title }
+          { title }
 
-          </Text>
-
-        </Anchor>
+        </Text>
 
 
         <View atomic={{ pl:0, pr:0 }}>

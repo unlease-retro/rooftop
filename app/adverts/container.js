@@ -20,6 +20,7 @@ import { Button } from 'components/button'
 import { Loader } from 'components/loader'
 import { Textarea } from 'components/textarea'
 import { Grid, View, Section } from 'components/layout'
+import { Checkbox } from 'components/checkbox'
 import { Select } from 'components/select'
 import { Text } from 'components/text'
 
@@ -33,6 +34,8 @@ class Adverts extends Component {
     this.renderAdvert = this.renderAdvert.bind(this)
 
     this.onFilterClick = this.onFilterClick.bind(this)
+
+    this.onChangeToggle = this.onChangeToggle.bind(this)
 
     this.onSendClick = this.onSendClick.bind(this)
 
@@ -73,13 +76,13 @@ class Adverts extends Component {
 
   renderAdvert(a) {
 
-    const { actions: { toggleAdvert }, chosenAdverts } = this.props
+    const { actions: { toggleAdvert }, advertsChosen } = this.props
 
-    const { id, url, title, phoneNumber, disabled, submitted, updatedAt, price: { value, unit } } = a
+    const { id, title, phoneNumber, disabled, submitted, updatedAt, price: { value, unit } } = a
 
     const renderButton = submitted ? <Button color='white' atomic={{ w:'a', m:0 }}>View replies</Button> : <Button backgroundColor='error' color='white' atomic={{ w:'a', m:0 }}>Send message</Button>
 
-    const isAdvertChosen = chosenAdverts.indexOf(id) !== -1
+    const isAdvertChosen = advertsChosen.indexOf(id) !== -1
 
     const borderWidth = isAdvertChosen ? 4 : 1
 
@@ -88,17 +91,13 @@ class Adverts extends Component {
 
         <View atomic={{ w:'f', p:0 }}>
 
-          <Anchor target='_blank' atomic={{ td:'n' }} href={url}>
+          <Text atomic={{ m:0, fw:'b' }}>
 
-            <Text atomic={{ m:0, fw:'b' }}>
+            { title }
 
-              { title }
+            { disabled && ' (Disabled)' }
 
-              { disabled && ' (Disabled)' }
-
-            </Text>
-
-          </Anchor>
+          </Text>
 
         </View>
 
@@ -147,15 +146,25 @@ class Adverts extends Component {
 
   }
 
+  onChangeToggle() {
+
+    const { query: { adverts }, actions: { toggleAdvert } } = this.props
+
+    adverts.map( ({ id }) => toggleAdvert(id) )
+
+  }
+
   render() {
 
-    const { message, requesting, chosenAdverts, relay: { variables }, query: { adverts }, actions: { updateUI } } = this.props
+    const { message, requesting, advertsGeneric, advertsChosen, relay: { variables }, query: { adverts }, actions: { updateUI } } = this.props
 
     const { submitted, disabled } = variables
 
+    const onSendClick = this.onSendClick
+
     const onFilterClick = this.onFilterClick
 
-    const onSendClick = this.onSendClick
+    const onChangeToggle = this.onChangeToggle
 
     const renderLoader = requesting ? <Loader atomic={{ m:2, po:'s', l:0, r:0 }}/> : null
 
@@ -209,15 +218,35 @@ class Adverts extends Component {
 
         </Grid>
 
-        { chosenAdverts.length ? (<Section atomic={{ mt:8 }}>
+        <Section atomic={{ mt:8 }}>
 
           { renderLoader }
 
-          <Textarea disabled={ requesting } maxWidth='initial' placeholder='Your message here..' value={ message } onChange={ e => updateUI({ adverts: { message: e.target.value } })} atomic={{ p:1, mb:1 }}></Textarea>
+          { !advertsGeneric ? (<Textarea disabled={ requesting } maxWidth='initial' placeholder='Your message here..' value={ message } onChange={ e => updateUI({ adverts: { message: e.target.value } })} atomic={{ p:1, mb:1 }}></Textarea>) : null }
 
-          <Button disabled={ requesting } backgroundColor='error' atomic={{ w:'a' }} color='white' onClick={ () => onSendClick(chosenAdverts, { message }) }>Send message to selected</Button>
+          <Button disabled={ requesting } backgroundColor='error' atomic={{ w:'a' }} color='white' onClick={ () => onSendClick(advertsChosen, { message }) }>Send message to selected</Button>
 
-        </Section>) : null }
+          <View atomic={{ ta: 'c', p:0 }}>
+
+            <View atomic={{ p:0, d:'ib', w:'a' }}>
+
+              <Checkbox atomic={{ d:'ib', mr:1, mt:0, mb:0, w:'a' }} onChange={ onChangeToggle } type='checkbox'></Checkbox>
+
+              <Text atomic={{ d:'ib', m:0 }}>Toggle all</Text>
+
+            </View>
+
+            <View atomic={{ p:0, d:'ib', w:'a' }}>
+
+              <Checkbox atomic={{ d:'ib', mr:1, mt:0, mb:0, w:'a' }} onChange={ () => updateUI({ adverts: { generic: !advertsGeneric } }) } type='checkbox'></Checkbox>
+
+              <Text atomic={{ d:'ib', m:0 }}>Send generic message</Text>
+
+            </View>
+
+          </View>
+
+        </Section>
 
       </View>
     )
