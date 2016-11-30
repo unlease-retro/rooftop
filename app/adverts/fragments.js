@@ -12,6 +12,7 @@ export const query = () => Relay.QL`
       updatedAt,
       createdAt,
       submittedBy,
+      recivedMessage,
       price {
         unit,
         value

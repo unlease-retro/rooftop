@@ -23,6 +23,7 @@ import { Grid, View, Section } from 'components/layout'
 import { Checkbox } from 'components/checkbox'
 import { Select } from 'components/select'
 import { Text } from 'components/text'
+import { Badge } from 'components/badge'
 
 
 class Adverts extends Component {
@@ -78,9 +79,11 @@ class Adverts extends Component {
 
     const { actions: { toggleAdvert }, advertsChosen } = this.props
 
-    const { id, title, phoneNumber, disabled, submitted, updatedAt, price: { value, unit } } = a
+    const { id, title, phoneNumber, disabled, submitted, updatedAt, recivedMessage, price: { value, unit } } = a
 
     const renderButton = submitted ? <Button color='white' atomic={{ w:'a', m:0 }}>View replies</Button> : <Button backgroundColor='error' color='white' atomic={{ w:'a', m:0 }}>Send message</Button>
+
+    const renderNotification = recivedMessage ? <Badge backgroundColor='error' atomic={{ ml:2 }} /> : null
 
     const isAdvertChosen = advertsChosen.indexOf(id) !== -1
 
@@ -96,6 +99,8 @@ class Adverts extends Component {
             { title }
 
             { disabled && ' (Disabled)' }
+
+            { renderNotification }
 
           </Text>
 
