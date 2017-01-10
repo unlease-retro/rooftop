@@ -1,3 +1,7 @@
+/**
+ * Created by Izzy on 10/01/2017.
+ */
+
 import Relay from 'react-relay'
 
 export default class ListingsMutation extends Relay.Mutation {
@@ -42,27 +46,6 @@ export default class ListingsMutation extends Relay.Mutation {
     }]
 
   }
-
-  // getOptimisticResponse() {
-  //
-  //   return {
-  //     listing: {
-  //       id: this.props.id,
-  //       leakage: this.props.leakage,
-  //       nonResponsive: this.props.nonResponsive,
-  //     },
-  //   }
-  //
-  // }
-
-  // static fragments = {
-  //
-  //   listing: () => Relay.QL`
-  //     fragment on Listing {
-  //       id,
-  //     }
-  //   `
-  //
-  // }
+  
 
 }

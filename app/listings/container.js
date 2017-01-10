@@ -7,7 +7,7 @@ import { getFormattedTimestamp, getListingUrl, getProfileUrl } from '../shared/u
 
 import * as fragments from './fragments'
 import variables from './variables'
-import mutation from './mutation'
+import mutations from './mutations'
 
 import { Anchor } from 'components/anchor'
 import { Badge } from 'components/badge'
@@ -17,6 +17,7 @@ import { Grid, Section, View } from 'components/layout'
 import { Position } from 'components/position'
 import { Select } from 'components/select'
 import { Text } from 'components/text'
+import { Button } from 'components/button'
 
 class Listings extends Component {
 
@@ -41,7 +42,7 @@ class Listings extends Component {
     if (data.unspecified) data = { leakage: false, nonResponsive: false }
 
     Relay.Store.commitUpdate(
-      new mutation({
+      new mutations.listingMutation({
         id,
         ...data,
       }), {
@@ -49,6 +50,32 @@ class Listings extends Component {
         onFailure: transaction => console.error(transaction),
       }
     )
+
+  }
+
+  onPopularClick(id, popular) {
+
+    if (!popular) {
+
+      Relay.Store.commitUpdate(
+        new mutations.addListingToPopular({
+          id
+        }), {
+          onSuccess: res => console.log(res),
+          onFailure: transaction => console.error(transaction),
+        }
+      )
+
+    } else {
+      Relay.Store.commitUpdate(
+        new mutations.removeListingFromPopular({
+          id
+        }), {
+          onSuccess: res => console.log(res),
+          onFailure: transaction => console.error(transaction),
+        }
+      )
+    }
 
   }
 
@@ -152,12 +179,12 @@ class Listings extends Component {
 
   renderListing(listing) {
 
-    const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user } = listing
+    const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user, popular } = listing
     const { id: userId, avatar, email, firstName, lastName, lastLoggedInAt, phoneVerification, notifications: { numberOfUnread } } = user
 
     const contactNumber = phoneVerification && phoneVerification.contactNumber || listing.contactNumber
 
-    const { onUpdateClick, onListingImageClick, onProfileImageClick } = this
+    const { onUpdateClick, onListingImageClick, onProfileImageClick, onPopularClick } = this
 
     return (
       <Section key={ uuid.v4() } border atomic={{ mt:1, mb:1 }}>
@@ -184,7 +211,7 @@ class Listings extends Component {
 
           <Position position='absolute' bottom='-5px' left='52%'>
 
-            <Badge label={ numberOfUnread - 1 } />
+            <Badge label={ numberOfUnread } />
 
           </Position>
 
@@ -229,6 +256,7 @@ class Listings extends Component {
         <Text atomic={{ m:0, pr:3, pb:1, pl:1, fs:3 }}>
           Last seen: { getFormattedTimestamp(lastLoggedInAt) }
         </Text>
+        <Button backgroundColor='accent' color='white' atomic={{ w:'a', m:0 }} onClick={ () => onPopularClick(id, popular) }>{popular ? 'remove' : 'add'}</Button>
 
       </Section>
     )
