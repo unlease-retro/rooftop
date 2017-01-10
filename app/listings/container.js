@@ -67,6 +67,7 @@ class Listings extends Component {
       )
 
     } else {
+
       Relay.Store.commitUpdate(
         new mutations.removeListingFromPopular({
           id
@@ -75,6 +76,7 @@ class Listings extends Component {
           onFailure: transaction => console.error(transaction),
         }
       )
+
     }
 
   }
@@ -100,13 +102,15 @@ class Listings extends Component {
   render() {
 
     const { query, relay: { variables } } = this.props
-    const { listed, area, hostStatus } = variables
+    const { listed, area, hostStatus, popular } = variables
     let { listings } = query
 
     const onFilterClick = this.onFilterClick
 
     // TODO - could do better but I'm tired!!
     if ( !listed && hostStatus !== 'unspecified' ) listings = listings.filter( l => l[hostStatus] )
+    // in the filter, doing || because popular can be undefined
+    if ( listed && popular !== 'unspecified' ) listings = listings.filter( l => (popular && l.popular === popular) || (!popular && !l.popular) )
 
     return (
       <View>
@@ -145,6 +149,23 @@ class Listings extends Component {
             onChange={ ({ value }) => onFilterClick({ area: value }) }
           />
 
+          { listed ? (
+            <Text atomic={{ d:'ib' }}>where the listing is</Text>
+          ) : null }
+
+          { listed ? (
+            <Select
+              width='160px'
+              name='popular'
+              value={ popular }
+              options={ FILTERS.popular }
+              autoBlur={ true }
+              clearable={ false }
+              searchable={ true }
+              onChange={ ({ value }) => onFilterClick({ popular: value }) }
+            />
+          ) : null }
+
           { !listed ? (
             <Text atomic={{ d:'ib' }}>where the host is</Text>
           ) : null }
@@ -179,7 +200,7 @@ class Listings extends Component {
 
   renderListing(listing) {
 
-    const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user, popular } = listing
+    const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user, popular, listed } = listing
     const { id: userId, avatar, email, firstName, lastName, lastLoggedInAt, phoneVerification, notifications: { numberOfUnread } } = user
 
     const contactNumber = phoneVerification && phoneVerification.contactNumber || listing.contactNumber
@@ -256,7 +277,7 @@ class Listings extends Component {
         <Text atomic={{ m:0, pr:3, pb:1, pl:1, fs:3 }}>
           Last seen: { getFormattedTimestamp(lastLoggedInAt) }
         </Text>
-        <Button backgroundColor='accent' color='white' atomic={{ w:'a', m:0 }} onClick={ () => onPopularClick(id, popular) }>{popular ? 'remove' : 'add'}</Button>
+        { listed ? (<Button backgroundColor='accent' color='white' atomic={{ w:'a', m:0 }} onClick={ () => onPopularClick(id, popular) }>{popular ? 'remove' : 'add'}</Button>) : null }
 
       </Section>
     )

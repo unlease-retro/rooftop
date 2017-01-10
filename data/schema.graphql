@@ -73,6 +73,7 @@ type Listing {
   title: String
   weeklyRent: Int
   popular: Boolean
+  listed: Boolean
   photos: [Photo]
   user: User
 }

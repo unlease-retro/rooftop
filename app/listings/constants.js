@@ -21,4 +21,10 @@ export const FILTERS = {
     { value: 'nonResponsive', label: 'Disenfranchised' },
     { value: 'leakage', label: 'Disintermediated' },
   ],
+
+  popular: [
+    { value: 'unspecified', label: 'Normal' },
+    { value: true, label: 'Popular' },
+    { value: false, label: 'Not Popular' },
+  ],
 }
