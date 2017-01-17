@@ -270,6 +270,15 @@ class Listings extends Component {
           onChange={ ({ value }) => onUpdateClick(id, { [`${value}`]: true }) }
         />
 
+        { listed ? (
+          <Button
+            color='white'
+            backgroundColor={ popular ? 'secondary' : 'error' }
+            atomic={{ w:'a', ml:'auto', mr:'auto', mt:4, mb:0 }}
+            onClick={ () => onPopularClick(id, popular) }>
+              { popular ? '❌️ Remove popular' : '🌟 Set as popular' }
+          </Button>) : null }
+
         <Text atomic={{ m:0, pt:4, pr:1, pl:1, fs:3 }}>
           Created at: { getFormattedTimestamp(createdAt) }
         </Text>
@@ -277,7 +286,7 @@ class Listings extends Component {
         <Text atomic={{ m:0, pr:3, pb:1, pl:1, fs:3 }}>
           Last seen: { getFormattedTimestamp(lastLoggedInAt) }
         </Text>
-        { listed ? (<Button backgroundColor='accent' color='white' atomic={{ w:'a', m:0 }} onClick={ () => onPopularClick(id, popular) }>{popular ? 'remove' : 'add'}</Button>) : null }
+
 
       </Section>
     )
