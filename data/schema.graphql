@@ -3,6 +3,16 @@ schema {
   mutation: Mutations
 }
 
+input AddListingToPopularInput {
+  id: String
+  clientMutationId: String
+}
+
+type AddListingToPopularPayload {
+  listing: Listing
+  clientMutationId: String
+}
+
 type Amenities {
   balcony: String
   garden: String
@@ -62,6 +72,8 @@ type Listing {
   postcode: String
   title: String
   weeklyRent: Int
+  popular: Boolean
+  listed: Boolean
   photos: [Photo]
   user: User
 }
@@ -83,6 +95,8 @@ type MarkAdvertPayload {
 
 type Mutations {
   updateHostStatus(input: UpdateHostStatusInput!): UpdateHostStatusPayload
+  addListingToPopular(input: AddListingToPopularInput!): AddListingToPopularPayload
+  removeListingFromPopular(input: RemoveListingFromPopularInput!): RemoveListingFromPopularPayload
   disableAdvert(input: DisableAdvertInput!): DisableAdvertPayload
   markAdvert(input: MarkAdvertInput!): MarkAdvertPayload
   sendAdvertMessage(input: SendAdvertMessageInput!): SendAdvertMessagePayload
@@ -119,6 +133,16 @@ type Query {
   notificationById(id: String, token: String): Notification
   users(token: String): [User]
   userById(id: String, token: String): User
+}
+
+input RemoveListingFromPopularInput {
+  id: String
+  clientMutationId: String
+}
+
+type RemoveListingFromPopularPayload {
+  listing: Listing
+  clientMutationId: String
 }
 
 type Reply {

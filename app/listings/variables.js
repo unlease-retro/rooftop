@@ -10,6 +10,7 @@ const variables = {
     lat: null,
     area: 'anywhere',
     hostStatus: 'unspecified',
+    popular: 'unspecified',
   },
 
   prepareVariables: ({ area, ...prevVariables }) => {

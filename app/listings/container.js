@@ -7,7 +7,7 @@ import { getFormattedTimestamp, getListingUrl, getProfileUrl } from '../shared/u
 
 import * as fragments from './fragments'
 import variables from './variables'
-import mutation from './mutation'
+import mutations from './mutations'
 
 import { Anchor } from 'components/anchor'
 import { Badge } from 'components/badge'
@@ -17,6 +17,7 @@ import { Grid, Section, View } from 'components/layout'
 import { Position } from 'components/position'
 import { Select } from 'components/select'
 import { Text } from 'components/text'
+import { Button } from 'components/button'
 
 class Listings extends Component {
 
@@ -41,7 +42,7 @@ class Listings extends Component {
     if (data.unspecified) data = { leakage: false, nonResponsive: false }
 
     Relay.Store.commitUpdate(
-      new mutation({
+      new mutations.listingMutation({
         id,
         ...data,
       }), {
@@ -49,6 +50,34 @@ class Listings extends Component {
         onFailure: transaction => console.error(transaction),
       }
     )
+
+  }
+
+  onPopularClick(id, popular) {
+
+    if (!popular) {
+
+      Relay.Store.commitUpdate(
+        new mutations.addListingToPopular({
+          id
+        }), {
+          onSuccess: res => console.log(res),
+          onFailure: transaction => console.error(transaction),
+        }
+      )
+
+    } else {
+
+      Relay.Store.commitUpdate(
+        new mutations.removeListingFromPopular({
+          id
+        }), {
+          onSuccess: res => console.log(res),
+          onFailure: transaction => console.error(transaction),
+        }
+      )
+
+    }
 
   }
 
@@ -73,13 +102,15 @@ class Listings extends Component {
   render() {
 
     const { query, relay: { variables } } = this.props
-    const { listed, area, hostStatus } = variables
+    const { listed, area, hostStatus, popular } = variables
     let { listings } = query
 
     const onFilterClick = this.onFilterClick
 
     // TODO - could do better but I'm tired!!
     if ( !listed && hostStatus !== 'unspecified' ) listings = listings.filter( l => l[hostStatus] )
+    // in the filter, doing || because popular can be undefined
+    if ( listed && popular !== 'unspecified' ) listings = listings.filter( l => (popular && l.popular === popular) || (!popular && !l.popular) )
 
     return (
       <View>
@@ -118,6 +149,23 @@ class Listings extends Component {
             onChange={ ({ value }) => onFilterClick({ area: value }) }
           />
 
+          { listed ? (
+            <Text atomic={{ d:'ib' }}>where the listing is</Text>
+          ) : null }
+
+          { listed ? (
+            <Select
+              width='160px'
+              name='popular'
+              value={ popular }
+              options={ FILTERS.popular }
+              autoBlur={ true }
+              clearable={ false }
+              searchable={ true }
+              onChange={ ({ value }) => onFilterClick({ popular: value }) }
+            />
+          ) : null }
+
           { !listed ? (
             <Text atomic={{ d:'ib' }}>where the host is</Text>
           ) : null }
@@ -152,12 +200,12 @@ class Listings extends Component {
 
   renderListing(listing) {
 
-    const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user } = listing
+    const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user, popular, listed } = listing
     const { id: userId, avatar, email, firstName, lastName, lastLoggedInAt, phoneVerification, notifications: { numberOfUnread } } = user
 
     const contactNumber = phoneVerification && phoneVerification.contactNumber || listing.contactNumber
 
-    const { onUpdateClick, onListingImageClick, onProfileImageClick } = this
+    const { onUpdateClick, onListingImageClick, onProfileImageClick, onPopularClick } = this
 
     return (
       <Section key={ uuid.v4() } border atomic={{ mt:1, mb:1 }}>
@@ -184,7 +232,7 @@ class Listings extends Component {
 
           <Position position='absolute' bottom='-5px' left='52%'>
 
-            <Badge label={ numberOfUnread - 1 } />
+            <Badge label={ numberOfUnread } />
 
           </Position>
 
@@ -222,6 +270,15 @@ class Listings extends Component {
           onChange={ ({ value }) => onUpdateClick(id, { [`${value}`]: true }) }
         />
 
+        { listed ? (
+          <Button
+            color='white'
+            backgroundColor={ popular ? 'secondary' : 'error' }
+            atomic={{ w:'a', ml:'auto', mr:'auto', mt:4, mb:0 }}
+            onClick={ () => onPopularClick(id, popular) }>
+              { popular ? '❌️ Remove popular' : '🌟 Set as popular' }
+          </Button>) : null }
+
         <Text atomic={{ m:0, pt:4, pr:1, pl:1, fs:3 }}>
           Created at: { getFormattedTimestamp(createdAt) }
         </Text>
@@ -229,6 +286,7 @@ class Listings extends Component {
         <Text atomic={{ m:0, pr:3, pb:1, pl:1, fs:3 }}>
           Last seen: { getFormattedTimestamp(lastLoggedInAt) }
         </Text>
+
 
       </Section>
     )

@@ -14,6 +14,8 @@ export const query = () => Relay.QL`
       postcode
       title
       weeklyRent
+      listed
+      popular
       photos {
         s3Link
       }
