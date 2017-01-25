@@ -68,7 +68,7 @@
               "description": null,
               "args": [
                 {
-                  "name": "id",
+                  "name": "_id",
                   "description": null,
                   "type": {
                     "kind": "SCALAR",
@@ -288,7 +288,7 @@
           "description": null,
           "fields": [
             {
-              "name": "id",
+              "name": "_id",
               "description": null,
               "args": [],
               "type": {
@@ -1441,7 +1441,7 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "id",
+              "name": "_id",
               "description": null,
               "type": {
                 "kind": "SCALAR",
@@ -1482,7 +1482,7 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "id",
+              "name": "_id",
               "description": null,
               "type": {
                 "kind": "SCALAR",

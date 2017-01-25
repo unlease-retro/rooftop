@@ -40,7 +40,7 @@ input AvailabilityInputType {
 }
 
 type Bot {
-  id: String
+  _id: String
   url: String
   title: String
   phoneNumber: String
@@ -164,7 +164,7 @@ input ImageInputType {
 }
 
 input InputTypeBot {
-  id: String
+  _id: String
   price: InputTypeBotPrice
   author: InputTypeBotAuthor
   url: String
@@ -298,7 +298,7 @@ input PricingInputType {
 type Query {
   query: Query
   allAdverts(submitted: Boolean, disabled: Boolean): [Bot]
-  advert(id: String): Bot
+  advert(_id: String): Bot
   listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
   notificationById(id: String, token: String): Notification
   users(token: String): [User]
@@ -325,7 +325,7 @@ input RoommateInputType {
 }
 
 input UpdateAdvertInput {
-  id: String
+  _id: String
   payload: InputTypeBot
   clientMutationId: String
 }

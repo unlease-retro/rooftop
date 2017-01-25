@@ -11,7 +11,7 @@ export default class UpdateAdvertMutation extends Relay.Mutation {
   getVariables() {
 
     return {
-      id: this.props.id,
+      _id: this.props._id,
       payload: this.props.payload,
     }
 
@@ -22,7 +22,7 @@ export default class UpdateAdvertMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on UpdateAdvertPayload {
         advert {
-          id,
+          _id,
         },
       }
     `
@@ -34,7 +34,7 @@ export default class UpdateAdvertMutation extends Relay.Mutation {
     return [{
       type: 'FIELDS_CHANGE',
       fieldIDs: {
-        advert: this.props.id,
+        advert: this.props._id,
       },
     }]
 
