@@ -6,11 +6,20 @@ import { FIELDS } from './constants'
 import * as fragments from './fragments'
 // import mutations from './mutations'
 import variables from './variables'
+// import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListingPreview } from './util'
 
 import { View } from 'components/layout'
 import { Text } from 'components/text'
 
 class Bot extends Component {
+
+  // onListingPreviewRequest(advert) {
+  //
+  //   return getAddressFromGeocode(advert.geocode)
+  //     .then( ({ address: { city, country, postcode, road } }) => ({ city, country, postcode, road }) )
+  //     .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...address }) ) )
+  //
+  // }
 
   render() {
 
