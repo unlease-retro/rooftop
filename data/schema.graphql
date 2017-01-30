@@ -42,53 +42,62 @@ input AvailabilityInputType {
 type Bot {
   _id: String
   url: String
+  advertId: String
+  hostName: String
   title: String
-  phoneNumber: String
+  description: String
+  price: Int
+  photos: [String]
+  availabilityFrom: String
+  availabilityTo: String
+  postcode: String
+  city: String
+  crawled: Boolean
   disabled: Boolean
   submitted: Boolean
-  submittedBy: String
-  createdAt: String
-  updatedAt: String
-  receivedMessage: Boolean
-  price: BotPrice
-  location: BotLocation
-  author: BotAuthor
-  preferences: BotPreferences
-  avability: BotAvability
   amenities: BotAmenities
+  preferences: BotPreferences
+  household: BotHousehold
+  extraCosts: BotExtraCosts
+  geocode: Botundefined
   replies: [BotReply]
 }
 
 type BotAmenities {
-  balcony: String
-  garden: String
   parking: String
+  garage: String
+  furnishing: String
+  garden: String
+  balcony: String
+  disabledAccess: String
+  sharedLivingRoom: String
+  broadband: String
 }
 
-type BotAuthor {
-  name: String
-  type: String
+type BotExtraCosts {
+  deposit: String
+  feesApply: String
+  billsIncluded: String
 }
 
-type BotAvability {
-  date: String
-  maximum: String
-  minimum: String
-}
-
-type BotLocation {
-  postcode: String
-  area: String
+type BotHousehold {
+  pets: String
+  rooms: String
+  gender: String
+  smoker: String
+  language: String
+  flatmates: String
+  occupation: String
 }
 
 type BotPreferences {
-  couples: String
+  dss: String
+  pets: String
   gender: String
-}
-
-type BotPrice {
-  unit: String
-  value: String
+  couples: String
+  smoking: String
+  occupation: String
+  references: String
 }
 
 type BotReply {
@@ -97,6 +106,11 @@ type BotReply {
   thread: String
   message: String
   createdAt: String
+}
+
+type Botundefined {
+  lat: Int
+  lng: Int
 }
 
 input CreateAdvertInput {
@@ -165,57 +179,72 @@ input ImageInputType {
 
 input InputTypeBot {
   _id: String
-  price: InputTypeBotPrice
-  author: InputTypeBotAuthor
   url: String
+  advertId: String
+  hostName: String
   title: String
-  contact: String
+  description: String
+  price: Int
+  photos: [String]
+  availabilityFrom: String
+  availabilityTo: String
+  postcode: String
+  city: String
   crawled: Boolean
-  location: InputTypeBotLocation
-  amenities: InputTypeBotAmenities
-  avability: InputTypeBotAvability
   disabled: Boolean
   submitted: Boolean
-  phoneNumber: String
-  submittedBy: String
+  geocode: InputTypeBotundefined
+  household: InputTypeBotHousehold
+  extraCosts: InputTypeBotExtraCosts
   preferences: InputTypeBotPreferences
-  receivedMessage: Boolean
+  amenities: InputTypeBotAmenities
 }
 
 input InputTypeBotAmenities {
-  balcony: String
-  garden: String
   parking: String
+  garage: String
+  furnishing: String
+  garden: String
+  balcony: String
+  disabledAccess: String
+  sharedLivingRoom: String
+  broadband: String
 }
 
-input InputTypeBotAuthor {
-  name: String
-  type: String
+input InputTypeBotExtraCosts {
+  deposit: String
+  feesApply: String
+  billsIncluded: String
 }
 
-input InputTypeBotAvability {
-  date: String
-  minimum: String
-  maximum: String
-}
-
-input InputTypeBotLocation {
-  area: String
-  postcode: String
+input InputTypeBotHousehold {
+  pets: String
+  rooms: String
+  gender: String
+  smoker: String
+  language: String
+  flatmates: String
+  occupation: String
 }
 
 input InputTypeBotPreferences {
-  couples: String
+  dss: String
+  pets: String
   gender: String
+  couples: String
+  smoking: String
+  occupation: String
+  references: String
 }
 
-input InputTypeBotPrice {
-  unit: String
-  value: Int
+input InputTypeBotundefined {
+  lat: Int
+  lng: Int
 }
 
 type Listing {
   id: String
+  bot: Boolean
   availableFrom: Float
   availableTo: Float
   contactNumber: String
@@ -233,6 +262,7 @@ type Listing {
 }
 
 input ListingInputType {
+  bot: Boolean
   accommodates: Int
   address: AddressInputType
   availability: AvailabilityInputType
@@ -298,8 +328,8 @@ input PricingInputType {
 type Query {
   query: Query
   allAdverts(submitted: Boolean, disabled: Boolean): [Bot]
-  advert(_id: String): Bot
-  listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
+  advert(_id: String, crawled: Boolean): Bot
+  listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String, bot: Boolean): [Listing]
   notificationById(id: String, token: String): Notification
   users(token: String): [User]
   userById(id: String, token: String): User
