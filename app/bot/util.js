@@ -11,7 +11,7 @@ export const getAddressFromGeocode = ({ lat, lng }) => fetch(`http://nominatim.o
 export const transformAdvertToListing = advert => ({
   payload: {
     user: {
-      firstName: advert.name,
+      firstName: advert.hostName,
       lastName: '',
       phoneVerification: {
         contactNumber: advert.phoneNumber,
@@ -184,7 +184,7 @@ export const transformAdvertToListingPreview = advert => ({
   },
   embeddedUser: {
     id: '',
-    firstName: advert.name,
+    firstName: advert.hostName,
     lastName: '',
     avatar: 'https://assets.unlease.io/static/static-img/default_avatar.png'
   },

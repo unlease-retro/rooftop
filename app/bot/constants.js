@@ -10,12 +10,8 @@ export const FIELDS = [
     label: 'Title',
   },
   {
-    key: 'name',
-    label: 'Name'
-  },
-  {
-    key: 'phoneNumber',
-    label: 'Phone'
+    key: 'hostName',
+    label: 'Host Name'
   },
   {
     key: 'description',
