@@ -107,7 +107,8 @@ class Listings extends Component {
 
     const onFilterClick = this.onFilterClick
 
-    // TODO - could do better but I'm tired!!
+    // TODO - combine filters and abstract to util(?)
+    // TODO - add bot filter
     if ( !listed && hostStatus !== 'unspecified' ) listings = listings.filter( l => l[hostStatus] )
     // in the filter, doing || because popular can be undefined
     if ( listed && popular !== 'unspecified' ) listings = listings.filter( l => (popular && l.popular === popular) || (!popular && !l.popular) )

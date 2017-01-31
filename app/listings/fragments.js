@@ -2,9 +2,8 @@ import Relay from 'react-relay'
 
 export const query = () => Relay.QL`
   fragment on Query {
-    listings(lng: $lng, lat: $lat, radius: $radius, startDateInNextDays: $startDateInNextDays, listed: $listed, bot: $bot) {
+    listings(lng: $lng, lat: $lat, radius: $radius, startDateInNextDays: $startDateInNextDays, listed: $listed) {
       id
-      bot
       availableFrom
       availableTo
       contactNumber
