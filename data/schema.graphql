@@ -56,7 +56,7 @@ type Bot {
   preferences: BotPreferences
   household: BotHousehold
   extraCosts: BotExtraCosts
-  geocode: Botundefined
+  geocode: BotGeocode
   replies: [BotReply]
 }
 
@@ -75,6 +75,11 @@ type BotExtraCosts {
   deposit: String
   feesApply: String
   billsIncluded: String
+}
+
+type BotGeocode {
+  lat: Int
+  lng: Int
 }
 
 type BotHousehold {
@@ -103,11 +108,6 @@ type BotReply {
   thread: String
   message: String
   createdAt: String
-}
-
-type Botundefined {
-  lat: Int
-  lng: Int
 }
 
 input CreateAdvertInput {
@@ -187,7 +187,7 @@ input InputTypeBot {
   city: String
   disabled: Boolean
   submitted: Boolean
-  geocode: InputTypeBotundefined
+  geocode: InputTypeBotGeocode
   household: InputTypeBotHousehold
   extraCosts: InputTypeBotExtraCosts
   preferences: InputTypeBotPreferences
@@ -211,6 +211,11 @@ input InputTypeBotExtraCosts {
   billsIncluded: String
 }
 
+input InputTypeBotGeocode {
+  lat: Int
+  lng: Int
+}
+
 input InputTypeBotHousehold {
   pets: String
   rooms: String
@@ -229,11 +234,6 @@ input InputTypeBotPreferences {
   smoking: String
   occupation: String
   references: String
-}
-
-input InputTypeBotundefined {
-  lat: Int
-  lng: Int
 }
 
 type Listing {

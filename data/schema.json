@@ -489,7 +489,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "Botundefined",
+                "name": "BotGeocode",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -883,7 +883,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "Botundefined",
+          "name": "BotGeocode",
           "description": null,
           "fields": [
             {
@@ -1771,7 +1771,7 @@
               "description": null,
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "InputTypeBotundefined",
+                "name": "InputTypeBotGeocode",
                 "ofType": null
               },
               "defaultValue": null
@@ -1823,7 +1823,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "InputTypeBotundefined",
+          "name": "InputTypeBotGeocode",
           "description": null,
           "fields": null,
           "inputFields": [
