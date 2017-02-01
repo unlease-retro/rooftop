@@ -6,7 +6,7 @@ import { FIELDS } from './constants'
 import * as fragments from './fragments'
 // import mutations from './mutations'
 import variables from './variables'
-// import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListingPreview } from './util'
 import { getSortedList } from '../shared/util/virtualized'
 
 import { View } from 'components/layout'
@@ -30,13 +30,14 @@ class Bot extends Component {
 
   }
 
-  // onListingPreviewRequest(advert) {
-  //
-  //   return getAddressFromGeocode(advert.geocode)
-  //     .then( ({ address: { city, country, postcode, road } }) => ({ city, country, postcode, road }) )
-  //     .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...address }) ) )
-  //
-  // }
+  onListingPreviewRequest(advert) {
+
+    return getAddressFromGeocode(advert.geocode)
+      .then( ({ address: { city, country, postcode, road } }) => ({ city, country, postcode, road }) )
+      .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...address }) ) )
+      .then( url => window.open(url) )
+
+  }
 
   render() {
 
@@ -75,6 +76,7 @@ class Bot extends Component {
               sortBy={ sortBy }
               sortDirection={ sortDirection }
               useDynamicRowHeight={false}
+              onRowDoubleClick={ ({ rowData }) => this.onListingPreviewRequest(rowData) }
             >
               { renderColumns }
             </Table>
