@@ -122,13 +122,13 @@ class Listings extends Component {
 
     const { query, relay: { variables } } = this.props
     const { listed, area, hostStatus, popular, bot } = variables
-    
+
     let { listings } = query
 
     const onFilterClick = this.onFilterClick
     const renderListing = this.renderListing
 
-    // TODO - could do better but I'm tired!!
+    // TODO - combine filters and abstract to util(?)
     if ( !listed && hostStatus !== 'unspecified' ) listings = listings.filter( l => l[hostStatus] )
     // in the filter, doing || because popular can be undefined
     if ( listed && popular !== 'unspecified' ) listings = listings.filter( l => (popular && l.popular === popular) || (!popular && !l.popular) )

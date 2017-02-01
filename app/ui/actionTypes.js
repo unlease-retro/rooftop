@@ -1,6 +1,4 @@
 import { name } from './constants'
 
-export const UPDATE = `${name}/UPDATE`
 export const RESET = `${name}/RESET`
-
-export const TOGGLE_ADVERT = `${name}/TOGGLE_ADVERT`
+export const UPDATE = `${name}/UPDATE`

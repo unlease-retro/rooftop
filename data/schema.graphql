@@ -329,9 +329,15 @@ input PricingInputType {
 
 type Query {
   query: Query
+<<<<<<< HEAD
   allAdverts(submitted: Boolean, disabled: Boolean, crawled: Boolean, limit: Int): [Bot]
   advert(_id: String): Bot
   listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String, bot: Boolean): [Listing]
+=======
+  allAdverts(submitted: Boolean, disabled: Boolean, crawled: Boolean, limit: Int = 0): [Bot]
+  advert(_id: String): Bot
+  listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
+>>>>>>> master
   notificationById(id: String, token: String): Notification
   users(token: String): [User]
   userById(id: String, token: String): User

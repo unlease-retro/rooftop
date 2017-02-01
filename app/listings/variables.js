@@ -12,6 +12,7 @@ const variables = {
     area: 'anywhere',
     hostStatus: 'unspecified',
     popular: 'unspecified',
+    bot: true,
   },
 
   prepareVariables: ({ area, ...prevVariables }) => {
