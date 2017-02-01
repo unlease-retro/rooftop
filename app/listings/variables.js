@@ -3,6 +3,7 @@ import { AREAS } from './constants'
 const variables = {
 
   initialVariables: {
+    bot: false,
     listed: true,
     startDateInNextDays: 90,
     radius: 21,

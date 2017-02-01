@@ -4,6 +4,7 @@ export const query = () => Relay.QL`
   fragment on Query {
     listings(lng: $lng, lat: $lat, radius: $radius, startDateInNextDays: $startDateInNextDays, listed: $listed) {
       id
+      bot
       availableFrom
       availableTo
       contactNumber

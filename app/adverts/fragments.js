@@ -2,25 +2,14 @@ import Relay from 'react-relay'
 
 export const query = () => Relay.QL`
   fragment on Query {
-    adverts(submitted: $submitted, disabled: $disabled) {
-      id,
+    allAdverts(submitted: $submitted, disabled: $disabled, limit: $limit, crawled: $crawled) {
+      _id,
       url,
       title,
-      submitted,
       disabled,
+      submitted,
       phoneNumber,
-      updatedAt,
-      createdAt,
-      submittedBy,
-      recivedMessage,
-      price {
-        unit,
-        value
-      },
-      location {
-        postcode,
-        area
-      }
+      price
     }
   }
 `

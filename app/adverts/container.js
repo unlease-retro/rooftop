@@ -23,7 +23,6 @@ import { Grid, View, Section } from 'components/layout'
 import { Checkbox } from 'components/checkbox'
 import { Select } from 'components/select'
 import { Text } from 'components/text'
-import { Badge } from 'components/badge'
 
 
 class Adverts extends Component {
@@ -33,11 +32,8 @@ class Adverts extends Component {
     super(props)
 
     this.renderAdvert = this.renderAdvert.bind(this)
-
     this.onFilterClick = this.onFilterClick.bind(this)
-
     this.onChangeToggle = this.onChangeToggle.bind(this)
-
     this.onSendClick = this.onSendClick.bind(this)
 
   }
@@ -77,20 +73,17 @@ class Adverts extends Component {
 
   renderAdvert(a) {
 
-    const { actions: { toggleAdvert }, advertsChosen } = this.props
 
-    const { id, title, phoneNumber, disabled, submitted, updatedAt, recivedMessage, price: { value, unit } } = a
+    const { actions: { toggleAdvert }, advertsChosen } = this.props
+    const { _id, title, phoneNumber, disabled, submitted, updatedAt, price } = a
+
+    const isAdvertChosen = advertsChosen.indexOf(_id) !== -1
+    const borderWidth = isAdvertChosen ? 4 : 1
 
     const renderButton = submitted ? <Button color='white' atomic={{ w:'a', m:0 }}>View replies</Button> : <Button backgroundColor='error' color='white' atomic={{ w:'a', m:0 }}>Send message</Button>
 
-    const renderNotification = recivedMessage ? <Badge backgroundColor='error' atomic={{ ml:2 }} /> : null
-
-    const isAdvertChosen = advertsChosen.indexOf(id) !== -1
-
-    const borderWidth = isAdvertChosen ? 4 : 1
-
     return (
-      <Section border atomic={{ mt:1, mb:1, p:1, bw: borderWidth }} key={ id }>
+      <Section border atomic={{ mt:1, mb:1, p:1, bw: borderWidth }} key={ _id }>
 
         <View atomic={{ w:'f', p:0 }}>
 
@@ -99,8 +92,6 @@ class Adverts extends Component {
             { title }
 
             { disabled && ' (Disabled)' }
-
-            { renderNotification }
 
           </Text>
 
@@ -120,7 +111,7 @@ class Adverts extends Component {
 
             <Icon>attach_money</Icon>
 
-            <Text atomic={{ m:0, ml:1 }}>£{ value } { unit }</Text>
+            <Text atomic={{ m:0, ml:1 }}>£{ price }pw</Text>
 
           </View>
 
@@ -136,11 +127,11 @@ class Adverts extends Component {
 
         <View atomic={{ d:'f', fd:'c', td:'n', p:0, mb:1 }}>
 
-          <Button backgroundColor='accent' color='white' atomic={{ w:'a', m:0 }} onClick={ () => toggleAdvert(id) }>Toggle</Button>
+          <Button backgroundColor='accent' color='white' atomic={{ w:'a', m:0 }} onClick={ () => toggleAdvert(_id) }>Toggle</Button>
 
         </View>
 
-        <Anchor atomic={{ d:'f', fd:'c', td:'n' }} href={`/adverts/${id}`}>
+        <Anchor atomic={{ d:'f', fd:'c', td:'n' }} href={`/adverts/${_id}`}>
 
           {renderButton}
 
@@ -153,23 +144,22 @@ class Adverts extends Component {
 
   onChangeToggle() {
 
-    const { query: { adverts }, actions: { toggleAdvert } } = this.props
+    const { query: { allAdverts }, actions: { toggleAdvert } } = this.props
 
-    adverts.map( ({ id }) => toggleAdvert(id) )
+    allAdverts.map( ({ id }) => toggleAdvert(id) )
 
   }
 
   render() {
 
-    const { message, requesting, advertsGeneric, advertsChosen, relay: { variables }, query: { adverts }, actions: { updateUI } } = this.props
+    const { message, requesting, advertsGeneric, advertsChosen, relay: { variables }, query: { allAdverts }, actions: { updateUI } } = this.props
 
     const { submitted, disabled } = variables
 
     const onSendClick = this.onSendClick
-
     const onFilterClick = this.onFilterClick
-
     const onChangeToggle = this.onChangeToggle
+    const renderAdvert = this.renderAdvert
 
     const renderLoader = requesting ? <Loader atomic={{ m:2, po:'s', l:0, r:0 }}/> : null
 
@@ -219,7 +209,7 @@ class Adverts extends Component {
 
         <Grid cell={3/0.12}>
 
-          { adverts.map( a => this.renderAdvert(a) ) }
+          { allAdverts.map( a => renderAdvert(a) ) }
 
         </Grid>
 

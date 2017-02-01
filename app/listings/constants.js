@@ -23,8 +23,13 @@ export const FILTERS = {
   ],
 
   popular: [
-    { value: 'unspecified', label: 'Normal' },
     { value: true, label: 'Popular' },
     { value: false, label: 'Not Popular' },
   ],
+
+  bot: [
+    { value: 'unspecified', label: 'Anyone' },
+    { value: true, label: 'Bot' },
+    { value: false, label: 'Human' },
+  ]
 }

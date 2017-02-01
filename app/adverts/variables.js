@@ -1,8 +1,10 @@
 const variables = {
 
   initialVariables: {
-    submitted: true,
-    disabled: false
+    disabled: false,
+    submitted: false,
+    crawled: true,
+    limit: 100
   },
 
   prepareVariables: prevVariables => prevVariables
