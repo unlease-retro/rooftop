@@ -8,8 +8,3 @@ export const updateUI = ui => ({
 export const resetUI = () => ({
   type: actions.RESET,
 })
-
-export const toggleAdvert = id => ({
-  type: actions.TOGGLE_ADVERT,
-  payload: { id }
-})

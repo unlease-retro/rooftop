@@ -1,18 +1,18 @@
 import Relay from 'react-relay'
 
-
-export default class AdvertMutation extends Relay.Mutation {
+export default class UpdateAdvertMutation extends Relay.Mutation {
 
   getMutation() {
 
-    return Relay.QL`mutation{ markAdvert }`
+    return Relay.QL`mutation{ updateAdvert }`
 
   }
 
   getVariables() {
 
     return {
-      id: this.props.id
+      _id: this.props._id,
+      payload: this.props.payload,
     }
 
   }
@@ -20,12 +20,10 @@ export default class AdvertMutation extends Relay.Mutation {
   getFatQuery() {
 
     return Relay.QL`
-      fragments on MarkAdvertPayload {
+      fragment on UpdateAdvertPayload {
         advert {
-          id,
-          submitted,
-          submittedBy
-        }
+          _id,
+        },
       }
     `
 
@@ -36,7 +34,7 @@ export default class AdvertMutation extends Relay.Mutation {
     return [{
       type: 'FIELDS_CHANGE',
       fieldIDs: {
-        advert: this.props.id,
+        advert: this.props._id,
       },
     }]
 

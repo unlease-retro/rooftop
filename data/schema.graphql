@@ -13,55 +13,240 @@ type AddListingToPopularPayload {
   clientMutationId: String
 }
 
-type Amenities {
-  balcony: String
-  garden: String
-  parking: String
+input AddressInputType {
+  contactNumber: String
+  city: String
+  country: String
+  flatNumber: String
+  geoLocation: GeolocationInputType
+  postcode: String
+  sectionCompleted: Boolean
+  streetAddress: String
 }
 
-type Author {
+input AmenityInputType {
+  displayName: String
+  included: Boolean
   name: String
-  type: String
 }
 
-type Avability {
-  date: String
-  maximum: String
-  minimum: String
+input AvailabilityInputType {
+  bookedDates: [Float]
+  duration: Int
+  from: String
+  minStay: Int
+  sectionCompleted: Boolean
+  to: String
 }
 
 type Bot {
-  id: String
+  _id: String
   url: String
-  title: String
+  advertId: String
   phoneNumber: String
+  hostName: String
+  title: String
+  description: String
+  price: Int
+  photos: [String]
+  availabilityFrom: String
+  availabilityTo: String
+  postcode: String
+  city: String
+  crawled: Boolean
   disabled: Boolean
   submitted: Boolean
-  submittedBy: String
-  createdAt: String
-  updatedAt: String
-  recivedMessage: Boolean
-  price: Price
-  location: Location
-  author: Author
-  preferences: Preferences
-  avability: Avability
-  amenities: Amenities
-  replies: [Reply]
+  amenities: BotAmenities
+  preferences: BotPreferences
+  household: BotHousehold
+  extraCosts: BotExtraCosts
+  geocode: BotGeocode
+  replies: [BotReply]
 }
 
-input DisableAdvertInput {
+type BotAmenities {
+  parking: String
+  garage: String
+  furnishing: String
+  garden: String
+  balcony: String
+  disabledAccess: String
+  sharedLivingRoom: String
+  broadband: String
+}
+
+type BotExtraCosts {
+  deposit: String
+  feesApply: String
+  billsIncluded: String
+}
+
+type BotGeocode {
+  lat: Float
+  lng: Float
+}
+
+type BotHousehold {
+  pets: String
+  rooms: String
+  gender: String
+  smoker: String
+  language: String
+  flatmates: String
+  occupation: String
+}
+
+type BotPreferences {
+  dss: String
+  pets: String
+  gender: String
+  couples: String
+  smoking: String
+  occupation: String
+  references: String
+}
+
+type BotReply {
   id: String
+  host: Boolean
+  thread: String
+  message: String
+  createdAt: String
+}
+
+input CreateAdvertInput {
+  payload: InputTypeBot
   clientMutationId: String
 }
 
-type DisableAdvertPayload {
+type CreateAdvertPayload {
   advert: Bot
   clientMutationId: String
 }
 
+input CreateListingInput {
+  payload: ListingInputType
+  clientMutationId: String
+}
+
+type CreateListingPayload {
+  listing: Listing
+  clientMutationId: String
+}
+
+input CreateUserInput {
+  payload: UserInputType
+  clientMutationId: String
+}
+
+type CreateUserPayload {
+  user: User
+  clientMutationId: String
+}
+
+input CreateUserWithListingInput {
+  payload: UserWithListingInputType
+  clientMutationId: String
+}
+
+type CreateUserWithListingPayload {
+  listing: Listing
+  clientMutationId: String
+}
+
+input DescriptionInputType {
+  amenityItems: [AmenityInputType]
+  description: String
+  sectionCompleted: Boolean
+  title: String
+}
+
+input GeolocationInputType {
+  coordinates: [String]
+  type: String
+  x: Float
+  y: Float
+}
+
+input HomeTruthInputType {
+  items: [String]
+  sectionCompleted: Boolean
+}
+
+input ImageInputType {
+  name: String
+  s3Link: String
+}
+
+input InputTypeBot {
+  _id: String
+  url: String
+  advertId: String
+  phoneNumber: String
+  hostName: String
+  title: String
+  description: String
+  price: Int
+  photos: [String]
+  availabilityFrom: String
+  availabilityTo: String
+  postcode: String
+  city: String
+  crawled: Boolean
+  disabled: Boolean
+  submitted: Boolean
+  geocode: InputTypeBotGeocode
+  household: InputTypeBotHousehold
+  extraCosts: InputTypeBotExtraCosts
+  preferences: InputTypeBotPreferences
+  amenities: InputTypeBotAmenities
+}
+
+input InputTypeBotAmenities {
+  parking: String
+  garage: String
+  furnishing: String
+  garden: String
+  balcony: String
+  disabledAccess: String
+  sharedLivingRoom: String
+  broadband: String
+}
+
+input InputTypeBotExtraCosts {
+  deposit: String
+  feesApply: String
+  billsIncluded: String
+}
+
+input InputTypeBotGeocode {
+  lat: Float
+  lng: Float
+}
+
+input InputTypeBotHousehold {
+  pets: String
+  rooms: String
+  gender: String
+  smoker: String
+  language: String
+  flatmates: String
+  occupation: String
+}
+
+input InputTypeBotPreferences {
+  dss: String
+  pets: String
+  gender: String
+  couples: String
+  smoking: String
+  occupation: String
+  references: String
+}
+
 type Listing {
   id: String
+  bot: Boolean
   availableFrom: Float
   availableTo: Float
   contactNumber: String
@@ -78,29 +263,34 @@ type Listing {
   user: User
 }
 
-type Location {
-  postcode: String
-  area: String
-}
-
-input MarkAdvertInput {
-  id: String
-  clientMutationId: String
-}
-
-type MarkAdvertPayload {
-  advert: Bot
-  clientMutationId: String
+input ListingInputType {
+  accommodates: Int
+  address: AddressInputType
+  availability: AvailabilityInputType
+  booked: Boolean
+  completed: Boolean
+  description: DescriptionInputType
+  homeTruth: HomeTruthInputType
+  homeType: String
+  listed: Boolean
+  location: String
+  photo: PhotoInputType
+  pricing: PricingInputType
+  referralCode: String
+  roommate: RoommateInputType
+  roomType: String
 }
 
 type Mutations {
+  updateAdvert(input: UpdateAdvertInput!): UpdateAdvertPayload
+  createAdvert(input: CreateAdvertInput!): CreateAdvertPayload
+  createListing(input: CreateListingInput!): CreateListingPayload
+  removeListing(input: RemoveListingInput!): RemoveListingPayload
+  createUserWithListing(input: CreateUserWithListingInput!): CreateUserWithListingPayload
   updateHostStatus(input: UpdateHostStatusInput!): UpdateHostStatusPayload
   addListingToPopular(input: AddListingToPopularInput!): AddListingToPopularPayload
   removeListingFromPopular(input: RemoveListingFromPopularInput!): RemoveListingFromPopularPayload
-  disableAdvert(input: DisableAdvertInput!): DisableAdvertPayload
-  markAdvert(input: MarkAdvertInput!): MarkAdvertPayload
-  sendAdvertMessage(input: SendAdvertMessageInput!): SendAdvertMessagePayload
-  sendAdvertsMessages(input: SendAdvertsMessagesInput!): SendAdvertsMessagesPayload
+  createUser(input: CreateUserInput!): CreateUserPayload
 }
 
 type Notification {
@@ -111,24 +301,36 @@ type PhoneVerification {
   contactNumber: String
 }
 
+input PhoneVerificationInputType {
+  code: String
+  contactNumber: String
+  verified: Boolean
+}
+
 type Photo {
   s3Link: String
 }
 
-type Preferences {
-  couples: String
-  gender: String
+input PhotoInputType {
+  imageList: [ImageInputType]
+  lowerLimit: Int = 1
+  sectionCompleted: Boolean
+  upperLimit: Int = 9
 }
 
-type Price {
-  unit: String
-  value: String
+input PricingInputType {
+  cleaningFee: Int
+  deposit: Int
+  extraGuestCharge: Int
+  sectionCompleted: Boolean
+  serviceFee: Float
+  weeklyRent: Int
 }
 
 type Query {
   query: Query
-  adverts(submitted: Boolean, disabled: Boolean): [Bot]
-  advertById(id: String): Bot
+  allAdverts(submitted: Boolean, disabled: Boolean, crawled: Boolean, limit: Int = 0): [Bot]
+  advert(_id: String): Bot
   listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
   notificationById(id: String, token: String): Notification
   users(token: String): [User]
@@ -145,33 +347,33 @@ type RemoveListingFromPopularPayload {
   clientMutationId: String
 }
 
-type Reply {
+input RemoveListingInput {
   id: String
-  host: Boolean
-  thread: String
-  message: String
-  createdAt: String
-}
-
-input SendAdvertMessageInput {
-  id: String
-  message: String
   clientMutationId: String
 }
 
-type SendAdvertMessagePayload {
+type RemoveListingPayload {
+  listing: Listing
+  clientMutationId: String
+}
+
+input RoommateInputType {
+  maxAge: Int
+  minAge: Int
+  numOfFemale: Int
+  numOfMale: Int
+  occupation: [String]
+  sectionCompleted: Boolean
+}
+
+input UpdateAdvertInput {
+  _id: String
+  payload: InputTypeBot
+  clientMutationId: String
+}
+
+type UpdateAdvertPayload {
   advert: Bot
-  clientMutationId: String
-}
-
-input SendAdvertsMessagesInput {
-  adverts: String
-  message: String
-  clientMutationId: String
-}
-
-type SendAdvertsMessagesPayload {
-  advert: [Bot]
   clientMutationId: String
 }
 
@@ -196,4 +398,20 @@ type User {
   lastLoggedInAt: Float
   phoneVerification: PhoneVerification
   notifications: Notification
+}
+
+input UserInputType {
+  id: String
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  dob: String
+  referralProgramCode: String
+  phoneVerification: PhoneVerificationInputType
+}
+
+input UserWithListingInputType {
+  listing: ListingInputType
+  user: UserInputType
 }

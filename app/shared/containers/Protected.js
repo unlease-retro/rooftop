@@ -8,7 +8,7 @@ import Transition from 'react-addons-css-transition-group'
 import { selectors as AuthSelectors } from '../../auth'
 import { selectors as UISelectors, actions as UIActions } from '../../ui'
 
-import * as Adverts from '../../adverts'
+import * as Bot from '../../bot'
 import * as Listings from '../../listings'
 
 import { Anchor } from 'components/anchor'
@@ -34,7 +34,7 @@ class Protected extends Component {
 
     const renderNav = isNavOpen ? (
       <Nav onClick={ () => updateUI({ isNavOpen: false }) }>
-        <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Adverts.route}>🤖 Bot</Anchor>
+        <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>🤖 Bot</Anchor>
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Listings.route}>🏠 Listings</Anchor>
       </Nav>
     ) : null

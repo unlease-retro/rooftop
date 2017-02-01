@@ -102,12 +102,13 @@ class Listings extends Component {
   render() {
 
     const { query, relay: { variables } } = this.props
-    const { listed, area, hostStatus, popular } = variables
+    const { listed, area, hostStatus, popular, bot } = variables
     let { listings } = query
 
     const onFilterClick = this.onFilterClick
 
-    // TODO - could do better but I'm tired!!
+    // TODO - combine filters and abstract to util(?)
+    // TODO - add bot filter
     if ( !listed && hostStatus !== 'unspecified' ) listings = listings.filter( l => l[hostStatus] )
     // in the filter, doing || because popular can be undefined
     if ( listed && popular !== 'unspecified' ) listings = listings.filter( l => (popular && l.popular === popular) || (!popular && !l.popular) )
@@ -147,6 +148,20 @@ class Listings extends Component {
             clearable={ false }
             searchable={ true }
             onChange={ ({ value }) => onFilterClick({ area: value }) }
+          />
+
+          <Text atomic={{ d:'ib' }}>
+            created by
+          </Text>
+
+          <Select
+            name='bot'
+            value={ bot }
+            options={ FILTERS.bot }
+            autoBlur={ true }
+            clearable={ false }
+            searchable={ true }
+            onChange={ ({ value }) => onFilterClick({ bot: value }) }
           />
 
           { listed ? (
@@ -200,7 +215,7 @@ class Listings extends Component {
 
   renderListing(listing) {
 
-    const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user, popular, listed } = listing
+    const { id, bot, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user, popular, listed } = listing
     const { id: userId, avatar, email, firstName, lastName, lastLoggedInAt, phoneVerification, notifications: { numberOfUnread } } = user
 
     const contactNumber = phoneVerification && phoneVerification.contactNumber || listing.contactNumber
@@ -270,14 +285,24 @@ class Listings extends Component {
           onChange={ ({ value }) => onUpdateClick(id, { [`${value}`]: true }) }
         />
 
-        { listed ? (
-          <Button
-            color='white'
-            backgroundColor={ popular ? 'secondary' : 'error' }
-            atomic={{ w:'a', ml:'auto', mr:'auto', mt:4, mb:0 }}
-            onClick={ () => onPopularClick(id, popular) }>
-              { popular ? '❌️ Remove popular' : '🌟 Set as popular' }
-          </Button>) : null }
+        <View>
+          { listed ? (
+            <Button
+              color='white'
+              backgroundColor={ popular ? 'secondary' : 'error' }
+              atomic={{ w:'a', ml:'auto', mr:'auto', mt:0, mb:2 }}
+              onClick={ () => onPopularClick(id, popular) }>
+                { popular ? '❌️ Remove popular' : '🌟 Set as popular' }
+            </Button>) : null }
+          { bot ? (
+            <Button
+              color='white'
+              backgroundColor='error'
+              atomic={{ w:'a', ml:'auto', mr:'auto', mt:0, mb:0 }}
+              onClick={ () => console.log('click') }>
+              📛 Delete listing
+            </Button>) : null }
+        </View>
 
         <Text atomic={{ m:0, pt:4, pr:1, pl:1, fs:3 }}>
           Created at: { getFormattedTimestamp(createdAt) }
