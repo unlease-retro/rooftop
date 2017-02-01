@@ -84,7 +84,7 @@ class Bot extends Component {
               sortBy={ sortBy }
               sortDirection={ sortDirection }
               useDynamicRowHeight={false}
-              onRowDoubleClick={ ({ rowData }) => this.onCreateUserWithListingRequest(rowData) }
+              onRowDoubleClick={ ({ rowData }) => this.onListingPreviewRequest(rowData) }
             >
               { renderColumns }
             </Table>
