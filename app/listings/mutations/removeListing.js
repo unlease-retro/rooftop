@@ -20,8 +20,8 @@ export default class RemoveListing extends Mutation {
 
     return Relay.QL`
       fragment on RemoveListingPayload {
-        deletedListingId,
         listing {
+          id
         }
       }
     `
@@ -39,5 +39,5 @@ export default class RemoveListing extends Mutation {
     }]
 
   }
-  
+
 }

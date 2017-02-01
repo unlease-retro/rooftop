@@ -45,43 +45,15 @@ class Listings extends Component {
 
     if (data.unspecified) data = { leakage: false, nonResponsive: false }
 
-    Relay.Store.commitUpdate(
-      new mutations.listingMutation({
-        id,
-        ...data,
-      }), {
-        onSuccess: res => console.log(res),
-        onFailure: transaction => console.error(transaction),
-      }
-    )
+    return Relay.Store.commitUpdate( new mutations.listingMutation({ id, ...data, }) )
 
   }
 
   onPopularClick(id, popular) {
 
-    if (!popular) {
+    if (!popular) return Relay.Store.commitUpdate( new mutations.addListingToPopular({ id }) )
 
-      Relay.Store.commitUpdate(
-        new mutations.addListingToPopular({
-          id
-        }), {
-          onSuccess: res => console.log(res),
-          onFailure: transaction => console.error(transaction),
-        }
-      )
-
-    } else {
-
-      Relay.Store.commitUpdate(
-        new mutations.removeListingFromPopular({
-          id
-        }), {
-          onSuccess: res => console.log(res),
-          onFailure: transaction => console.error(transaction),
-        }
-      )
-
-    }
+    return Relay.Store.commitUpdate( new mutations.removeListingFromPopular({ id }) )
 
   }
 
@@ -120,13 +92,11 @@ class Listings extends Component {
 
   render() {
 
+    const { onFilterClick, renderListing } = this
     const { query, relay: { variables } } = this.props
     const { listed, area, hostStatus, popular, bot } = variables
 
     let { listings } = query
-
-    const onFilterClick = this.onFilterClick
-    const renderListing = this.renderListing
 
     // TODO - combine filters and abstract to util(?)
     if ( !listed && hostStatus !== 'unspecified' ) listings = listings.filter( l => l[hostStatus] )

@@ -3,7 +3,6 @@ import { AREAS } from './constants'
 const variables = {
 
   initialVariables: {
-    bot: false,
     listed: true,
     startDateInNextDays: 90,
     radius: 21,
@@ -12,7 +11,7 @@ const variables = {
     area: 'anywhere',
     hostStatus: 'unspecified',
     popular: 'unspecified',
-    bot: true,
+    bot: false,
   },
 
   prepareVariables: ({ area, ...prevVariables }) => {
