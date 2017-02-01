@@ -20,9 +20,9 @@ export default class RemoveListing extends Mutation {
 
     return Relay.QL`
       fragment on RemoveListingPayload {
+        deletedListingId,
         listing {
-          id
-        },
+        }
       }
     `
 
@@ -31,10 +31,11 @@ export default class RemoveListing extends Mutation {
   getConfigs() {
 
     return [{
-      type: 'FIELDS_CHANGE',
-      fieldIDs: {
-        listing: this.props.id,
-      },
+      type: 'NODE_DELETE',
+      parentName: 'listing',
+      parentID: this.props.id,
+      connectionName: 'listing',
+      deletedIDFieldName: 'deletedListingId'
     }]
 
   }

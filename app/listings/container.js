@@ -87,14 +87,16 @@ class Listings extends Component {
 
   deleteListing(id) {
 
-    Relay.Store.commitUpdate(
-      new mutations.removeListing({
-        id,
-      }), {
-        onSuccess: res => console.log(res),
-        onFailure: transaction => console.error(transaction),
-      }
-    )
+    console.log(id)
+
+    // Relay.Store.commitUpdate(
+    //   new mutations.removeListing({
+    //     id,
+    //   }), {
+    //     onSuccess: res => console.log(res),
+    //     onFailure: transaction => console.error(transaction),
+    //   }
+    // )
 
   }
 
