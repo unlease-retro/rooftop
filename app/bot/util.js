@@ -4,7 +4,7 @@
 
 import { LISTING_PREVIEW_URL_PREFIX } from './constants'
 
-export const getListingPreviewUrl = listing => `${LISTING_PREVIEW_URL_PREFIX}${ encodeURI(listing) }`
+export const getListingPreviewUrl = listing => `${LISTING_PREVIEW_URL_PREFIX}${ encodeURI(JSON.stringify(listing)) }`
 
 export const getAddressFromGeocode = ({ lat, lng }) => fetch(`http://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`).then( res => res.json() )
 
