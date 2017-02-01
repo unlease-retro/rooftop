@@ -5,8 +5,9 @@ import { AutoSizer, Column, SortIndicator, Table } from 'react-virtualized'
 import { FIELDS } from './constants'
 import * as fragments from './fragments'
 // import mutations from './mutations'
+import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { getSortedList } from '../shared/util/virtualized'
 
 import { View } from 'components/layout'
@@ -33,9 +34,16 @@ class Bot extends Component {
   onListingPreviewRequest(advert) {
 
     return getAddressFromGeocode(advert.geocode)
-      .then( ({ address: { city, country, postcode, road } }) => ({ city, country, postcode, road }) )
       .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...address }) ) )
       .then( url => window.open(url) )
+
+  }
+
+  onCreateUserWithListingRequest(advert) {
+
+    return getAddressFromGeocode(advert.geocode)
+      .then( address => transformAdvertToListing({ ...advert, ...address }) )
+      .then( payload => Relay.Store.commitUpdate( new ListingMutations.createUserWithListing(payload) ) )
 
   }
 
@@ -76,7 +84,7 @@ class Bot extends Component {
               sortBy={ sortBy }
               sortDirection={ sortDirection }
               useDynamicRowHeight={false}
-              onRowDoubleClick={ ({ rowData }) => this.onListingPreviewRequest(rowData) }
+              onRowDoubleClick={ ({ rowData }) => this.onCreateUserWithListingRequest(rowData) }
             >
               { renderColumns }
             </Table>

@@ -6,7 +6,9 @@ import { LISTING_PREVIEW_URL_PREFIX } from './constants'
 
 export const getListingPreviewUrl = listing => `${LISTING_PREVIEW_URL_PREFIX}${ encodeURI(JSON.stringify(listing)) }`
 
-export const getAddressFromGeocode = ({ lat, lng }) => fetch(`http://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`).then( res => res.json() )
+export const getAddressFromGeocode = ({ lat, lng }) => fetch(`http://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+  .then( res => res.json() )
+  .then( ({ address: { city, country, postcode, road } }) => ({ city, country, postcode, road }) )
 
 export const transformAdvertToListing = advert => ({
   payload: {
@@ -46,7 +48,7 @@ export const transformAdvertToListing = advert => ({
         sectionCompleted: true
       },
       photo: {
-        imageList: [ ...advert.photos ],
+        imageList: advert.photos.map( p => ({ s3Link: p, name: '' }) ),
         upperLimit: 9,
         lowerLimit: 1,
         sectionCompleted: true
