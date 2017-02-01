@@ -41,6 +41,9 @@ input AvailabilityInputType {
 
 type Bot {
   _id: String
+  url: String
+  advertId: String
+  phoneNumber: String
   hostName: String
   title: String
   description: String
@@ -78,8 +81,8 @@ type BotExtraCosts {
 }
 
 type BotGeocode {
-  lat: Int
-  lng: Int
+  lat: Float
+  lng: Float
 }
 
 type BotHousehold {
@@ -176,6 +179,9 @@ input ImageInputType {
 
 input InputTypeBot {
   _id: String
+  url: String
+  advertId: String
+  phoneNumber: String
   hostName: String
   title: String
   description: String
@@ -212,8 +218,8 @@ input InputTypeBotExtraCosts {
 }
 
 input InputTypeBotGeocode {
-  lat: Int
-  lng: Int
+  lat: Float
+  lng: Float
 }
 
 input InputTypeBotHousehold {
@@ -319,7 +325,7 @@ input PricingInputType {
 
 type Query {
   query: Query
-  allAdverts(submitted: Boolean, disabled: Boolean): [Bot]
+  allAdverts(submitted: Boolean, disabled: Boolean, crawled: Boolean, limit: Int = 0): [Bot]
   advert(_id: String): Bot
   listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
   notificationById(id: String, token: String): Notification
