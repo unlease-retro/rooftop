@@ -53,6 +53,7 @@ type Bot {
   availabilityTo: String
   postcode: String
   city: String
+  crawled: Boolean
   disabled: Boolean
   submitted: Boolean
   amenities: BotAmenities
@@ -191,6 +192,7 @@ input InputTypeBot {
   availabilityTo: String
   postcode: String
   city: String
+  crawled: Boolean
   disabled: Boolean
   submitted: Boolean
   geocode: InputTypeBotGeocode
@@ -244,6 +246,7 @@ input InputTypeBotPreferences {
 
 type Listing {
   id: String
+  bot: Boolean
   availableFrom: Float
   availableTo: Float
   contactNumber: String
@@ -282,6 +285,7 @@ type Mutations {
   updateAdvert(input: UpdateAdvertInput!): UpdateAdvertPayload
   createAdvert(input: CreateAdvertInput!): CreateAdvertPayload
   createListing(input: CreateListingInput!): CreateListingPayload
+  removeListing(input: RemoveListingInput!): RemoveListingPayload
   createUserWithListing(input: CreateUserWithListingInput!): CreateUserWithListingPayload
   updateHostStatus(input: UpdateHostStatusInput!): UpdateHostStatusPayload
   addListingToPopular(input: AddListingToPopularInput!): AddListingToPopularPayload
@@ -339,6 +343,16 @@ input RemoveListingFromPopularInput {
 }
 
 type RemoveListingFromPopularPayload {
+  listing: Listing
+  clientMutationId: String
+}
+
+input RemoveListingInput {
+  id: String
+  clientMutationId: String
+}
+
+type RemoveListingPayload {
   listing: Listing
   clientMutationId: String
 }
