@@ -26,8 +26,4 @@ export const FILTERS = {
     { value: true, label: 'Popular' },
     { value: false, label: 'Not Popular' },
   ],
-  bot: [
-    { value: true, label: 'Bot' },
-    { value: false, label: 'Human' },
-  ]
 }

@@ -10,6 +10,8 @@ import variables from './variables'
 import mutations from './mutations'
 
 import { Anchor } from 'components/anchor'
+import { Checkbox } from 'components/checkbox'
+import { Label } from 'components/label'
 import { Badge } from 'components/badge'
 import { Icon } from 'components/icon'
 import { Image } from 'components/image'
@@ -26,6 +28,8 @@ class Listings extends Component {
     super()
 
     this.onFilterClick = this.onFilterClick.bind(this)
+    this.deleteListing = this.deleteListing.bind(this)
+    this.renderListing = this.renderListing.bind(this)
 
   }
 
@@ -81,6 +85,21 @@ class Listings extends Component {
 
   }
 
+  deleteListing(id) {
+
+    console.log(id)
+
+    // Relay.Store.commitUpdate(
+    //   new mutations.removeListing({
+    //     id,
+    //   }), {
+    //     onSuccess: res => console.log(res),
+    //     onFailure: transaction => console.error(transaction),
+    //   }
+    // )
+
+  }
+
   onListingImageClick(id) {
 
     const listingUrl = getListingUrl(id)
@@ -103,15 +122,18 @@ class Listings extends Component {
 
     const { query, relay: { variables } } = this.props
     const { listed, area, hostStatus, popular, bot } = variables
+
     let { listings } = query
 
     const onFilterClick = this.onFilterClick
+    const renderListing = this.renderListing
 
     // TODO - combine filters and abstract to util(?)
-    // TODO - add bot filter
     if ( !listed && hostStatus !== 'unspecified' ) listings = listings.filter( l => l[hostStatus] )
     // in the filter, doing || because popular can be undefined
     if ( listed && popular !== 'unspecified' ) listings = listings.filter( l => (popular && l.popular === popular) || (!popular && !l.popular) )
+    // filter bot
+    if ( bot ) listings = listings.filter( l => l.bot === bot )
 
     return (
       <View>
@@ -150,20 +172,6 @@ class Listings extends Component {
             onChange={ ({ value }) => onFilterClick({ area: value }) }
           />
 
-          <Text atomic={{ d:'ib' }}>
-            created by
-          </Text>
-
-          <Select
-            name='bot'
-            value={ bot }
-            options={ FILTERS.bot }
-            autoBlur={ true }
-            clearable={ false }
-            searchable={ true }
-            onChange={ ({ value }) => onFilterClick({ bot: value }) }
-          />
-
           { listed ? (
             <Text atomic={{ d:'ib' }}>where the listing is</Text>
           ) : null }
@@ -200,11 +208,20 @@ class Listings extends Component {
 
           <Badge label={ listings.length } backgroundColor='primary' atomic={{ ml:5 }} />
 
+          <View atomic={{ p:0, d:'ib', w:'a' }}>
+
+            <Label atomic={{ d:'ib', m:0 }}>
+              <Checkbox atomic={{ d:'ib', mr:1, mt:0, mb:0, w:'a' }} onChange={ () => onFilterClick({ bot: !bot }) } type='checkbox' />
+              Display only bot listings
+            </Label>
+
+          </View>
+
         </Section>
 
         <Grid cell={3/0.12}>
 
-          { listings.map( l => this.renderListing(l) ) }
+          { listings.map( l => renderListing(l) ) }
 
         </Grid>
 
@@ -220,7 +237,7 @@ class Listings extends Component {
 
     const contactNumber = phoneVerification && phoneVerification.contactNumber || listing.contactNumber
 
-    const { onUpdateClick, onListingImageClick, onProfileImageClick, onPopularClick } = this
+    const { onUpdateClick, onListingImageClick, onProfileImageClick, onPopularClick, deleteListing } = this
 
     return (
       <Section key={ uuid.v4() } border atomic={{ mt:1, mb:1 }}>
@@ -286,25 +303,25 @@ class Listings extends Component {
         />
 
         <View>
-          { listed ? (
-            <Button
-              color='white'
-              backgroundColor={ popular ? 'secondary' : 'error' }
-              atomic={{ w:'a', ml:'auto', mr:'auto', mt:0, mb:2 }}
-              onClick={ () => onPopularClick(id, popular) }>
-                { popular ? '❌️ Remove popular' : '🌟 Set as popular' }
-            </Button>) : null }
-          { bot ? (
-            <Button
-              color='white'
-              backgroundColor='error'
-              atomic={{ w:'a', ml:'auto', mr:'auto', mt:0, mb:0 }}
-              onClick={ () => console.log('click') }>
-              📛 Delete listing
-            </Button>) : null }
+        { listed ? (
+          <Button
+            color='white'
+            backgroundColor={ popular ? 'secondary' : 'error' }
+            atomic={{ w:'a', ml:'auto', mr:'auto', mt:0, mb:2 }}
+            onClick={ () => onPopularClick(id, popular) }>
+              { popular ? '❌️ Remove popular' : '🌟 Set as popular' }
+          </Button>) : null }
+        { bot ? (
+          <Button
+            color='white'
+            backgroundColor='error'
+            atomic={{ w:'a', ml:'auto', mr:'auto', mt:0, mb:0 }}
+            onClick={ () => deleteListing(id) }>
+            📛 Delete listing
+          </Button>) : null }
         </View>
 
-        <Text atomic={{ m:0, pt:4, pr:1, pl:1, fs:3 }}>
+        <Text atomic={{ m:0, pt:0, pr:1, pl:1, fs:3 }}>
           Created at: { getFormattedTimestamp(createdAt) }
         </Text>
 
