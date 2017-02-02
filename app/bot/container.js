@@ -3,12 +3,13 @@ import Relay from 'react-relay'
 import { withRouter } from 'react-router'
 import { AutoSizer, Column, SortIndicator, Table } from 'react-virtualized'
 
-import { FIELDS } from './constants'
+import { FIELDS, FILTERS } from './constants'
 import * as fragments from './fragments'
 import variables from './variables'
 import { getSortedList } from '../shared/util/virtualized'
 
 import { View } from 'components/layout'
+import { Select } from 'components/select'
 import { Text } from 'components/text'
 
 class Bot extends Component {
@@ -19,6 +20,7 @@ class Bot extends Component {
 
     this.onAdvertClick = this.onAdvertClick.bind(this)
     this.onSort = this.onSort.bind(this)
+    this.onStatusFilterChange = this.onStatusFilterChange.bind(this)
 
   }
 
@@ -39,11 +41,25 @@ class Bot extends Component {
 
   }
 
+  onStatusFilterChange(status) {
+
+    const { relay } = this.props
+
+    const variables = {
+      disabled: status === 'declined',
+      submitted: status === 'active',
+      status,
+    }
+
+    return relay.setVariables(variables)
+
+  }
+
   render() {
 
     const { query, relay: { variables } } = this.props
     const { allAdverts } = query
-    const { sortBy, sortDirection } = variables
+    const { sortBy, sortDirection, status } = variables
 
     // sort adverts
     const sortedList = getSortedList(allAdverts, sortBy, sortDirection)
@@ -57,7 +73,18 @@ class Bot extends Component {
     return (
       <View>
 
-        <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>Bot Output</Text>
+        <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>All Adverts</Text>
+
+        <Select
+          atomic={{ d:'b', mt:4, mb:6, ta:'c' }}
+          name='status'
+          value={ status }
+          options={ FILTERS.status }
+          autoBlur={ true }
+          clearable={ false }
+          searchable={ true }
+          onChange={ ({ value }) => this.onStatusFilterChange(value) }
+        />
 
         <AutoSizer>
 

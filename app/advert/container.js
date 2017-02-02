@@ -58,6 +58,8 @@ class Advert extends Component {
 
         <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>{ advert.title }</Text>
 
+        <Text atomic={{ fs:3, mt:4, ta:'r' }}>Status: { advert.status }</Text>
+
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
 
         <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' onClick={ this.onListingPreviewRequest }>Preview Listing</Button>

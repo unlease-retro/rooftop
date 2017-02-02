@@ -5,7 +5,8 @@ const variables = {
     crawled: true,
     disabled: false,
     sortBy: 'title',
-    sortDirection: 'ASC'
+    sortDirection: 'ASC',
+    status: 'pending',
   },
 
 }

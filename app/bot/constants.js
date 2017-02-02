@@ -38,3 +38,11 @@ export const FIELDS = [
     label: 'Postcode'
   },
 ]
+
+export const FILTERS = {
+  status: [
+    { value: 'active', label: 'Active' },
+    { value: 'declined', label: 'Declined' },
+    { value: 'pending', label: 'Pending' },
+  ],
+}
