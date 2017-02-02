@@ -4,7 +4,7 @@ import Relay from 'react-relay'
 import * as Bot from '../bot'
 import { getStatus } from './computed'
 import * as fragments from './fragments'
-// import mutations from './mutations'
+import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
 import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
@@ -20,8 +20,18 @@ class Advert extends Component {
 
     super()
 
-    this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
     this.onCreateUserWithListingRequest = this.onCreateUserWithListingRequest.bind(this)
+    this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
+
+  }
+
+  onCreateUserWithListingRequest() {
+
+    const { query: { advert } } = this.props
+
+    return getAddressFromGeocode(advert.geocode)
+      .then( address => transformAdvertToListing({ ...advert, ...address }) )
+      .then( payload => Relay.Store.commitUpdate( new ListingMutations.createUserWithListing(payload) ) )
 
   }
 
@@ -35,13 +45,9 @@ class Advert extends Component {
 
   }
 
-  onCreateUserWithListingRequest() {
+  onUpdateAdvertRequest(_id, payload) {
 
-    const { query: { advert } } = this.props
-
-    return getAddressFromGeocode(advert.geocode)
-      .then( address => transformAdvertToListing({ ...advert, ...address }) )
-      .then( payload => Relay.Store.commitUpdate( new ListingMutations.createUserWithListing(payload) ) )
+    return Relay.Store.commitUpdate( new mutations.updateAdvert({ _id, payload }) )
 
   }
 
@@ -61,6 +67,8 @@ class Advert extends Component {
         <Text atomic={{ fs:3, mt:4, ta:'r' }}>Status: { advert.status }</Text>
 
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
+
+        <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
 
         <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
 
