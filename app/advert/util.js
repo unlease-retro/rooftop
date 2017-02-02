@@ -1,5 +1,5 @@
 /**
-  * @desc Bot utility functions
+  * @desc Advert utility functions
 */
 
 import { LISTING_PREVIEW_URL_PREFIX } from './constants'

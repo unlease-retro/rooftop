@@ -2,8 +2,9 @@ import Relay from 'react-relay'
 
 export const query = () => Relay.QL`
   fragment on Query {
-    allAdverts(crawled: $crawled, disabled: $disabled, submitted: $submitted) {
+    advert(_id: $_id) {
       _id
+      homeType
       availabilityFrom
       availabilityTo
       city
@@ -12,7 +13,6 @@ export const query = () => Relay.QL`
         lat
         lng
       }
-      homeType
       hostName
       photos
       postcode

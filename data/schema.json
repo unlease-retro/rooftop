@@ -342,6 +342,18 @@
               "deprecationReason": null
             },
             {
+              "name": "homeType",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "advertId",
               "description": null,
               "args": [],
@@ -1761,6 +1773,16 @@
             },
             {
               "name": "url",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "homeType",
               "description": null,
               "type": {
                 "kind": "SCALAR",

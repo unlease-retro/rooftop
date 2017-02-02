@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
+import { withRouter } from 'react-router'
 import { AutoSizer, Column, SortIndicator, Table } from 'react-virtualized'
 
 import { FIELDS } from './constants'
 import * as fragments from './fragments'
-// import mutations from './mutations'
-import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { getSortedList } from '../shared/util/virtualized'
 
 import { View } from 'components/layout'
@@ -19,7 +17,17 @@ class Bot extends Component {
 
     super()
 
+    this.onAdvertClick = this.onAdvertClick.bind(this)
     this.onSort = this.onSort.bind(this)
+
+  }
+
+  onAdvertClick(advert) {
+
+    const { router } = this.props
+
+    // navigate to `/bot/:id`
+    return router.push(`/bot/${advert._id}`)
 
   }
 
@@ -28,22 +36,6 @@ class Bot extends Component {
     const { relay } = this.props
 
     return relay.setVariables(variables)
-
-  }
-
-  onListingPreviewRequest(advert) {
-
-    return getAddressFromGeocode(advert.geocode)
-      .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...address }) ) )
-      .then( url => window.open(url) )
-
-  }
-
-  onCreateUserWithListingRequest(advert) {
-
-    return getAddressFromGeocode(advert.geocode)
-      .then( address => transformAdvertToListing({ ...advert, ...address }) )
-      .then( payload => Relay.Store.commitUpdate( new ListingMutations.createUserWithListing(payload) ) )
 
   }
 
@@ -84,7 +76,7 @@ class Bot extends Component {
               sortBy={ sortBy }
               sortDirection={ sortDirection }
               useDynamicRowHeight={false}
-              onRowDoubleClick={ ({ rowData }) => this.onListingPreviewRequest(rowData) }
+              onRowClick={ ({ rowData }) => this.onAdvertClick(rowData) }
             >
               { renderColumns }
             </Table>
@@ -100,4 +92,4 @@ class Bot extends Component {
 
 }
 
-export default Relay.createContainer(Bot, { ...variables, fragments })
+export default withRouter(Relay.createContainer(Bot, { ...variables, fragments }))
