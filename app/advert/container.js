@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Relay from 'react-relay'
 
 import * as Bot from '../bot'
+import { getStatus } from './computed'
 import * as fragments from './fragments'
 // import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
@@ -48,6 +49,9 @@ class Advert extends Component {
 
     const { query } = this.props
     const { advert } = query
+
+    // set computed values
+    advert.status = getStatus(advert)
 
     return (
       <View>

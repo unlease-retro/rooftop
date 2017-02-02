@@ -4,6 +4,7 @@ export const query = () => Relay.QL`
   fragment on Query {
     advert(_id: $_id) {
       _id
+      disabled
       homeType
       availabilityFrom
       availabilityTo
@@ -17,6 +18,7 @@ export const query = () => Relay.QL`
       photos
       postcode
       price
+      submitted
       title
     },
   }
