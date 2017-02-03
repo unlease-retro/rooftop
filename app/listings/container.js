@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Relay from 'react-relay'
 import uuid from 'node-uuid'
 
+import { getFilteredListings } from './computed'
 import { FILTERS } from './constants'
 import { getFormattedTimestamp, getListingUrl, getProfileUrl } from '../shared/util'
 
@@ -95,15 +96,10 @@ class Listings extends Component {
     const { onFilterClick, renderListing } = this
     const { query, relay: { variables } } = this.props
     const { listed, area, hostStatus, popular, bot } = variables
+    const { listings } = query
 
-    let { listings } = query
-
-    // TODO - combine filters and abstract to util(?)
-    if ( !listed && hostStatus !== 'unspecified' ) listings = listings.filter( l => l[hostStatus] )
-    // in the filter, doing || because popular can be undefined
-    if ( listed && popular !== 'unspecified' ) listings = listings.filter( l => (popular && l.popular === popular) || (!popular && !l.popular) )
-    // filter bot
-    if ( bot ) listings = listings.filter( l => l.bot === bot )
+    // get filtered listings from computed value
+    const filteredListings = getFilteredListings(listings, { bot, hostStatus, listed, popular })
 
     return (
       <View>
@@ -176,7 +172,7 @@ class Listings extends Component {
             />
           ) : null }
 
-          <Badge label={ listings.length } backgroundColor='primary' atomic={{ ml:5 }} />
+          <Badge label={ filteredListings.length } backgroundColor='primary' atomic={{ ml:5 }} />
 
           <View atomic={{ p:0, d:'ib', w:'a' }}>
 
@@ -191,7 +187,7 @@ class Listings extends Component {
 
         <Grid cell={3/0.12}>
 
-          { listings.map( l => renderListing(l) ) }
+          { filteredListings.map( l => renderListing(l) ) }
 
         </Grid>
 
