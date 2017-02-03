@@ -8,6 +8,7 @@ import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
 import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { promisifyMutation } from '../shared/util'
 
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
@@ -32,7 +33,7 @@ class Advert extends Component {
 
     return getAddressFromGeocode(advert.geocode)
       .then( address => transformAdvertToListing({ ...advert, ...address }) )
-      .then( payload => Relay.Store.commitUpdate( new ListingMutations.createUserWithListing(payload) ) )
+      .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
 
   }
 

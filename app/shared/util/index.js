@@ -4,12 +4,15 @@
 
 import jwt_decode from 'jwt-decode'
 import moment from 'moment'
+import Relay from 'react-relay'
 
 import { UI } from '../constants'
 
 const padLeft = str => Array(3 - str.length).join('0') + str
 
 export const isDevelopment = process.env.NODE_ENV === 'development'
+
+export const promisifyMutation = mutation => new Promise( (onSuccess, onFailure) => Relay.Store.commitUpdate( mutation, { onSuccess, onFailure } ) )
 
 export const getDecodedToken = token => jwt_decode(token)
 
