@@ -4,22 +4,23 @@ export const query = () => Relay.QL`
   fragment on Query {
     advert(_id: $_id) {
       _id
-      disabled
+      title
+      description
+      price
       homeType
+      hostName
+      phoneNumber
+      photos
       availabilityFrom
       availabilityTo
       city
-      description
+      postcode
       geocode {
         lat
         lng
       }
-      hostName
-      photos
-      postcode
-      price
+      disabled
       submitted
-      title
     },
   }
 `
