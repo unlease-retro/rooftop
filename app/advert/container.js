@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
 import { connect } from 'react-redux'
-import { Field, reduxForm, getFormValues } from 'redux-form/immutable'
+import { Field, reduxForm } from 'redux-form/immutable'
 
 import * as Bot from '../bot'
 import { getStatus } from './computed'
@@ -63,50 +63,51 @@ class Advert extends Component {
     const { query } = this.props
     const { advert } = query
 
-    console.log(this.props)
-
     const onCreateUserWithListingRequest = this.onCreateUserWithListingRequest
     const onListingPreviewRequest = this.onListingPreviewRequest
     const onUpdateAdvertRequest = this.onUpdateAdvertRequest
+
+    const renderField = ({ input, defaultValue }) => <Input { ...input } value={ defaultValue }/>
+    const renderDescriptionField = ({ input, defaultValue }) => <Textarea { ...input } value={ defaultValue }/>
 
     const Edit = reduxForm({ form: name })( () => (
       <Form>
 
         <Label>Title</Label>
 
-        <Field name='title' type='text' defaultValue={ advert.title } component={ Input } />
+        <Field name='title' defaultValue={ advert.title } component={ renderField } />
 
         <Label>Description</Label>
 
-        <Field name='description' type='text' defaultValue={ advert.description } component={ Textarea }/>
+        <Field name='description' type='text' defaultValue={ advert.description } component={ renderDescriptionField }/>
 
         <Label>Price</Label>
 
-        <Field name='price' type='number' defaultValue={ advert.price } component={ Input }/>
+        <Field name='price' type='number' defaultValue={ advert.price } component={ renderField }/>
 
         <Label>Host name</Label>
 
-        <Field name='hostName' type='text' defaultValue={ advert.hostName } component={ Input }/>
+        <Field name='hostName' type='text' defaultValue={ advert.hostName } component={ renderField }/>
 
         <Label>Phone number</Label>
 
-        <Field name='phoneNumber' type='text' defaultValue={ advert.phoneNumber } component={ Input }/>
+        <Field name='phoneNumber' type='text' defaultValue={ advert.phoneNumber } component={ renderField }/>
 
         <Label>Home type</Label>
 
-        <Field name='homeType' type='text' defaultValue={ advert.homeType } component={ Input }/>
+        <Field name='homeType' type='text' defaultValue={ advert.homeType } component={ renderField }/>
 
         <Label>Location</Label>
 
-        <Field name='location' type='text' defaultValue={ advert.postcode } component={ Input }/>
+        <Field name='location' type='text' defaultValue={ advert.postcode } component={ renderField }/>
 
         <Label>Availability from</Label>
 
-        <Field name='availabilityFrom' type='date' defaultValue={ advert.availabilityFrom } component={ Input }/>
+        <Field name='availabilityFrom' type='date' defaultValue={ advert.availabilityFrom } component={ renderField }/>
 
         <Label>Availability to</Label>
 
-        <Field name='availabilityTo' type='date' defaultValue={ advert.availabilityTo } component={ Input }/>
+        <Field name='availabilityTo' type='date' defaultValue={ advert.availabilityTo } component={ renderField }/>
 
       </Form>)
     )
