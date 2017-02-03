@@ -7,11 +7,11 @@ import * as fragments from './fragments'
 import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
-import { View } from 'components/layout'
+import { Section, View } from 'components/layout'
 import { Text } from 'components/text'
 
 class Advert extends Component {
@@ -22,6 +22,7 @@ class Advert extends Component {
 
     this.onCreateUserWithListingRequest = this.onCreateUserWithListingRequest.bind(this)
     this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
+    this.onListingViewRequest = this.onListingViewRequest.bind(this)
 
   }
 
@@ -42,6 +43,14 @@ class Advert extends Component {
     return getAddressFromGeocode(advert.geocode)
       .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...address }) ) )
       .then( url => window.open(url) )
+
+  }
+
+  onListingViewRequest() {
+
+    const { query: { advert } } = this.props
+
+    return window.open( getListingUrl(advert.listingId) )
 
   }
 
@@ -68,11 +77,23 @@ class Advert extends Component {
 
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
 
-        <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
+        { advert.status !== 'active' && (
+          <Section>
 
-        <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
+            { advert.status !== 'declined' && (
+              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
+            ) }
 
-        <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>
+            <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
+
+            <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>
+
+          </Section>
+        ) }
+
+        { advert.status === 'active' && (
+          <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onListingViewRequest }>View Listing</Button>
+        ) }
 
       </View>
     )
