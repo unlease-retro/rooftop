@@ -4,16 +4,17 @@ export const query = () => Relay.QL`
   fragment on Query {
     advert(_id: $_id) {
       _id
-      disabled
-      homeType
       availabilityFrom
       availabilityTo
       city
       description
+      disabled
       geocode {
         lat
         lng
       }
+      listingId
+      homeType
       hostName
       photos
       postcode

@@ -44,6 +44,7 @@ type Bot {
   url: String
   homeType: String
   advertId: String
+  listingId: String
   phoneNumber: String
   hostName: String
   title: String
@@ -184,6 +185,7 @@ input InputTypeBot {
   url: String
   homeType: String
   advertId: String
+  listingId: String
   phoneNumber: String
   hostName: String
   title: String
