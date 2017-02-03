@@ -1,6 +1,6 @@
 import { UI } from '../shared/constants'
 
-export const route = 'bot'
+export const route = '/bot'
 
 export const LISTING_PREVIEW_URL_PREFIX = `${UI}/preview-listing?listing=`
 
@@ -38,3 +38,11 @@ export const FIELDS = [
     label: 'Postcode'
   },
 ]
+
+export const FILTERS = {
+  status: [
+    { value: 'active', label: 'Active' },
+    { value: 'declined', label: 'Declined' },
+    { value: 'pending', label: 'Pending' },
+  ],
+}

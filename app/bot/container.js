@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
+import { withRouter } from 'react-router'
 import { AutoSizer, Column, SortIndicator, Table } from 'react-virtualized'
 
-import { FIELDS } from './constants'
+import { FIELDS, FILTERS } from './constants'
 import * as fragments from './fragments'
-// import mutations from './mutations'
-import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { getSortedList } from '../shared/util/virtualized'
 
 import { View } from 'components/layout'
+import { Select } from 'components/select'
 import { Text } from 'components/text'
 
 class Bot extends Component {
@@ -19,7 +18,18 @@ class Bot extends Component {
 
     super()
 
+    this.onAdvertClick = this.onAdvertClick.bind(this)
     this.onSort = this.onSort.bind(this)
+    this.onStatusFilterChange = this.onStatusFilterChange.bind(this)
+
+  }
+
+  onAdvertClick(advert) {
+
+    const { router } = this.props
+
+    // navigate to `/bot/:id`
+    return router.push(`/bot/${advert._id}`)
 
   }
 
@@ -31,19 +41,17 @@ class Bot extends Component {
 
   }
 
-  onListingPreviewRequest(advert) {
+  onStatusFilterChange(status) {
 
-    return getAddressFromGeocode(advert.geocode)
-      .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...address }) ) )
-      .then( url => window.open(url) )
+    const { relay } = this.props
 
-  }
+    const variables = {
+      disabled: status === 'declined',
+      submitted: status === 'active',
+      status,
+    }
 
-  onCreateUserWithListingRequest(advert) {
-
-    return getAddressFromGeocode(advert.geocode)
-      .then( address => transformAdvertToListing({ ...advert, ...address }) )
-      .then( payload => Relay.Store.commitUpdate( new ListingMutations.createUserWithListing(payload) ) )
+    return relay.setVariables(variables)
 
   }
 
@@ -51,7 +59,7 @@ class Bot extends Component {
 
     const { query, relay: { variables } } = this.props
     const { allAdverts } = query
-    const { sortBy, sortDirection } = variables
+    const { sortBy, sortDirection, status } = variables
 
     // sort adverts
     const sortedList = getSortedList(allAdverts, sortBy, sortDirection)
@@ -65,7 +73,18 @@ class Bot extends Component {
     return (
       <View>
 
-        <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>Bot Output</Text>
+        <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>All Adverts</Text>
+
+        <Select
+          atomic={{ d:'b', mt:4, mb:6, ta:'c' }}
+          name='status'
+          value={ status }
+          options={ FILTERS.status }
+          autoBlur={ true }
+          clearable={ false }
+          searchable={ true }
+          onChange={ ({ value }) => this.onStatusFilterChange(value) }
+        />
 
         <AutoSizer>
 
@@ -84,7 +103,7 @@ class Bot extends Component {
               sortBy={ sortBy }
               sortDirection={ sortDirection }
               useDynamicRowHeight={false}
-              onRowDoubleClick={ ({ rowData }) => this.onListingPreviewRequest(rowData) }
+              onRowClick={ ({ rowData }) => this.onAdvertClick(rowData) }
             >
               { renderColumns }
             </Table>
@@ -100,4 +119,4 @@ class Bot extends Component {
 
 }
 
-export default Relay.createContainer(Bot, { ...variables, fragments })
+export default withRouter(Relay.createContainer(Bot, { ...variables, fragments }))
