@@ -38,6 +38,9 @@ export const query = () => Relay.QL`
         language
         flatmates
         occupation
+        age
+        interests
+        nationality
       }
       extraCosts {
         deposit
@@ -52,6 +55,9 @@ export const query = () => Relay.QL`
         smoking
         occupation
         references
+        minAge
+        maxAge
+        vegetarian
       }
       disabled
       submitted

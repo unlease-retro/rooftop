@@ -232,6 +232,30 @@ class Advert extends Component {
 
               </View>
 
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Nationality:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.nationality }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Age:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.age }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Interests:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.interests }</Text>
+
+              </View>
+
             </View>
 
             <View>
@@ -321,6 +345,30 @@ class Advert extends Component {
                 <Text atomic={{ m:0 }}>References:</Text>
 
                 <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.references }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Minimum age:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.minAge }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Maximum age:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.maxAge }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Vegetarian:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.vegetarian }</Text>
 
               </View>
 
