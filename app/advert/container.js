@@ -16,6 +16,7 @@ import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListing, 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
+import { Textarea } from 'components/textarea'
 import { View, Grid, Section } from 'components/layout'
 import { Text } from 'components/text'
 import { Label } from 'components/label'
@@ -84,6 +85,12 @@ class Advert extends Component {
         <Grid>
 
           <Section>
+
+            <View>
+
+              <Textarea defaultValue={ advert.url }/>
+
+            </View>
 
             <View>
 
