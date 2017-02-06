@@ -13,6 +13,7 @@ import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
 import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 
+import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
 import { View, Grid, Section } from 'components/layout'
@@ -61,6 +62,7 @@ class Advert extends Component {
 
     const { query } = this.props
     const { advert } = query
+    const { photos, amenities, preferences, household, extraCosts } = advert
 
     // actions
     const onCreateUserWithListingRequest = this.onCreateUserWithListingRequest
@@ -83,7 +85,239 @@ class Advert extends Component {
 
           <Section>
 
-            <Text>1.</Text>
+            <View>
+
+              <Grid>
+
+                { photos.map( (source, index) => <Image key={ index } width='auto' height='200px' source={ decodeURI(source) } /> ) }
+
+              </Grid>
+
+            </View>
+
+            <View>
+
+              <Text>Amenities</Text>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Parking:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.parking }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Garage:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.garage }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Furnishing:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.furnishing }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Garden:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.garden }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Balcony:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.balcony }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Disabled Access:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.disabledAccess }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Shared Living Room:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.sharedLivingRoom }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Broadband:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.broadband }</Text>
+
+              </View>
+
+            </View>
+
+            <View>
+
+              <Text>Household</Text>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Pets:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.pets }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Rooms:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.rooms }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Gender:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.gender }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Smoker:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.smoker }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Language:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.language }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Flatmates:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.flatmates }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Occupation:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.occupation }</Text>
+
+              </View>
+
+            </View>
+
+            <View>
+
+              <Text>Extra Costs</Text>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Deposit:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.deposit }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Fees Apply:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.feesApply }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Bills Included:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.billsIncluded }</Text>
+
+              </View>
+
+            </View>
+
+            <View>
+
+              <Text>Preferences</Text>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>DSS:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.dss }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Pets:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.pets }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Gender:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.gender }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Couples:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.couples }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Smoking:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.smoking }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>Occupation:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.occupation }</Text>
+
+              </View>
+
+              <View atomic={{ d:'f', p:0 }}>
+
+                <Text atomic={{ m:0 }}>References:</Text>
+
+                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.references }</Text>
+
+              </View>
+
+            </View>
 
           </Section>
 

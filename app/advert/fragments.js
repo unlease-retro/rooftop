@@ -19,6 +19,39 @@ export const query = () => Relay.QL`
         lat
         lng
       }
+      amenities {
+        parking
+        garage
+        furnishing
+        garden
+        balcony
+        disabledAccess
+        sharedLivingRoom
+        broadband
+      }
+      household {
+        pets
+        rooms
+        gender
+        smoker
+        language
+        flatmates
+        occupation
+      }
+      extraCosts {
+        deposit
+        feesApply
+        billsIncluded
+      }
+      preferences {
+        dss
+        pets
+        gender
+        couples
+        smoking
+        occupation
+        references
+      }
       disabled
       submitted
     },
