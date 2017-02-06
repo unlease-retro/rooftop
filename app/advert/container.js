@@ -12,6 +12,7 @@ import { promisifyMutation } from '../shared/util'
 
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
+import { Image } from 'components/image'
 import { Section, View } from 'components/layout'
 import { Text } from 'components/text'
 
@@ -77,6 +78,8 @@ class Advert extends Component {
         <Text atomic={{ fs:3, mt:4, ta:'r' }}>Status: { advert.status }</Text>
 
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
+
+        { advert.photos.map( (p, i) => <Image key={i} source={p} width='100px' height='100px' /> )}
 
         { advert.status !== 'active' && (
           <Section>
