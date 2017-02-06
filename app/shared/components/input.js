@@ -5,7 +5,7 @@ import { colours, typography } from 'style'
 
 export const Input = styled.input`
   ${ typography.ff() }
-  width: 200px;
+  min-width: 200px;
   margin-left: auto;
   margin-right: auto;
   outline: none;

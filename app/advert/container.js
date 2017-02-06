@@ -13,13 +13,13 @@ import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
 import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { promisifyMutation } from '../shared/util'
+import { required } from './util'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
 import { View, Grid, Section } from 'components/layout'
 import { Text } from 'components/text'
-import { Label } from 'components/label'
 import { Form, Input } from './components'
 
 class Advert extends Component {
@@ -386,41 +386,23 @@ class Advert extends Component {
 
             <Form>
 
-              <Label>Title</Label>
+              <Field name='title' type='text' label='Title' defaultValue={ advert.title } component={ Input } validate={ required }/>
 
-              <Field name='title' type='text' defaultValue={ advert.title } component={ Input } />
+              <Field name='description' label='Description' defaultValue={ advert.description } component={ Input } validate={ required }/>
 
-              <Label>Description</Label>
+              <Field name='price' type='number' label='Price' defaultValue={ advert.price } component={ Input } validate={ required }/>
 
-              <Field name='description' defaultValue={ advert.description } component={ Input }/>
+              <Field name='hostName' type='text' label='Host name' defaultValue={ advert.hostName } component={ Input } validate={ required }/>
 
-              <Label>Price</Label>
+              <Field name='phoneNumber' type='text' label='Phone number' defaultValue={ advert.phoneNumber } component={ Input } validate={ required }/>
 
-              <Field name='price' type='number' defaultValue={ advert.price } component={ Input }/>
+              <Field name='homeType' type='text' label='Home type' defaultValue={ advert.homeType } component={ Input } validate={ required }/>
 
-              <Label>Host name</Label>
+              <Field name='location' type='text' label='Location' defaultValue={ advert.postcode } component={ Input } validate={ required }/>
 
-              <Field name='hostName' type='text' defaultValue={ advert.hostName } component={ Input }/>
+              <Field name='availabilityFrom' type='date' label='Availability from' defaultValue={ advert.availabilityFrom } component={ Input } validate={ required }/>
 
-              <Label>Phone number</Label>
-
-              <Field name='phoneNumber' type='text' defaultValue={ advert.phoneNumber } component={ Input }/>
-
-              <Label>Home type</Label>
-
-              <Field name='homeType' type='text' defaultValue={ advert.homeType } component={ Input }/>
-
-              <Label>Location</Label>
-
-              <Field name='location' type='text' defaultValue={ advert.postcode } component={ Input }/>
-
-              <Label>Availability from</Label>
-
-              <Field name='availabilityFrom' type='date' defaultValue={ advert.availabilityFrom } component={ Input }/>
-
-              <Label>Availability to</Label>
-
-              <Field name='availabilityTo' type='date' defaultValue={ advert.availabilityTo } component={ Input }/>
+              <Field name='availabilityTo' type='date' label='Availability to' defaultValue={ advert.availabilityTo } component={ Input } validate={ required }/>
 
             </Form>
 
@@ -429,7 +411,7 @@ class Advert extends Component {
         </Grid>
 
         { advert.status !== 'active' && (
-          <Section>
+          <Section atomic={{ ta:'c' }}>
 
             { advert.status !== 'declined' && (
               <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
@@ -443,7 +425,11 @@ class Advert extends Component {
         ) }
 
         { advert.status === 'active' && (
-          <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onListingViewRequest }>View Listing</Button>
+          <Section atomic={{ ta:'c' }}>
+
+            <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onListingViewRequest }>View Listing</Button>
+
+          </Section>
         ) }
 
       </View>

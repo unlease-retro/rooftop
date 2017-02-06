@@ -11,7 +11,9 @@ import { SCALE, UNIT } from 'style/scale'
 const properties = {
   ai: 'align-items',
   b: 'bottom',
+  bg: 'background',
   bw: 'border-width',
+  bs: 'border-style',
   c: 'cursor',
   d: 'display',
   fd: 'flex-direction',
@@ -53,6 +55,14 @@ const values = {
     c: 'center',
     e: 'flex-end',
     s: 'flex-start'
+  },
+  bg: {
+    t: 'transparent'
+  },
+  bs: {
+    da: 'dashed',
+    do: 'dotted', 
+    s: 'solid',
   },
   c: {
     a: 'auto',
@@ -131,6 +141,8 @@ const values = {
 const getters = {
   ai: value => getStaticProperty('ai', value),
   b: value => getScaledProperty('b', value),
+  bg: value => getStaticProperty('bg', value),
+  bs: value => getStaticProperty('bs', value),
   bw: value => getComputedProperty('bw', value),
   c: value => getStaticProperty('c', value),
   d: value => getStaticProperty('d', value),
