@@ -6,6 +6,7 @@ export const query = () => Relay.QL`
       _id
       url
       title
+      listingId
       description
       price
       homeType

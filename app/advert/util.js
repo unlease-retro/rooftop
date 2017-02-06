@@ -2,7 +2,9 @@
   * @desc Advert utility functions
 */
 
-import { LISTING_PREVIEW_URL_PREFIX } from './constants'
+import { LISTING_PREVIEW_URL_PREFIX, LISTING_URL_PREFIX } from './constants'
+
+export const getListingUrl = id => `${LISTING_URL_PREFIX}${id}`
 
 export const getListingPreviewUrl = listing => `${LISTING_PREVIEW_URL_PREFIX}${ encodeURI(JSON.stringify(listing)) }`
 

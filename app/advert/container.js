@@ -11,13 +11,15 @@ import * as fragments from './fragments'
 import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { promisifyMutation } from '../shared/util'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
 import { Textarea } from 'components/textarea'
 import { View, Grid, Section } from 'components/layout'
+import { Image } from 'components/image'
 import { Text } from 'components/text'
 import { Label } from 'components/label'
 import { Form, Input } from './components'
@@ -30,6 +32,7 @@ class Advert extends Component {
 
     this.onCreateUserWithListingRequest = this.onCreateUserWithListingRequest.bind(this)
     this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
+    this.onListingViewRequest = this.onListingViewRequest.bind(this)
 
   }
 
@@ -39,7 +42,7 @@ class Advert extends Component {
 
     return getAddressFromGeocode(advert.geocode)
       .then( address => transformAdvertToListing({ ...advert, ...address }) )
-      .then( payload => Relay.Store.commitUpdate( new ListingMutations.createUserWithListing(payload) ) )
+      .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
 
   }
 
@@ -50,6 +53,14 @@ class Advert extends Component {
     return getAddressFromGeocode(advert.geocode)
       .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...address }) ) )
       .then( url => window.open(url) )
+
+  }
+
+  onListingViewRequest() {
+
+    const { query: { advert } } = this.props
+
+    return window.open( getListingUrl(advert.listingId) )
 
   }
 
@@ -79,6 +90,14 @@ class Advert extends Component {
         <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>{ advert.title }</Text>
 
         <Text atomic={{ fs:3, mt:4, ta:'r' }}>Status: { advert.status }</Text>
+
+        <Section>
+
+          <Text atomic={{ fs:3, mt:4, mb:0, ta:'r' }}>Advert: { advert.url }</Text>
+
+          <Text atomic={{ fs:3, mt:0, ta:'r' }} color='error'>Caution: only open in private-mode 🕵️</Text>
+
+        </Section>
 
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
 
@@ -431,6 +450,24 @@ class Advert extends Component {
           <Button atomic={{ d:'ib', w:'a' }} onClick={ onCreateUserWithListingRequest  }>Create Listing</Button>
 
         </View>
+
+        { advert.status !== 'active' && (
+          <Section>
+
+            { advert.status !== 'declined' && (
+              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
+            ) }
+
+            <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
+
+            <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>
+
+          </Section>
+        ) }
+
+        { advert.status === 'active' && (
+          <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onListingViewRequest }>View Listing</Button>
+        ) }
 
       </View>
     )

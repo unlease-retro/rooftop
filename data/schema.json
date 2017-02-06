@@ -366,6 +366,18 @@
               "deprecationReason": null
             },
             {
+              "name": "listingId",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "phoneNumber",
               "description": null,
               "args": [],
@@ -1865,6 +1877,16 @@
             },
             {
               "name": "advertId",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "listingId",
               "description": null,
               "type": {
                 "kind": "SCALAR",
