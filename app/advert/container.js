@@ -440,16 +440,6 @@ class Advert extends Component {
 
         </Grid>
 
-        <View atomic={{ ta: 'c' }}>
-
-          <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
-
-          <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' onClick={ onListingPreviewRequest }>Preview Listing</Button>
-
-          <Button atomic={{ d:'ib', w:'a' }} onClick={ onCreateUserWithListingRequest  }>Create Listing</Button>
-
-        </View>
-
         { advert.status !== 'active' && (
           <Section>
 
