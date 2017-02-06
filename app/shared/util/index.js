@@ -3,7 +3,6 @@
 */
 
 import jwt_decode from 'jwt-decode'
-import moment from 'moment'
 import Relay from 'react-relay'
 
 import { UI } from '../constants'
@@ -31,8 +30,6 @@ export const getFormattedTimestamp = ts => {
   return `${DD}/${MM}/${YYYY}`
 
 }
-
-export const getFormattedUnixTimestamp = ut => moment(parseInt(ut)).format('DD/MM/YYYY')
 
 export const getListingUrl = id => `${UI}/room/${id}`
 
