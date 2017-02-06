@@ -21,6 +21,7 @@ export const query = () => Relay.QL`
       price
       submitted
       title
+      url
     },
   }
 `

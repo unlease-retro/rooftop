@@ -77,6 +77,14 @@ class Advert extends Component {
 
         <Text atomic={{ fs:3, mt:4, ta:'r' }}>Status: { advert.status }</Text>
 
+        <Section>
+
+          <Text atomic={{ fs:3, mt:4, mb:0, ta:'r' }}>Advert: { advert.url }</Text>
+
+          <Text atomic={{ fs:3, mt:0, ta:'r' }} color='error'>Caution: only open in private-mode 🕵️</Text>
+
+        </Section>
+
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
 
         { advert.photos.map( (p, i) => <Image key={i} source={p} width='100px' height='100px' /> )}
