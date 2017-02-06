@@ -4,24 +4,64 @@ export const query = () => Relay.QL`
   fragment on Query {
     advert(_id: $_id) {
       _id
+      url
+      title
+      listingId
+      description
+      price
+      homeType
+      hostName
+      phoneNumber
+      photos
       availabilityFrom
       availabilityTo
       city
-      description
-      disabled
+      postcode
       geocode {
         lat
         lng
       }
-      listingId
-      homeType
-      hostName
-      photos
-      postcode
-      price
+      amenities {
+        parking
+        garage
+        furnishing
+        garden
+        balcony
+        disabledAccess
+        sharedLivingRoom
+        broadband
+      }
+      household {
+        pets
+        rooms
+        gender
+        smoker
+        language
+        flatmates
+        occupation
+        age
+        interests
+        nationality
+      }
+      extraCosts {
+        deposit
+        feesApply
+        billsIncluded
+      }
+      preferences {
+        dss
+        pets
+        gender
+        couples
+        smoking
+        occupation
+        references
+        minAge
+        maxAge
+        vegetarian
+      }
+      disabled
       submitted
-      title
-      url
     },
   }
 `
