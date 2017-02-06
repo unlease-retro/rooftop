@@ -1,25 +1,24 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
 import { connect } from 'react-redux'
-import { reduxForm, Field } from 'redux-form/immutable'
+import { createStructuredSelector } from 'reselect'
+import { Field } from 'redux-form/immutable'
 
 import * as Bot from '../bot'
 import { getStatus } from './computed'
+import * as selectors from './selectors'
 import * as fragments from './fragments'
 import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { name as form } from './constants'
 import { getAddressFromGeocode, getListingPreviewUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
-import { View } from 'components/layout'
+import { View, Grid, Section } from 'components/layout'
 import { Text } from 'components/text'
-import { Form } from 'components/form'
 import { Label } from 'components/label'
-import { Input } from 'components/input'
-import { Textarea } from 'components/textarea'
+import { Form, Input } from './components'
 
 class Advert extends Component {
 
@@ -63,19 +62,6 @@ class Advert extends Component {
     const { query } = this.props
     const { advert } = query
 
-    const renderInput = ( { input, type, defaultValue } ) => {
-      
-      // set value to default value
-      if (!input.value) input.value = defaultValue
-      
-      if (!type) return <Textarea { ...input }/>
-
-      return <Input { ...input } type={ type }/>
-
-    }
-
-    const EditForm = reduxForm( { form } )( Form )
-
     // actions
     const onCreateUserWithListingRequest = this.onCreateUserWithListingRequest
     const onListingPreviewRequest = this.onListingPreviewRequest
@@ -92,46 +78,60 @@ class Advert extends Component {
         <Text atomic={{ fs:3, mt:4, ta:'r' }}>Status: { advert.status }</Text>
 
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
-        
-        <EditForm>
 
-          <Label>Title</Label>
+        <Grid>
 
-          <Field name='title' type='text' defaultValue={ advert.title } component={ renderInput } />
+          <Section>
 
-          <Label>Description</Label>
+            <Text>1.</Text>
 
-          <Field name='description' defaultValue={ advert.description } component={ renderInput }/>
+          </Section>
 
-          <Label>Price</Label>
+          <Section>
 
-          <Field name='price' type='number' defaultValue={ advert.price } component={ renderInput }/>
+            <Form>
 
-          <Label>Host name</Label>
+              <Label>Title</Label>
 
-          <Field name='hostName' type='text' defaultValue={ advert.hostName } component={ renderInput }/>
+              <Field name='title' type='text' defaultValue={ advert.title } component={ Input } />
 
-          <Label>Phone number</Label>
+              <Label>Description</Label>
 
-          <Field name='phoneNumber' type='text' defaultValue={ advert.phoneNumber } component={ renderInput }/>
+              <Field name='description' defaultValue={ advert.description } component={ Input }/>
 
-          <Label>Home type</Label>
+              <Label>Price</Label>
 
-          <Field name='homeType' type='text' defaultValue={ advert.homeType } component={ renderInput }/>
+              <Field name='price' type='number' defaultValue={ advert.price } component={ Input }/>
 
-          <Label>Location</Label>
+              <Label>Host name</Label>
 
-          <Field name='location' type='text' defaultValue={ advert.postcode } component={ renderInput }/>
+              <Field name='hostName' type='text' defaultValue={ advert.hostName } component={ Input }/>
 
-          <Label>Availability from</Label>
+              <Label>Phone number</Label>
 
-          <Field name='availabilityFrom' type='date' defaultValue={ advert.availabilityFrom } component={ renderInput }/>
+              <Field name='phoneNumber' type='text' defaultValue={ advert.phoneNumber } component={ Input }/>
 
-          <Label>Availability to</Label>
+              <Label>Home type</Label>
 
-          <Field name='availabilityTo' type='date' defaultValue={ advert.availabilityTo } component={ renderInput }/>
+              <Field name='homeType' type='text' defaultValue={ advert.homeType } component={ Input }/>
 
-        </EditForm>
+              <Label>Location</Label>
+
+              <Field name='location' type='text' defaultValue={ advert.postcode } component={ Input }/>
+
+              <Label>Availability from</Label>
+
+              <Field name='availabilityFrom' type='date' defaultValue={ advert.availabilityFrom } component={ Input }/>
+
+              <Label>Availability to</Label>
+
+              <Field name='availabilityTo' type='date' defaultValue={ advert.availabilityTo } component={ Input }/>
+
+            </Form>
+
+          </Section>
+
+        </Grid>
 
         <View atomic={{ ta: 'c' }}>
 
@@ -150,9 +150,10 @@ class Advert extends Component {
 
 }
 
+
 export default Relay.createContainer(
   connect(
-
+    createStructuredSelector({ ...selectors })
   )(Advert),
   { ...variables, fragments }
 )
