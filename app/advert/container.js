@@ -74,11 +74,6 @@ class Advert extends Component {
     const { advert } = query
     const { photos, amenities, preferences, household, extraCosts } = advert
 
-    // actions
-    const onCreateUserWithListingRequest = this.onCreateUserWithListingRequest
-    const onListingPreviewRequest = this.onListingPreviewRequest
-    const onUpdateAdvertRequest = this.onUpdateAdvertRequest
-
     // set computed values
     advert.status = getStatus(advert)
 
