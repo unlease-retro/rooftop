@@ -4,6 +4,7 @@ export const query = () => Relay.QL`
   fragment on Query {
     advert(_id: $_id) {
       _id
+      id
       url
       title
       listingId

@@ -330,6 +330,18 @@
               "deprecationReason": null
             },
             {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "url",
               "description": null,
               "args": [],
@@ -1805,7 +1817,7 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "_id",
+              "name": "id",
               "description": null,
               "type": {
                 "kind": "SCALAR",
