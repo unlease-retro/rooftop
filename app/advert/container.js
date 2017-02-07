@@ -44,6 +44,7 @@ class Advert extends Component {
       .then( () => getAddressFromGeocode(advert.geocode) )
       .then( address => transformAdvertToListing({ ...this.props.query.advert, ...address }) )
       .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
+      .then( ({ createUserWithListing: { listing } }) => console.log('done!', listing.id) )
 
   }
 
