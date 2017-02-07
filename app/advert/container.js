@@ -75,7 +75,7 @@ class Advert extends Component {
 
   render() {
 
-    const { query } = this.props
+    const { doesFormHaveErrors, query } = this.props
     const { advert } = query
     const { photos, amenities, preferences, household, extraCosts } = advert
 
@@ -426,9 +426,9 @@ class Advert extends Component {
               <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
             ) }
 
-            <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
+            <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
 
-            <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>
+            <Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>
 
           </Section>
         ) }
