@@ -84,6 +84,18 @@ class Advert extends Component {
     const { advert } = query
     const { photos, amenities, preferences, household, extraCosts } = advert
 
+    const initialValues = {
+      title: advert.title,
+      description: advert.description,
+      price: advert.price,
+      hostName: advert.hostName,
+      phoneNumber: advert.phoneNumber,
+      homeType: advert.homeType,
+      postcode: advert.postcode,
+      availabilityFrom: advert.availabilityFrom,
+      availabilityTo: advert.availabilityTo,
+    }
+
     // set computed values
     advert.status = getStatus(advert)
 
@@ -390,7 +402,7 @@ class Advert extends Component {
 
           <Section>
 
-            <Form initialValues={ { ...advert } }>
+            <Form initialValues={ initialValues }>
 
               <Field name='title' type='text' label='Title' component={ Input } validate={ required }/>
 
