@@ -11,9 +11,8 @@ import * as fragments from './fragments'
 import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getStatusTextColour, required, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { promisifyMutation } from '../shared/util'
-import { required } from './util'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
@@ -85,17 +84,9 @@ class Advert extends Component {
     return (
       <View>
 
-        <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>{ advert.title }</Text>
+        <Text atomic={{ fs:6, fw:'b', mb:0, ta:'c' }} color='primary'>{ advert.title }</Text>
 
-        <Text atomic={{ fs:3, mt:4, ta:'r' }}>Status: { advert.status }</Text>
-
-        <Section>
-
-          <Text atomic={{ fs:3, mt:4, mb:0, ta:'r' }}>Advert: { advert.url }</Text>
-
-          <Text atomic={{ fs:3, mt:0, ta:'r' }} color='error'>Caution: only open in private-mode 🕵️</Text>
-
-        </Section>
+        <Text atomic={{ fs:4, mt:0, ta:'c', tt:'u' }} color={ getStatusTextColour(advert.status) }>{ advert.status }</Text>
 
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
 
@@ -440,6 +431,14 @@ class Advert extends Component {
 
           </Section>
         ) }
+
+        <Section>
+
+          <Text atomic={{ fs:3, mt:4, mb:0, ta:'c' }}>{ advert.url }</Text>
+
+          <Text atomic={{ fs:3, mt:0, ta:'c' }} color='error'>Caution: only open in private-mode 🕵️</Text>
+
+        </Section>
 
       </View>
     )
