@@ -1,4 +1,4 @@
-import { getFormValues } from 'redux-form/immutable'
+import { getFormSyncErrors, getFormValues } from 'redux-form/immutable'
 import { name } from './constants'
 
 export const editForm = state => {
@@ -12,3 +12,5 @@ export const editForm = state => {
 }
 
 export const hasFormBeenEdited = state => Boolean( getFormValues(name)(state) && getFormValues(name)(state).size )
+
+export const doesFormHaveErrors = state => Boolean( getFormSyncErrors(name)(state) )
