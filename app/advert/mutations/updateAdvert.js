@@ -28,6 +28,7 @@ export default class UpdateAdvertMutation extends Relay.Mutation {
           disabled
           homeType
           hostName
+          listingId
           phoneNumber
           postcode
           price

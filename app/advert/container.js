@@ -36,15 +36,16 @@ class Advert extends Component {
 
   onCreateUserWithListingRequest() {
 
+    const { onUpdateAdvertRequest } = this
     const { editForm, hasFormBeenEdited, query: { advert } } = this.props
 
-    const updateAdvertIfFormEdited = hasFormBeenEdited ? this.onUpdateAdvertRequest(advert._id, editForm) : Promise.resolve()
+    const updateAdvertIfFormEdited = hasFormBeenEdited ? onUpdateAdvertRequest(advert._id, editForm) : Promise.resolve()
 
     return updateAdvertIfFormEdited
       .then( () => getAddressFromGeocode(advert.geocode) )
       .then( address => transformAdvertToListing({ ...this.props.query.advert, ...address }) )
       .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
-      .then( ({ createUserWithListing: { listing } }) => console.log('done!', listing.id) )
+      .then( ({ createUserWithListing: { listing } }) => onUpdateAdvertRequest(advert._id, { listingId: listing.id, submitted: true }) )
 
   }
 
