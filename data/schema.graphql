@@ -384,7 +384,7 @@ input RoommateInputType {
 }
 
 input UpdateAdvertInput {
-  id: String
+  _id: String
   payload: InputTypeBot
   clientMutationId: String
 }

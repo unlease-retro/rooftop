@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Field } from 'redux-form/immutable'
 
+import * as API from '../shared/services/api'
 import * as Bot from '../bot'
 import { getStatus } from './computed'
 import * as selectors from './selectors'
@@ -13,10 +14,12 @@ import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
 import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getStatusTextColour, required, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { promisifyMutation } from '../shared/util'
+import { DEFAULT_SMS } from './constants'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
+import { Textarea } from 'components/textarea'
 import { View, Grid, Section } from 'components/layout'
 import { Text } from 'components/text'
 import { Form, Input } from './components'
@@ -27,6 +30,8 @@ class Advert extends Component {
 
     super()
 
+    this.SMSContent = DEFAULT_SMS
+
     this.onCreateUserWithListingRequest = this.onCreateUserWithListingRequest.bind(this)
     this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
     this.onListingViewRequest = this.onListingViewRequest.bind(this)
@@ -35,7 +40,7 @@ class Advert extends Component {
 
   onCreateUserWithListingRequest() {
 
-    const { onUpdateAdvertRequest } = this
+    const { onUpdateAdvertRequest, SMSContent } = this
     const { editForm, hasFormBeenEdited, query: { advert } } = this.props
 
     const updateAdvertIfFormEdited = hasFormBeenEdited ? onUpdateAdvertRequest(advert._id, editForm) : Promise.resolve()
@@ -45,6 +50,7 @@ class Advert extends Component {
       .then( address => transformAdvertToListing({ ...this.props.query.advert, ...address }) )
       .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
       .then( ({ createUserWithListing: { listing } }) => onUpdateAdvertRequest(advert._id, { listingId: listing.id, submitted: true }) )
+      .then( () => API.post( 'webhook/sendSms', { body: SMSContent, to: advert.phoneNumber }) )
 
   }
 
@@ -409,6 +415,14 @@ class Advert extends Component {
           </Section>
 
         </Grid>
+
+        <View>
+
+          <Text>SMS content:</Text>
+
+          <Textarea defaultValue={ this.SMSContent } onChange={ e => this.SMSContent = e.target.value } />
+
+        </View>
 
         { advert.status !== 'active' && (
           <Section atomic={{ ta:'c' }}>
