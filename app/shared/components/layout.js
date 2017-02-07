@@ -24,6 +24,7 @@ const GRID_ALIGN = {
 
 export const View = styled.div`
   width: ${ props => props.width || View.default.width };
+  height: ${ props => props.height || View.default.height };
   max-width: ${ props => props.maxWidth || View.default.maxWidth };
   background-color: ${ props => props.backgroundColor && colours[props.backgroundColor] || View.default.backgroundColor };
   margin: 0 auto;
@@ -68,6 +69,7 @@ export const Main = styled.main`
 
 View.default = {
   width: '100%',
+  height: null,
   maxWidth: '1280px',
   backgroundColor: 'transparent',
   atomic: {

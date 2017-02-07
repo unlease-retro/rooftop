@@ -4,6 +4,8 @@
 
 import { LISTING_PREVIEW_URL_PREFIX, LISTING_URL_PREFIX } from './constants'
 
+export const required = value => value ? undefined : 'Required'
+
 export const getListingUrl = id => `${LISTING_URL_PREFIX}${id}`
 
 export const getListingPreviewUrl = listing => `${LISTING_PREVIEW_URL_PREFIX}${ encodeURI(JSON.stringify(listing)) }`

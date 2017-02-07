@@ -13,13 +13,13 @@ import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
 import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { promisifyMutation } from '../shared/util'
+import { required } from './util'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
 import { View, Grid, Section } from 'components/layout'
 import { Text } from 'components/text'
-import { Label } from 'components/label'
 import { Form, Input } from './components'
 
 class Advert extends Component {
@@ -113,273 +113,277 @@ class Advert extends Component {
 
             </View>
 
-            <View>
+            <View atomic={{ p:0, o:'s' }} height='500px'>
 
-              <Text>Amenities</Text>
+              <View>
 
-              <View atomic={{ d:'f', p:0 }}>
+                <Text atomic={{ fw:'b', fs:6 }}>Amenities</Text>
 
-                <Text atomic={{ m:0 }}>Parking:</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.parking }</Text>
+                  <Text atomic={{ m:0 }}>Parking:</Text>
 
-              </View>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.parking }</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                </View>
 
-                <Text atomic={{ m:0 }}>Garage:</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.garage }</Text>
+                  <Text atomic={{ m:0 }}>Garage:</Text>
 
-              </View>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.garage }</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                </View>
 
-                <Text atomic={{ m:0 }}>Furnishing:</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.furnishing }</Text>
+                  <Text atomic={{ m:0 }}>Furnishing:</Text>
 
-              </View>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.furnishing }</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                </View>
 
-                <Text atomic={{ m:0 }}>Garden:</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.garden }</Text>
+                  <Text atomic={{ m:0 }}>Garden:</Text>
 
-              </View>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.garden }</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                </View>
 
-                <Text atomic={{ m:0 }}>Balcony:</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.balcony }</Text>
+                  <Text atomic={{ m:0 }}>Balcony:</Text>
 
-              </View>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.balcony }</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                </View>
 
-                <Text atomic={{ m:0 }}>Disabled Access:</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.disabledAccess }</Text>
+                  <Text atomic={{ m:0 }}>Disabled Access:</Text>
 
-              </View>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.disabledAccess }</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                </View>
 
-                <Text atomic={{ m:0 }}>Shared Living Room:</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.sharedLivingRoom }</Text>
+                  <Text atomic={{ m:0 }}>Shared Living Room:</Text>
 
-              </View>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.sharedLivingRoom }</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                </View>
 
-                <Text atomic={{ m:0 }}>Broadband:</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.broadband }</Text>
+                  <Text atomic={{ m:0 }}>Broadband:</Text>
 
-              </View>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ amenities.broadband }</Text>
 
-            </View>
-
-            <View>
-
-              <Text>Household</Text>
-
-              <View atomic={{ d:'f', p:0 }}>
-
-                <Text atomic={{ m:0 }}>Pets:</Text>
-
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.pets }</Text>
+                </View>
 
               </View>
 
-              <View atomic={{ d:'f', p:0 }}>
+              <View>
 
-                <Text atomic={{ m:0 }}>Rooms:</Text>
+                <Text atomic={{ fw:'b', fs:6 }}>Household</Text>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.rooms }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Pets:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.pets }</Text>
 
-                <Text atomic={{ m:0 }}>Gender:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.gender }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Rooms:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.rooms }</Text>
 
-                <Text atomic={{ m:0 }}>Smoker:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.smoker }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Gender:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.gender }</Text>
 
-                <Text atomic={{ m:0 }}>Language:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.language }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Smoker:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.smoker }</Text>
 
-                <Text atomic={{ m:0 }}>Flatmates:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.flatmates }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Language:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.language }</Text>
 
-                <Text atomic={{ m:0 }}>Occupation:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.occupation }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Flatmates:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.flatmates }</Text>
 
-                <Text atomic={{ m:0 }}>Nationality:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.nationality }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Occupation:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.occupation }</Text>
 
-                <Text atomic={{ m:0 }}>Age:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.age }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Nationality:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.nationality }</Text>
 
-                <Text atomic={{ m:0 }}>Interests:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.interests }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Age:</Text>
 
-            </View>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.age }</Text>
 
-            <View>
+                </View>
 
-              <Text>Extra Costs</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ m:0 }}>Interests:</Text>
 
-                <Text atomic={{ m:0 }}>Deposit:</Text>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.interests }</Text>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.deposit }</Text>
-
-              </View>
-
-              <View atomic={{ d:'f', p:0 }}>
-
-                <Text atomic={{ m:0 }}>Fees Apply:</Text>
-
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.feesApply }</Text>
+                </View>
 
               </View>
 
-              <View atomic={{ d:'f', p:0 }}>
+              <View>
 
-                <Text atomic={{ m:0 }}>Bills Included:</Text>
+                <Text atomic={{ fw:'b', fs:6 }}>Extra Costs</Text>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.billsIncluded }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Deposit:</Text>
 
-            </View>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.deposit }</Text>
 
-            <View>
+                </View>
 
-              <Text>Preferences</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ m:0 }}>Fees Apply:</Text>
 
-                <Text atomic={{ m:0 }}>DSS:</Text>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.feesApply }</Text>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.dss }</Text>
+                </View>
 
-              </View>
+                <View atomic={{ d:'f', p:0 }}>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ m:0 }}>Bills Included:</Text>
 
-                <Text atomic={{ m:0 }}>Pets:</Text>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.billsIncluded }</Text>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.pets }</Text>
-
-              </View>
-
-              <View atomic={{ d:'f', p:0 }}>
-
-                <Text atomic={{ m:0 }}>Gender:</Text>
-
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.gender }</Text>
+                </View>
 
               </View>
 
-              <View atomic={{ d:'f', p:0 }}>
+              <View>
 
-                <Text atomic={{ m:0 }}>Couples:</Text>
+                <Text atomic={{ fw:'b', fs:6 }}>Preferences</Text>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.couples }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>DSS:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.dss }</Text>
 
-                <Text atomic={{ m:0 }}>Smoking:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.smoking }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Pets:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.pets }</Text>
 
-                <Text atomic={{ m:0 }}>Occupation:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.occupation }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Gender:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.gender }</Text>
 
-                <Text atomic={{ m:0 }}>References:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.references }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Couples:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.couples }</Text>
 
-                <Text atomic={{ m:0 }}>Minimum age:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.minAge }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Smoking:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.smoking }</Text>
 
-                <Text atomic={{ m:0 }}>Maximum age:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.maxAge }</Text>
+                <View atomic={{ d:'f', p:0 }}>
 
-              </View>
+                  <Text atomic={{ m:0 }}>Occupation:</Text>
 
-              <View atomic={{ d:'f', p:0 }}>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.occupation }</Text>
 
-                <Text atomic={{ m:0 }}>Vegetarian:</Text>
+                </View>
 
-                <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.vegetarian }</Text>
+                <View atomic={{ d:'f', p:0 }}>
+
+                  <Text atomic={{ m:0 }}>References:</Text>
+
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.references }</Text>
+
+                </View>
+
+                <View atomic={{ d:'f', p:0 }}>
+
+                  <Text atomic={{ m:0 }}>Minimum age:</Text>
+
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.minAge }</Text>
+
+                </View>
+
+                <View atomic={{ d:'f', p:0 }}>
+
+                  <Text atomic={{ m:0 }}>Maximum age:</Text>
+
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.maxAge }</Text>
+
+                </View>
+
+                <View atomic={{ d:'f', p:0 }}>
+
+                  <Text atomic={{ m:0 }}>Vegetarian:</Text>
+
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.vegetarian }</Text>
+
+                </View>
 
               </View>
 
@@ -389,43 +393,25 @@ class Advert extends Component {
 
           <Section>
 
-            <Form>
+            <Form initialValues={ { ...advert } }>
 
-              <Label>Title</Label>
+              <Field name='title' type='text' label='Title' component={ Input } validate={ required }/>
 
-              <Field name='title' type='text' defaultValue={ advert.title } component={ Input } />
+              <Field name='description' label='Description' component={ Input } validate={ required }/>
 
-              <Label>Description</Label>
+              <Field name='price' type='number' label='Price' component={ Input } validate={ required }/>
 
-              <Field name='description' defaultValue={ advert.description } component={ Input }/>
+              <Field name='hostName' type='text' label='Host name' component={ Input } validate={ required }/>
 
-              <Label>Price</Label>
+              <Field name='phoneNumber' type='text' label='Phone number' component={ Input } validate={ required }/>
 
-              <Field name='price' type='number' defaultValue={ advert.price } component={ Input }/>
+              <Field name='homeType' type='text' label='Home type' component={ Input } validate={ required }/>
 
-              <Label>Host name</Label>
+              <Field name='location' type='text' label='Location' component={ Input } validate={ required }/>
 
-              <Field name='hostName' type='text' defaultValue={ advert.hostName } component={ Input }/>
+              <Field name='availabilityFrom' type='date' label='Availability from' component={ Input } validate={ required }/>
 
-              <Label>Phone number</Label>
-
-              <Field name='phoneNumber' type='text' defaultValue={ advert.phoneNumber } component={ Input }/>
-
-              <Label>Home type</Label>
-
-              <Field name='homeType' type='text' defaultValue={ advert.homeType } component={ Input }/>
-
-              <Label>Location</Label>
-
-              <Field name='location' type='text' defaultValue={ advert.postcode } component={ Input }/>
-
-              <Label>Availability from</Label>
-
-              <Field name='availabilityFrom' type='date' defaultValue={ advert.availabilityFrom } component={ Input }/>
-
-              <Label>Availability to</Label>
-
-              <Field name='availabilityTo' type='date' defaultValue={ advert.availabilityTo } component={ Input }/>
+              <Field name='availabilityTo' type='date' label='Availability to' component={ Input } validate={ required }/>
 
             </Form>
 
@@ -434,7 +420,7 @@ class Advert extends Component {
         </Grid>
 
         { advert.status !== 'active' && (
-          <Section>
+          <Section atomic={{ ta:'c' }}>
 
             { advert.status !== 'declined' && (
               <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
@@ -448,7 +434,11 @@ class Advert extends Component {
         ) }
 
         { advert.status === 'active' && (
-          <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onListingViewRequest }>View Listing</Button>
+          <Section atomic={{ ta:'c' }}>
+
+            <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onListingViewRequest }>View Listing</Button>
+
+          </Section>
         ) }
 
       </View>

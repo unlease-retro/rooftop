@@ -4,19 +4,35 @@ import { reduxForm } from 'redux-form/immutable'
 import { Form as StyledForm } from 'components/form'
 import { Input as TextInput } from 'components/input'
 import { Textarea } from 'components/textarea'
+import { Label } from 'components/label'
+import { Error } from 'components/error'
+import { View } from 'components/layout'
 
 import { name as form } from './constants'
 
 export const Form = reduxForm( { form } )( StyledForm )
 
-export const Input = ( { input, type, defaultValue } ) => {
+export const Input = props => {
 
-  const atomic = { mt: 0 }
-  // set value to default value
-  if (!input.value) input.value = defaultValue
-      
-  if (!type) return <Textarea { ...input } atomic={ atomic }/>
+  const { label, input, type, meta } = props
+  const { touched, error } = meta
 
-  return <TextInput { ...input } type={ type } atomic={ atomic }/>
+  const atomic = { m:0, bs:'s', bw:1, bg:'t' }
+
+  let renderElement = <TextInput { ...input } type={ type } atomic={ atomic }/>
+
+  if (!type) renderElement = <Textarea { ...input } atomic={ atomic }/>
+
+  return (
+    <View atomic={{ m:0, mb:2, p:0, d:'f', fd:'c' }}>
+
+      <Label atomic={{ ml:0, mr:0 }}>{ label }</Label>
+
+      { renderElement }
+
+      { touched && error ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
+
+    </View>
+  )
 
 }
