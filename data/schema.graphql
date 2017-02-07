@@ -41,6 +41,7 @@ input AvailabilityInputType {
 
 type Bot {
   _id: String
+  id: String
   url: String
   homeType: String
   advertId: String
@@ -383,7 +384,7 @@ input RoommateInputType {
 }
 
 input UpdateAdvertInput {
-  _id: String
+  id: String
   payload: InputTypeBot
   clientMutationId: String
 }
