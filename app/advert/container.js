@@ -12,9 +12,8 @@ import * as fragments from './fragments'
 import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getStatusTextColour, required, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { promisifyMutation } from '../shared/util'
-import { required } from './util'
 import { DEFAULT_SMS } from './constants'
 
 import { Image } from 'components/image'
@@ -81,7 +80,7 @@ class Advert extends Component {
 
   render() {
 
-    const { query } = this.props
+    const { doesFormHaveErrors, query } = this.props
     const { advert } = query
     const { photos, amenities, preferences, household, extraCosts } = advert
 
@@ -91,17 +90,9 @@ class Advert extends Component {
     return (
       <View>
 
-        <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>{ advert.title }</Text>
+        <Text atomic={{ fs:6, fw:'b', mb:0, ta:'c' }} color='primary'>{ advert.title }</Text>
 
-        <Text atomic={{ fs:3, mt:4, ta:'r' }}>Status: { advert.status }</Text>
-
-        <Section>
-
-          <Text atomic={{ fs:3, mt:4, mb:0, ta:'r' }}>Advert: { advert.url }</Text>
-
-          <Text atomic={{ fs:3, mt:0, ta:'r' }} color='error'>Caution: only open in private-mode 🕵️</Text>
-
-        </Section>
+        <Text atomic={{ fs:4, mt:0, ta:'c', tt:'u' }} color={ getStatusTextColour(advert.status) }>{ advert.status }</Text>
 
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
 
@@ -440,9 +431,9 @@ class Advert extends Component {
               <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
             ) }
 
-            <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
+            <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
 
-            <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>
+            <Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>
 
           </Section>
         ) }
@@ -454,6 +445,14 @@ class Advert extends Component {
 
           </Section>
         ) }
+
+        <Section>
+
+          <Text atomic={{ fs:3, mt:4, mb:0, ta:'c' }}>{ advert.url }</Text>
+
+          <Text atomic={{ fs:3, mt:0, ta:'c' }} color='error'>Caution: only open in private-mode 🕵️</Text>
+
+        </Section>
 
       </View>
     )

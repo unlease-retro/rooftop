@@ -8,3 +8,9 @@ export const LISTING_PREVIEW_URL_PREFIX = `${UI}/preview-listing?listing=`
 export const LISTING_URL_PREFIX = `${UI}/room/`
 
 export const DEFAULT_SMS = 'Default SMS content here'
+
+export const STATUS_TEXT_COLOURS = {
+  active: 'secondary',
+  declined: 'error',
+  pending: 'dark',
+}
