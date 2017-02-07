@@ -15,15 +15,15 @@ export const Form = reduxForm( { form } )( StyledForm )
 export const Input = props => {
 
   const { label, input, type, defaultValue, meta } = props
-  const { prisitine, touched, error } = meta
+  const { pristine, touched, error } = meta
 
   const atomic = { m:0, bs:'s', bw:1, bg:'t' }
 
   // set value to default value
-  if (prisitine) input.value = defaultValue
+  if (pristine) input.value = defaultValue
 
   let renderElement = <TextInput { ...input } type={ type } atomic={ atomic }/>
-      
+
   if (!type) renderElement = <Textarea { ...input } atomic={ atomic }/>
 
   return (

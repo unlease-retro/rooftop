@@ -21,6 +21,7 @@ export const SCALE = [
   96,
   128,
   144,
+  256,
 ]
 
 const createScaledValueGetter = (scale, x, unit) => typeof x === 'number' && typeof scale[x] === 'number' ? `${ scale[x] }${ unit }` : null
