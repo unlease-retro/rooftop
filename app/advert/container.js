@@ -388,25 +388,25 @@ class Advert extends Component {
 
           <Section>
 
-            <Form>
+            <Form initialValues={ { ...advert } }>
 
-              <Field name='title' type='text' label='Title' defaultValue={ advert.title } component={ Input } validate={ required }/>
+              <Field name='title' type='text' label='Title' component={ Input } validate={ required }/>
 
-              <Field name='description' label='Description' defaultValue={ advert.description } component={ Input } validate={ required }/>
+              <Field name='description' label='Description' component={ Input } validate={ required }/>
 
-              <Field name='price' type='number' label='Price' defaultValue={ advert.price } component={ Input } validate={ required }/>
+              <Field name='price' type='number' label='Price' component={ Input } validate={ required }/>
 
-              <Field name='hostName' type='text' label='Host name' defaultValue={ advert.hostName } component={ Input } validate={ required }/>
+              <Field name='hostName' type='text' label='Host name' component={ Input } validate={ required }/>
 
-              <Field name='phoneNumber' type='text' label='Phone number' defaultValue={ advert.phoneNumber } component={ Input } validate={ required }/>
+              <Field name='phoneNumber' type='text' label='Phone number' component={ Input } validate={ required }/>
 
-              <Field name='homeType' type='text' label='Home type' defaultValue={ advert.homeType } component={ Input } validate={ required }/>
+              <Field name='homeType' type='text' label='Home type' component={ Input } validate={ required }/>
 
-              <Field name='location' type='text' label='Location' defaultValue={ advert.postcode } component={ Input } validate={ required }/>
+              <Field name='location' type='text' label='Location' component={ Input } validate={ required }/>
 
-              <Field name='availabilityFrom' type='date' label='Availability from' defaultValue={ advert.availabilityFrom } component={ Input } validate={ required }/>
+              <Field name='availabilityFrom' type='date' label='Availability from' component={ Input } validate={ required }/>
 
-              <Field name='availabilityTo' type='date' label='Availability to' defaultValue={ advert.availabilityTo } component={ Input } validate={ required }/>
+              <Field name='availabilityTo' type='date' label='Availability to' component={ Input } validate={ required }/>
 
             </Form>
 
