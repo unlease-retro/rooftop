@@ -50,7 +50,7 @@ class Advert extends Component {
       .then( address => transformAdvertToListing({ ...this.props.query.advert, ...address }) )
       .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
       .then( ({ createUserWithListing: { listing } }) => onUpdateAdvertRequest(advert._id, { listingId: listing.id, submitted: true }) )
-      .then( () => API.post( 'webhook/sendSms', { body: SMSContent, to: advert.phoneNumber }) )
+      .then( () => API.post( 'webhooks/sendSms', { body: SMSContent, to: this.props.query.advert.phoneNumber }) )
 
   }
 
