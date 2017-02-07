@@ -20,7 +20,7 @@ export default class CreateUserWithListingMutation extends Relay.Mutation {
   getFatQuery() {
 
     return Relay.QL`
-      fragment on CreateUserWithListingPayload {
+      fragment on CreateUserWithListingPayload @relay(pattern: true) {
         listing {
           id,
         },
@@ -32,10 +32,16 @@ export default class CreateUserWithListingMutation extends Relay.Mutation {
   getConfigs() {
 
     return [{
-      type: 'FIELDS_CHANGE',
-      fieldIDs: {
-        listing: this.props.id,
-      },
+      type: 'REQUIRED_CHILDREN',
+      children: [
+        Relay.QL`
+          fragment on CreateUserWithListingPayload {
+            listing {
+              id
+            }
+          }
+        `,
+      ],
     }]
 
   }

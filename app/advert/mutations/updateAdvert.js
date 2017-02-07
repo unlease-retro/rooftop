@@ -22,7 +22,18 @@ export default class UpdateAdvertMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on UpdateAdvertPayload {
         advert {
-          disabled,
+          availabilityFrom
+          availabilityTo
+          description
+          disabled
+          homeType
+          hostName
+          listingId
+          phoneNumber
+          postcode
+          price
+          submitted
+          title
         },
       }
     `

@@ -36,11 +36,16 @@ class Advert extends Component {
 
   onCreateUserWithListingRequest() {
 
-    const { query: { advert } } = this.props
+    const { onUpdateAdvertRequest } = this
+    const { editForm, hasFormBeenEdited, query: { advert } } = this.props
 
-    return getAddressFromGeocode(advert.geocode)
-      .then( address => transformAdvertToListing({ ...advert, ...address }) )
+    const updateAdvertIfFormEdited = hasFormBeenEdited ? onUpdateAdvertRequest(advert._id, editForm) : Promise.resolve()
+
+    return updateAdvertIfFormEdited
+      .then( () => getAddressFromGeocode(advert.geocode) )
+      .then( address => transformAdvertToListing({ ...this.props.query.advert, ...address }) )
       .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
+      .then( ({ createUserWithListing: { listing } }) => onUpdateAdvertRequest(advert._id, { listingId: listing.id, submitted: true }) )
 
   }
 
@@ -64,7 +69,7 @@ class Advert extends Component {
 
   onUpdateAdvertRequest(_id, payload) {
 
-    return Relay.Store.commitUpdate( new mutations.updateAdvert({ _id, payload }) )
+    return promisifyMutation( new mutations.updateAdvert({ _id, payload }) )
 
   }
 
