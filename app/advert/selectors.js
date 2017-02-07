@@ -10,3 +10,5 @@ export const editForm = state => {
   return editForm.toObject()
 
 }
+
+export const hasFormBeenEdited = state => Boolean( getFormValues(name)(state) && getFormValues(name)(state).size )
