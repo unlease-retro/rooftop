@@ -13,9 +13,8 @@ export const MAP_URL_PREFIX = 'https://www.google.co.uk/maps/@'
 export const MAP_URL_SUFFIX = ',17z'
 
 export const HOME_TYPES = [
-	{ value: 'House share', label: 'House share' },
-	{ value: 'Flat share', label: 'Flat share' },
-	{ value: 'Shared property', label: 'Shared property' },
+	{ value: 'house', label: 'House share' },
+	{ value: 'flat', label: 'Flat share' },
 ]
 
 export const STATUS_TEXT_COLOURS = {

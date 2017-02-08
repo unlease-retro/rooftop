@@ -31,8 +31,8 @@ export const transformAdvertToListing = advert => ({
     },
     listing: {
       roommate: {
-        numOfMale: 0,
-        numOfFemale: 0,
+        numOfMale: advert.numOfMale,
+        numOfFemale: advert.numOfFemale,
         minAge: 18,
         maxAge: 65,
         occupation: [],
@@ -75,7 +75,7 @@ export const transformAdvertToListing = advert => ({
       },
       roomType: 'double',
       location: `${advert.city}, ${advert.country}`,
-      homeType: 'house',
+      homeType: advert.homeType,
       availability: {
         from: advert.availabilityFrom,
         to: advert.availabilityTo,
@@ -145,8 +145,8 @@ export const transformAdvertToListing = advert => ({
 
 export const transformAdvertToListingPreview = advert => ({
   roommate: {
-    numOfMale: 0,
-    numOfFemale: 0,
+    numOfMale: advert.numOfMale,
+    numOfFemale: advert.numOfFemale,
     minAge: 18,
     maxAge: 65,
     occupation: [],
@@ -201,7 +201,7 @@ export const transformAdvertToListingPreview = advert => ({
   roomType: 'double',
   location: `${advert.city}, ${advert.country}`,
   expiredAt: null,
-  homeType: 'house',
+  homeType: advert.homeType,
   id: '',
   createdAt: Date.now(),
   availability: {
