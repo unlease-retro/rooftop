@@ -95,6 +95,8 @@ class Advert extends Component {
       postcode: advert.postcode,
       availabilityFrom: advert.availabilityFrom,
       availabilityTo: advert.availabilityTo,
+      numOfFemale: 0,
+      numOfMale: 0,
     }
 
     // set computed values
@@ -422,6 +424,10 @@ class Advert extends Component {
               <Field name='availabilityFrom' type='date' label='Availability from' component={ Input } validate={ required }/>
 
               <Field name='availabilityTo' type='date' label='Availability to' component={ Input } validate={ required }/>
+
+              <Field name='numOfMale' type='number' label='Number of Male Housemates' component={ Input } validate={ required }/>
+
+              <Field name='numOfFemale' type='number' label='Number of Female Housemates' component={ Input } validate={ required }/>
 
             </Form>
 

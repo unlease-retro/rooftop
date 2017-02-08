@@ -20,8 +20,9 @@ export const Input = props => {
 
   let renderElement = <TextInput { ...input } type={ type } atomic={ atomic }/>
 
-  if (!type)
-    renderElement = <Textarea { ...input } atomic={ atomic }/>
+  if (!type) renderElement = <Textarea { ...input } atomic={ atomic }/>
+  // fix warning on date
+  if (input.value === 'unspecified') input.value = null
 
   return (
     <View atomic={{ m:0, mb:2, p:0, d:'f', fd:'c' }}>
@@ -56,7 +57,7 @@ export const Select = props => {
         value={ value }
         onChange={ v => onChange(v.value) }
         options={ HOME_TYPES }
-        atomic={{ pt:2, pb:2, m:0 }}
+        atomic={{ ml:0, mr:0, mb:0, mt:1 }}
         width='100%'
       />
 
