@@ -20,7 +20,7 @@ export const getSmsBody = ({ city, emailAddress, hostName, listingId }) => `Hey 
 
 export const getStatusTextColour = status => STATUS_TEXT_COLOURS[status]
 
-export const getAddressFromGeocode = ({ lat, lng }) => fetch(`http://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+export const getAddressFromGeocode = ({ lat, lng }) => fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
   .then( res => res.json() )
   .then( ({ address: { city, country, postcode, road } }) => ({ city, country, postcode, road }) )
 
