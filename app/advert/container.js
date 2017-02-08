@@ -427,7 +427,7 @@ class Advert extends Component {
 
               <Field name='homeType' label='Home type' component={ Select } validate={ required }/>
 
-              <Field name='postcode' type='text' label='Location' component={ Input } validate={ required }/>
+              <Field name='postcode' type='text' label='Postcode' component={ Input } validate={ required }/>
 
               <Field name='availabilityFrom' type='date' label='Availability from' component={ Input } validate={ required }/>
 
