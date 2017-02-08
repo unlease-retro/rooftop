@@ -9,6 +9,12 @@ export const LISTING_URL_PREFIX = `${UI}/room/`
 
 export const DEFAULT_SMS = 'Default SMS content here'
 
+export const HOME_TYPES = [
+	{ value: 'House share', label: 'House share' },
+	{ value: 'Flat share', label: 'Flat share' },
+	{ value: 'Shared property', label: 'Shared property' },
+]
+
 export const STATUS_TEXT_COLOURS = {
   active: 'secondary',
   declined: 'error',

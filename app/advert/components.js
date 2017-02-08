@@ -1,16 +1,15 @@
 import React from 'react'
 import { reduxForm } from 'redux-form/immutable'
 
-import { Form as StyledForm } from 'components/form'
+import { Form } from 'components/form'
 import { Input as TextInput } from 'components/input'
+import { Select as Dropdown } from 'components/select'
 import { Textarea } from 'components/textarea'
 import { Label } from 'components/label'
 import { Error } from 'components/error'
 import { View } from 'components/layout'
 
-import { name as form } from './constants'
-
-export const Form = reduxForm( { form } )( StyledForm )
+import { name as form, HOME_TYPES } from './constants'
 
 export const Input = props => {
 
@@ -21,7 +20,8 @@ export const Input = props => {
 
   let renderElement = <TextInput { ...input } type={ type } atomic={ atomic }/>
 
-  if (!type) renderElement = <Textarea { ...input } atomic={ atomic }/>
+  if (!type)
+    renderElement = <Textarea { ...input } atomic={ atomic }/>
 
   return (
     <View atomic={{ m:0, mb:2, p:0, d:'f', fd:'c' }}>
@@ -36,3 +36,36 @@ export const Input = props => {
   )
 
 }
+
+
+export const Select = props => {
+
+  const { label, input, meta } = props
+  const { value, onChange } = input
+  const { touched, error } = meta
+
+  const selectDefaults = { autoBlur: false, clearable: false, searchable: false }
+
+  return (
+    <View atomic={{ m:0, mb:2, p:0, d:'f', fd:'c' }}>
+
+      <Label atomic={{ ml:0, mr:0 }}>{ label }</Label>
+
+      <Dropdown
+        { ...selectDefaults }
+        value={ value }
+        onChange={ v => onChange(v.value) }
+        options={ HOME_TYPES }
+        atomic={{ pt:2, pb:2, m:0 }}
+        width='100%'
+      />
+
+      { touched && error ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
+
+    </View>
+  )
+
+}
+
+
+export default reduxForm( { form } )( Form )

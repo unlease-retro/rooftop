@@ -22,7 +22,8 @@ import { Button } from 'components/button'
 import { Textarea } from 'components/textarea'
 import { View, Grid, Section } from 'components/layout'
 import { Text } from 'components/text'
-import { Form, Input } from './components'
+
+import Form, { Select, Input } from './components'
 
 class Advert extends Component {
 
@@ -414,7 +415,7 @@ class Advert extends Component {
 
               <Field name='phoneNumber' type='text' label='Phone number' component={ Input } validate={ required }/>
 
-              <Field name='homeType' type='text' label='Home type' component={ Input } validate={ required }/>
+              <Field name='homeType' label='Home type' component={ Select } validate={ required }/>
 
               <Field name='postcode' type='text' label='Location' component={ Input } validate={ required }/>
 
