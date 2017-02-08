@@ -16,7 +16,7 @@ export const getListingPreviewUrl = listing => `${LISTING_PREVIEW_URL_PREFIX}${ 
 
 export const getMapUrl = ({ lat, lng }) => `${MAP_URL_PREFIX}${lat},${lng}${MAP_URL_SUFFIX}`
 
-export const getSmsBody = ({ emailAddress, hostName }) => `Hello ${hostName}, your username is ${emailAddress} and password is ${getUserPassword(emailAddress)}`
+export const getSmsBody = ({ city, emailAddress, hostName, listingId }) => `Hey ${hostName}, I saw your room and thought it looked awesome. I noticed it was available as a short let. I hope you don’t mind but I featured it on unlease.io. It’s exactly what a lot of our users are currently looking for in ${city}. Listing on Unlease is totally free and you get the benefit of advertising to young professionals looking specifically for somewhere medium-term. Check out your listing here ${getListingUrl(listingId)} but let me know if you’d like me to take it down for any reason. Your login details are ${emailAddress} and temporary password is ${getUserPassword(emailAddress)}. If you have any questions let me know otherwise I will just text you when you receive a good enquiry so you can log in and respond 🙂 Drew`
 
 export const getStatusTextColour = status => STATUS_TEXT_COLOURS[status]
 
