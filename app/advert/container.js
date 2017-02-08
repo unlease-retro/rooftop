@@ -419,7 +419,7 @@ class Advert extends Component {
 
               <Field name='description' label='Description' component={ Input } validate={ required }/>
 
-              <Field name='price' type='number' label='Price' component={ Input } validate={ required }/>
+              <Field name='price' type='number' label='Price' normalize={ normalizeInt } component={ Input } validate={ required }/>
 
               <Field name='hostName' type='text' label='Host name' component={ Input } validate={ required }/>
 
