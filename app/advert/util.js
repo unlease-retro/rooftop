@@ -4,7 +4,7 @@
 
 import { LISTING_PREVIEW_URL_PREFIX, LISTING_URL_PREFIX, MAP_URL_PREFIX, MAP_URL_SUFFIX, STATUS_TEXT_COLOURS } from './constants'
 
-export const required = value => value ? undefined : 'Required'
+export const required = value => !value || value === 'unspecified' ? 'Required' : undefined
 
 export const normalizeInt = value => parseInt( value )
 
