@@ -55,10 +55,10 @@ class Advert extends Component {
 
   onListingPreviewRequest() {
 
-    const { query: { advert } } = this.props
+    const { editForm, query: { advert } } = this.props
 
     return getAddressFromGeocode(advert.geocode)
-      .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...address }) ) )
+      .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...editForm, ...address }) ) )
       .then( url => window.open(url) )
 
   }
