@@ -12,7 +12,7 @@ import * as fragments from './fragments'
 import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getStatusTextColour, required, normalizeInt, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { promisifyMutation } from '../shared/util'
 import { DEFAULT_SMS } from './constants'
 
@@ -419,7 +419,7 @@ class Advert extends Component {
 
               <Field name='description' label='Description' component={ Input } validate={ required }/>
 
-              <Field name='price' type='number' label='Price' normalize={ normalizeInt } component={ Input } validate={ required }/>
+              <Field name='price' type='number' label='Price' normalize={ normalize } component={ Input } validate={ required }/>
 
               <Field name='hostName' type='text' label='Host name' component={ Input } validate={ required }/>
 
@@ -433,9 +433,9 @@ class Advert extends Component {
 
               <Field name='availabilityTo' type='date' label='Availability to' component={ Input } validate={ required }/>
 
-              <Field name='numOfMale' type='number' label='Number of Male Housemates' normalize={ normalizeInt } component={ Input } validate={ required }/>
+              <Field name='numOfMale' type='number' label='Number of Male Housemates' normalize={ normalize } component={ Input } validate={ required }/>
 
-              <Field name='numOfFemale' type='number' label='Number of Female Housemates' normalize={ normalizeInt } component={ Input } validate={ required }/>
+              <Field name='numOfFemale' type='number' label='Number of Female Housemates' normalize={ normalize } component={ Input } validate={ required }/>
 
             </Form>
 
