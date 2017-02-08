@@ -4,6 +4,8 @@
 
 import { LISTING_PREVIEW_URL_PREFIX, LISTING_URL_PREFIX, MAP_URL_PREFIX, MAP_URL_SUFFIX, STATUS_TEXT_COLOURS } from './constants'
 
+const getUserPassword = email => email.replace(/@.*$/, '')
+
 export const required = value => value === '' || value === 'unspecified' ? 'Required' : undefined
 
 export const normalize = value => parseInt( value )
@@ -14,7 +16,7 @@ export const getListingPreviewUrl = listing => `${LISTING_PREVIEW_URL_PREFIX}${ 
 
 export const getMapUrl = ({ lat, lng }) => `${MAP_URL_PREFIX}${lat},${lng}${MAP_URL_SUFFIX}`
 
-export const getSmsBody = ({ emailAddress, hostName }) => `Hello ${hostName}, your email address is ${emailAddress}`
+export const getSmsBody = ({ emailAddress, hostName }) => `Hello ${hostName}, your username is ${emailAddress} and password is ${getUserPassword(emailAddress)}`
 
 export const getStatusTextColour = status => STATUS_TEXT_COLOURS[status]
 
