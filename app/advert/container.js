@@ -117,7 +117,7 @@ class Advert extends Component {
 
               <Grid>
 
-                { photos.map( (source, index) => <Image key={ index } width='auto' height='200px' source={ decodeURI(source) } /> ) }
+                { photos.map( (source, index) => <Anchor key={ index } href={source} target='_blank'><Image width='auto' height='200px' source={ decodeURI(source) } /></Anchor> ) }
 
               </Grid>
 
