@@ -40,8 +40,9 @@ export const query = () => Relay.QL`
         language
         flatmates
         occupation
-        age
+        ages
         interests
+        housemates
         nationality
       }
       extraCosts {

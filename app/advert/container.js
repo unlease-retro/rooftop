@@ -267,9 +267,17 @@ class Advert extends Component {
 
                 <View atomic={{ d:'f', p:0 }}>
 
-                  <Text atomic={{ m:0 }}>Age:</Text>
+                  <Text atomic={{ m:0 }}>Housemates:</Text>
 
-                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.age }</Text>
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.housemates }</Text>
+
+                </View>
+
+                <View atomic={{ d:'f', p:0 }}>
+
+                  <Text atomic={{ m:0 }}>Ages:</Text>
+
+                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ household.ages }</Text>
 
                 </View>
 

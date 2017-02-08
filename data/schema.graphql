@@ -99,7 +99,8 @@ type BotHousehold {
   occupation: String
   nationality: String
   interests: String
-  age: Int
+  housemates: String
+  ages: String
 }
 
 type BotPreferences {
@@ -120,7 +121,7 @@ type BotReply {
   host: Boolean
   thread: String
   message: String
-  createdAt: String
+  createdAt: Float
 }
 
 input CreateAdvertInput {
@@ -245,7 +246,8 @@ input InputTypeBotHousehold {
   occupation: String
   nationality: String
   interests: String
-  age: Int
+  housemates: String
+  ages: String
 }
 
 input InputTypeBotPreferences {
