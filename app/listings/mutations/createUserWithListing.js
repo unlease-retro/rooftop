@@ -21,9 +21,8 @@ export default class CreateUserWithListingMutation extends Relay.Mutation {
 
     return Relay.QL`
       fragment on CreateUserWithListingPayload @relay(pattern: true) {
-        listing {
-          id,
-        },
+        listingId
+        email
       }
     `
 
@@ -36,9 +35,8 @@ export default class CreateUserWithListingMutation extends Relay.Mutation {
       children: [
         Relay.QL`
           fragment on CreateUserWithListingPayload {
-            listing {
-              id
-            }
+            listingId
+            email
           }
         `,
       ],

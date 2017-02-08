@@ -44,11 +44,19 @@ class Advert extends Component {
     const { onUpdateAdvertRequest, SMSContent } = this
     const { editForm, query: { advert } } = this.props
 
+    let emailAddress
+
     return onUpdateAdvertRequest(advert._id, editForm)
       .then( () => getAddressFromGeocode(advert.geocode) )
       .then( address => transformAdvertToListing({ ...this.props.query.advert, ...address }) )
       .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
-      .then( ({ createUserWithListing: { listing } }) => onUpdateAdvertRequest(advert._id, { listingId: listing.id, submitted: true }) )
+      .then( ({ createUserWithListing: { listingId, email } }) => {
+
+        emailAddress = email
+
+        return onUpdateAdvertRequest(advert._id, { listingId: listingId, submitted: true })
+
+      } )
       .then( () => API.post( 'webhooks/sendSms', { body: SMSContent, to: this.props.query.advert.phoneNumber }) )
 
   }
