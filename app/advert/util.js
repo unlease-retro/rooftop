@@ -14,6 +14,8 @@ export const getListingPreviewUrl = listing => `${LISTING_PREVIEW_URL_PREFIX}${ 
 
 export const getMapUrl = ({ lat, lng }) => `${MAP_URL_PREFIX}${lat},${lng}${MAP_URL_SUFFIX}`
 
+export const getSmsBody = ({ emailAddress, hostName }) => `Hello ${hostName}, your email address is ${emailAddress}`
+
 export const getStatusTextColour = status => STATUS_TEXT_COLOURS[status]
 
 export const getAddressFromGeocode = ({ lat, lng }) => fetch(`http://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)

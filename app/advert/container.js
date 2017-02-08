@@ -12,14 +12,13 @@ import * as fragments from './fragments'
 import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { promisifyMutation } from '../shared/util'
-import { DEFAULT_SMS } from './constants'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
-import { Textarea } from 'components/textarea'
+// import { Textarea } from 'components/textarea'
 import { View, Grid, Section } from 'components/layout'
 import { Text } from 'components/text'
 
@@ -31,8 +30,6 @@ class Advert extends Component {
 
     super()
 
-    this.SMSContent = DEFAULT_SMS
-
     this.onCreateUserWithListingRequest = this.onCreateUserWithListingRequest.bind(this)
     this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
     this.onListingViewRequest = this.onListingViewRequest.bind(this)
@@ -41,9 +38,10 @@ class Advert extends Component {
 
   onCreateUserWithListingRequest() {
 
-    const { onUpdateAdvertRequest, SMSContent } = this
+    const { onUpdateAdvertRequest } = this
     const { editForm, query: { advert } } = this.props
 
+    // I have given up! 😫
     let emailAddress
 
     return onUpdateAdvertRequest(advert._id, editForm)
@@ -57,7 +55,7 @@ class Advert extends Component {
         return onUpdateAdvertRequest(advert._id, { listingId: listingId, submitted: true })
 
       } )
-      .then( () => API.post( 'webhooks/sendSms', { body: SMSContent, to: this.props.query.advert.phoneNumber }) )
+      .then( () => API.post( 'webhooks/sendSms', { body: getSmsBody({ ...this.props.query.advert, emailAddress }), to: this.props.query.advert.phoneNumber }) )
 
   }
 
@@ -451,13 +449,13 @@ class Advert extends Component {
 
         </Grid>
 
-        <View>
+        {/* <View>
 
           <Text>SMS content:</Text>
 
           <Textarea defaultValue={ this.SMSContent } onChange={ e => this.SMSContent = e.target.value } />
 
-        </View>
+        </View> */}
 
         { advert.status !== 'active' && (
           <Section atomic={{ ta:'c' }}>
