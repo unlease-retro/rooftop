@@ -93,8 +93,8 @@ class Advert extends Component {
       postcode: advert.postcode,
       availabilityFrom: advert.availabilityFrom,
       availabilityTo: advert.availabilityTo,
-      numOfFemale: 0,
-      numOfMale: 0,
+      numOfFemale: advert.numOfFemale,
+      numOfMale: advert.numOfMale,
     }
 
     // set computed values

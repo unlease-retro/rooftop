@@ -12,6 +12,8 @@ export const query = () => Relay.QL`
       price
       homeType
       hostName
+      numOfFemale
+      numOfMale
       phoneNumber
       photos
       availabilityFrom
