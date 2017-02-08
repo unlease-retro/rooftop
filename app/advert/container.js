@@ -12,7 +12,7 @@ import * as fragments from './fragments'
 import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getStatusTextColour, required, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getStatusTextColour, required, transformAdvertToListing, transformAdvertToListingPreview } from './util'
 import { promisifyMutation } from '../shared/util'
 import { DEFAULT_SMS } from './constants'
 
@@ -104,7 +104,7 @@ class Advert extends Component {
 
         <Text atomic={{ fs:4, mt:0, ta:'c', tt:'u' }} color={ getStatusTextColour(advert.status) }>{ advert.status }</Text>
 
-        <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
+        <Anchor atomic={{ d:'ib', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
 
         <Grid>
 
@@ -123,6 +123,8 @@ class Advert extends Component {
             <View atomic={{ p:0, o:'s' }} height='500px'>
 
               <View>
+
+                <Anchor href={ getMapUrl(advert.geocode) } target='_blank'>View on map</Anchor>
 
                 <Text atomic={{ fw:'b', fs:6 }}>Amenities</Text>
 
