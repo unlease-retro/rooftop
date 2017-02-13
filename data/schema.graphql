@@ -377,6 +377,7 @@ input RemoveListingInput {
 }
 
 type RemoveListingPayload {
+  deletedListingId: String
   listing: Listing
   clientMutationId: String
 }

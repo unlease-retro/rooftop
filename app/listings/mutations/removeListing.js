@@ -23,6 +23,7 @@ export default class RemoveListing extends Mutation {
         listing {
           id
         }
+        deletedListingId
       }
     `
 
@@ -33,8 +34,7 @@ export default class RemoveListing extends Mutation {
     return [{
       type: 'NODE_DELETE',
       parentName: 'listing',
-      parentID: this.props.id,
-      connectionName: 'listing',
+      connectionName: 'listings',
       deletedIDFieldName: 'deletedListingId'
     }]
 

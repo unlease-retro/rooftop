@@ -4,7 +4,7 @@ import uuid from 'node-uuid'
 
 import { getFilteredListings } from './computed'
 import { FILTERS } from './constants'
-import { getFormattedTimestamp, getListingUrl, getProfileUrl } from '../shared/util'
+import { getFormattedTimestamp, getListingUrl, getProfileUrl, promisifyMutation } from '../shared/util'
 
 import * as fragments from './fragments'
 import variables from './variables'
@@ -60,16 +60,9 @@ class Listings extends Component {
 
   deleteListing(id) {
 
-    console.log(id)
-
-    // Relay.Store.commitUpdate(
-    //   new mutations.removeListing({
-    //     id,
-    //   }), {
-    //     onSuccess: res => console.log(res),
-    //     onFailure: transaction => console.error(transaction),
-    //   }
-    // )
+    return promisifyMutation( new mutations.removeListing({ id }) )
+      .then( res => console.log(res) )
+      .catch( err => console.error(err) )
 
   }
 
