@@ -61,8 +61,6 @@ class Listings extends Component {
   deleteListing(id) {
 
     return promisifyMutation( new mutations.removeListing({ id }) )
-      .then( res => console.log(res) )
-      .catch( err => console.error(err) )
 
   }
 
@@ -180,7 +178,7 @@ class Listings extends Component {
 
         <Grid cell={3/0.12}>
 
-          { filteredListings.map( l => renderListing(l) ) }
+          { filteredListings.map( l => l.user && renderListing(l) ) }
 
         </Grid>
 
