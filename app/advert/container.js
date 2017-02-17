@@ -32,7 +32,17 @@ class Advert extends Component {
 
     this.onCreateUserWithListingRequest = this.onCreateUserWithListingRequest.bind(this)
     this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
+    this.onDeleteListingRequest = this.onDeleteListingRequest.bind(this)
     this.onListingViewRequest = this.onListingViewRequest.bind(this)
+
+  }
+
+  onDeleteListingRequest() {
+
+    const { query: { advert } } = this.props
+    const { listingId } = advert
+
+    return promisifyMutation( new mutations.removeListing({ id: listingId }) )
 
   }
 
@@ -475,6 +485,8 @@ class Advert extends Component {
           <Section atomic={{ ta:'c' }}>
 
             <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onListingViewRequest }>View Listing</Button>
+
+            <Button atomic={{ ml:4, d:'ib', w:'a' }} onClick={ this.onDeleteListingRequest } backgroundColor='error'>Delete listing</Button>
 
           </Section>
         ) }

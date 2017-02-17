@@ -4,7 +4,7 @@ import uuid from 'node-uuid'
 
 import { getFilteredListings } from './computed'
 import { FILTERS } from './constants'
-import { getFormattedTimestamp, getListingUrl, getProfileUrl, promisifyMutation } from '../shared/util'
+import { getFormattedTimestamp, getListingUrl, getProfileUrl } from '../shared/util'
 
 import * as fragments from './fragments'
 import variables from './variables'
@@ -29,7 +29,6 @@ class Listings extends Component {
     super()
 
     this.onFilterClick = this.onFilterClick.bind(this)
-    this.deleteListing = this.deleteListing.bind(this)
     this.renderListing = this.renderListing.bind(this)
 
   }
@@ -55,12 +54,6 @@ class Listings extends Component {
     if (!popular) return Relay.Store.commitUpdate( new mutations.addListingToPopular({ id }) )
 
     return Relay.Store.commitUpdate( new mutations.removeListingFromPopular({ id }) )
-
-  }
-
-  deleteListing(id) {
-
-    return promisifyMutation( new mutations.removeListing({ id }) )
 
   }
 
@@ -189,12 +182,12 @@ class Listings extends Component {
 
   renderListing(listing) {
 
-    const { id, bot, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user, popular, listed } = listing
+    const { id, availableFrom, availableTo, createdAt, location, postcode, title, weeklyRent, leakage, nonResponsive, photos, user, popular, listed } = listing
     const { id: userId, avatar, email, firstName, lastName, lastLoggedInAt, phoneVerification, notifications: { numberOfUnread } } = user
 
     const contactNumber = phoneVerification && phoneVerification.contactNumber || listing.contactNumber
 
-    const { onUpdateClick, onListingImageClick, onProfileImageClick, onPopularClick, deleteListing } = this
+    const { onUpdateClick, onListingImageClick, onProfileImageClick, onPopularClick } = this
 
     return (
       <Section key={ uuid.v4() } border atomic={{ mt:1, mb:1 }}>
@@ -267,14 +260,6 @@ class Listings extends Component {
             atomic={{ w:'a', ml:'auto', mr:'auto', mt:0, mb:2 }}
             onClick={ () => onPopularClick(id, popular) }>
               { popular ? '❌️ Remove popular' : '🌟 Set as popular' }
-          </Button>) : null }
-        { bot ? (
-          <Button
-            color='white'
-            backgroundColor='error'
-            atomic={{ w:'a', ml:'auto', mr:'auto', mt:0, mb:0 }}
-            onClick={ () => deleteListing(id) }>
-            📛 Delete listing
           </Button>) : null }
         </View>
 
