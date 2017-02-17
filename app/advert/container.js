@@ -18,7 +18,6 @@ import { promisifyMutation } from '../shared/util'
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
-// import { Textarea } from 'components/textarea'
 import { View, Grid, Section } from 'components/layout'
 import { Text } from 'components/text'
 
@@ -40,9 +39,10 @@ class Advert extends Component {
   onDeleteListingRequest() {
 
     const { query: { advert } } = this.props
-    const { listingId } = advert
+    const { listingId, _id } = advert
 
     return promisifyMutation( new mutations.removeListing({ id: listingId }) )
+      .then( promisifyMutation( new mutations.updateAdvert({ _id, payload: { disabled: true, submitted: false, listingId: 'listingDeleted' } }) ) )
 
   }
 
