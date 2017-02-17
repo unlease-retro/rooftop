@@ -18,7 +18,6 @@ import { promisifyMutation } from '../shared/util'
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
-// import { Textarea } from 'components/textarea'
 import { View, Grid, Section } from 'components/layout'
 import { Text } from 'components/text'
 
@@ -32,7 +31,18 @@ class Advert extends Component {
 
     this.onCreateUserWithListingRequest = this.onCreateUserWithListingRequest.bind(this)
     this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
+    this.onDeleteListingRequest = this.onDeleteListingRequest.bind(this)
     this.onListingViewRequest = this.onListingViewRequest.bind(this)
+
+  }
+
+  onDeleteListingRequest() {
+
+    const { query: { advert } } = this.props
+    const { listingId, _id } = advert
+
+    return promisifyMutation( new mutations.removeListing({ id: listingId }) )
+      .then( promisifyMutation( new mutations.updateAdvert({ _id, payload: { disabled: true, submitted: false, listingId: 'listingDeleted' } }) ) )
 
   }
 
@@ -475,6 +485,8 @@ class Advert extends Component {
           <Section atomic={{ ta:'c' }}>
 
             <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onListingViewRequest }>View Listing</Button>
+
+            <Button atomic={{ ml:4, d:'ib', w:'a' }} onClick={ this.onDeleteListingRequest } backgroundColor='error'>Delete listing</Button>
 
           </Section>
         ) }
