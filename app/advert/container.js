@@ -113,6 +113,8 @@ class Advert extends Component {
       numOfMale: advert.numOfMale,
     }
 
+    console.log(initialValues)
+
     // set computed values
     advert.status = getStatus(advert)
 
