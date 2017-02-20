@@ -8,6 +8,7 @@ import * as API from '../shared/services/api'
 import * as Bot from '../bot'
 import { getStatus } from './computed'
 import * as selectors from './selectors'
+import UISelectors from '../ui/selectors'
 import * as fragments from './fragments'
 import mutations from './mutations'
 import { mutations as ListingMutations } from '../listings'
@@ -95,7 +96,7 @@ class Advert extends Component {
 
   render() {
 
-    const { doesFormHaveErrors, query } = this.props
+    const { doesFormHaveErrors, requesting, query } = this.props
     const { advert } = query
     const { photos, amenities, preferences, household, extraCosts } = advert
 
@@ -111,6 +112,11 @@ class Advert extends Component {
       availabilityTo: advert.availabilityTo,
       numOfFemale: advert.numOfFemale,
       numOfMale: advert.numOfMale,
+    }
+
+    const createListingButtonStyle = {
+      pe: requesting ? 'n' : 'i',
+      c: requesting ? 'w' : 'p',
     }
 
     // set computed values
@@ -476,7 +482,7 @@ class Advert extends Component {
 
             <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
 
-            <Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>
+            <Button atomic={{ d:'ib', w:'a', ...createListingButtonStyle }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>
 
           </Section>
         ) }
@@ -509,7 +515,7 @@ class Advert extends Component {
 
 export default Relay.createContainer(
   connect(
-    createStructuredSelector({ ...selectors })
+    createStructuredSelector({ ...selectors, ...UISelectors })
   )(Advert),
   { ...variables, fragments }
 )
