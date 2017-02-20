@@ -2,7 +2,7 @@ const variables = {
 
   initialVariables: {
     _id: null,
-    requesting: false,
+    createListingRequesting: false,
   },
 
 }

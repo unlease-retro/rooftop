@@ -13,7 +13,7 @@ const properties = {
   b: 'bottom',
   bg: 'background',
   bw: 'border-width',
-  bs: 'border-style',
+  bs: 'border-style',  
   c: 'cursor',
   d: 'display',
   fd: 'flex-direction',

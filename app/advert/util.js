@@ -2,9 +2,12 @@
   * @desc Advert utility functions
 */
 
-import { LISTING_PREVIEW_URL_PREFIX, LISTING_URL_PREFIX, MAP_URL_PREFIX, MAP_URL_SUFFIX, STATUS_TEXT_COLOURS } from './constants'
+import moment from 'moment'
+import { LISTING_PREVIEW_URL_PREFIX, LISTING_URL_PREFIX, MAP_URL_PREFIX, MAP_URL_SUFFIX, STATUS_TEXT_COLOURS, REPLY_DATE_FORMAT } from './constants'
 
 const getUserPassword = email => email.replace(/@.*$/, '')
+
+export const formatReplyDate = date => moment(date).format(REPLY_DATE_FORMAT)
 
 export const required = value => value === '' || value === 'unspecified' ? 'Required' : undefined
 

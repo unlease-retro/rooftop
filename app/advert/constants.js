@@ -22,3 +22,5 @@ export const STATUS_TEXT_COLOURS = {
   declined: 'error',
   pending: 'dark',
 }
+
+export const REPLY_DATE_FORMAT = 'HH:mm, DD MMM YYYY'

@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Field } from 'redux-form/immutable'
 
-import * as API from '../shared/services/api'
+//import * as API from '../shared/services/api'
 import * as Bot from '../bot'
 import { getStatus } from './computed'
 import * as selectors from './selectors'
+import UISelectors from '../ui/selectors'
 import * as fragments from './fragments'
 import mutations from './mutations'
+import { updateUI } from '../ui/actions'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
 import { promisifyMutation } from '../shared/util'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
 import { View, Grid, Section } from 'components/layout'
+import { Textarea } from 'components/textarea'
 import { Text } from 'components/text'
 
 import Form, { Select, Input } from './components'
@@ -33,6 +37,16 @@ class Advert extends Component {
     this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
     this.onDeleteListingRequest = this.onDeleteListingRequest.bind(this)
     this.onListingViewRequest = this.onListingViewRequest.bind(this)
+    this.onSendMessageRequest = this.onSendMessageRequest.bind(this)
+    this.renderReply = this.renderReply.bind(this)
+
+  }
+
+  componentWillUnmount() {
+
+    const { actions: { updateUI } } = this.props
+
+    return updateUI({ snackbar: null })
 
   }
 
@@ -55,7 +69,7 @@ class Advert extends Component {
     // I have given up! 😫
     let emailAddress
 
-    relay.setVariables({ requesting: true })
+    relay.setVariables({ createListingRequesting: true })
 
     return onUpdateAdvertRequest(advert._id, editForm)
       .then( () => getAddressFromGeocode(advert.geocode) )
@@ -68,8 +82,19 @@ class Advert extends Component {
         return onUpdateAdvertRequest(advert._id, { listingId: listingId, submitted: true })
 
       } )
-      .then( () => API.post( 'webhooks/sendSms', { body: getSmsBody({ ...this.props.query.advert, emailAddress }), to: this.props.query.advert.phoneNumber }) )
-      .then( () => relay.setVariables({ requesting: false }) )
+      .then( () => relay.setVariables({ createListingRequesting: false }) )
+
+  }
+
+  onSendMessageRequest() {
+
+    const message = this.SMSContent
+
+    const { query: { advert }, actions: { updateUI } } = this.props
+    const { phoneNumber } = advert
+
+    return promisifyMutation( new mutations.sendAdvertMessage({ id: advert._id, payload: { thread: phoneNumber, message } }) )
+      .then( () => updateUI({ snackbar: 'Message sent!' }) )
 
   }
 
@@ -97,12 +122,38 @@ class Advert extends Component {
 
   }
 
+  renderReply(reply, index) {
+
+    const { message, host, createdAt } = reply
+
+    const dateTextColor = host ? 'error' : 'primary'
+    const date = formatReplyDate(createdAt)
+
+    return (
+      <View atomic={{ m:0, p:0 }} key={ index }>
+
+        <View atomic={{ pl:0, pr:0, pt:0, pb:4 }}>
+
+          <Text>{ message }</Text>
+
+          <Text color={ dateTextColor } atomic={{ mb: 0 }}>{ date }</Text>
+
+        </View>
+
+        <View height='1px' backgroundColor='dark' atomic={{ m:0, p:0 }} />
+
+      </View>
+    )
+
+  }
+
   render() {
 
-    const { doesFormHaveErrors, query, relay: { variables } } = this.props
+
+    const { doesFormHaveErrors, query, requesting, relay: { variables } } = this.props
     const { advert } = query
-    const { requesting } = variables
-    const { photos, amenities, preferences, household, extraCosts } = advert
+    const { createListingRequesting } = variables
+    const { photos, amenities, preferences, household, extraCosts, replies } = advert
 
     const initialValues = {
       title: advert.title,
@@ -124,6 +175,26 @@ class Advert extends Component {
 
     return (
       <View>
+
+        <Section>
+
+          <View atomic={{ pb:0 }}>
+
+            { replies.map( (reply, index) => this.renderReply(reply, index) ) }
+
+          </View>
+
+          <View>
+
+            <Text atomic={{ mt: 0 }}>Your message:</Text>
+
+            <Textarea placeholder='Write here..' disabled={ requesting } defaultValue={ this.SMSContent } onChange={ e => this.SMSContent = e.target.value } />
+
+            { !requesting ? (<Button atomic={{ w:'a' }} onClick={ this.onSendMessageRequest }>Send message</Button>) : null }
+
+          </View>
+
+        </Section>
 
         <Text atomic={{ fs:6, fw:'b', mb:0, ta:'c' }} color='primary'>{ advert.title }</Text>
 
@@ -427,7 +498,7 @@ class Advert extends Component {
 
           <Section>
 
-            <Form initialValues={ initialValues }>
+            <Form initialValues={ initialValues } atomic={{ m:0 }}>
 
               <Field name='title' type='text' label='Title' component={ Input } validate={ required }/>
 
@@ -459,14 +530,6 @@ class Advert extends Component {
 
         </Grid>
 
-        {/* <View>
-
-          <Text>SMS content:</Text>
-
-          <Textarea defaultValue={ this.SMSContent } onChange={ e => this.SMSContent = e.target.value } />
-
-        </View> */}
-
         { advert.status !== 'active' && (
           <Section atomic={{ ta:'c' }}>
 
@@ -476,7 +539,7 @@ class Advert extends Component {
 
             <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
 
-            { !requesting ? (<Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>) : null }
+            { !createListingRequesting ? (<Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>) : null }
 
           </Section>
         ) }
@@ -509,7 +572,10 @@ class Advert extends Component {
 
 export default Relay.createContainer(
   connect(
-    createStructuredSelector({ ...selectors })
+    createStructuredSelector({ ...selectors, ...UISelectors }),
+    dispatch => ({
+      actions: bindActionCreators({ updateUI }, dispatch)
+    })
   )(Advert),
   { ...variables, fragments }
 )

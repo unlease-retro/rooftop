@@ -119,7 +119,7 @@ type BotPreferences {
 }
 
 type BotReply {
-  id: String
+  _id: String
   host: Boolean
   thread: String
   message: String
@@ -268,6 +268,13 @@ input InputTypeBotPreferences {
   vegetarian: String
 }
 
+input InputTypeBotReply {
+  createdAt: String
+  host: Boolean
+  message: String
+  thread: String
+}
+
 type Listing {
   id: String
   bot: Boolean
@@ -308,6 +315,7 @@ input ListingInputType {
 type Mutations {
   updateAdvert(input: UpdateAdvertInput!): UpdateAdvertPayload
   createAdvert(input: CreateAdvertInput!): CreateAdvertPayload
+  sendAdvertMessage(input: SendAdvertMessageInput!): SendAdvertMessagePayload
   createListing(input: CreateListingInput!): CreateListingPayload
   removeListing(input: RemoveListingInput!): RemoveListingPayload
   createUserWithListing(input: CreateUserWithListingInput!): CreateUserWithListingPayload
@@ -389,6 +397,16 @@ input RoommateInputType {
   numOfMale: Int
   occupation: [String]
   sectionCompleted: Boolean
+}
+
+input SendAdvertMessageInput {
+  payload: InputTypeBotReply
+  clientMutationId: String
+}
+
+type SendAdvertMessagePayload {
+  replies: BotReply
+  clientMutationId: String
 }
 
 input UpdateAdvertInput {
