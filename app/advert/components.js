@@ -69,4 +69,4 @@ export const Select = props => {
 }
 
 
-export default reduxForm( { form } )( Form )
+export default reduxForm( { form, enableReinitialize: true } )( Form )
