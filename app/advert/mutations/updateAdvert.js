@@ -33,6 +33,7 @@ export default class UpdateAdvertMutation extends Relay.Mutation {
           numOfMale
           phoneNumber
           postcode
+          deposit
           price
           submitted
           title
