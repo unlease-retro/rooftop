@@ -39,11 +39,12 @@ class Advert extends Component {
 
   onDeleteListingRequest() {
 
+    const { onUpdateAdvertRequest } = this
     const { query: { advert } } = this.props
     const { listingId, _id } = advert
 
     return promisifyMutation( new mutations.removeListing({ id: listingId }) )
-      .then( promisifyMutation( new mutations.updateAdvert({ _id, payload: { disabled: true, submitted: false, listingId: 'listingDeleted' } }) ) )
+      .then( () => onUpdateAdvertRequest(_id, { disabled: true, submitted: false, listingId: 'listingDeleted' }) )
 
   }
 
@@ -104,6 +105,7 @@ class Advert extends Component {
       title: advert.title,
       description: advert.description,
       price: advert.price,
+      deposit: advert.deposit,
       hostName: advert.hostName,
       phoneNumber: advert.phoneNumber,
       homeType: advert.homeType,
@@ -319,14 +321,6 @@ class Advert extends Component {
 
                 <View atomic={{ d:'f', p:0 }}>
 
-                  <Text atomic={{ m:0 }}>Deposit:</Text>
-
-                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.deposit }</Text>
-
-                </View>
-
-                <View atomic={{ d:'f', p:0 }}>
-
                   <Text atomic={{ m:0 }}>Fees Apply:</Text>
 
                   <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ extraCosts.feesApply }</Text>
@@ -442,6 +436,8 @@ class Advert extends Component {
               <Field name='description' label='Description' component={ Input } validate={ required }/>
 
               <Field name='price' type='number' label='Price' normalize={ normalize } component={ Input } validate={ required }/>
+
+              <Field name='deposit' type='number' label='Deposit' normalize={ normalize } component={ Input } validate={ required }/>
 
               <Field name='hostName' type='text' label='Host name' component={ Input } validate={ required }/>
 

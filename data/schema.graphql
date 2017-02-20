@@ -51,6 +51,7 @@ type Bot {
   title: String
   description: String
   price: Int
+  deposit: Int
   photos: [String]
   availabilityFrom: String
   availabilityTo: String
@@ -81,7 +82,6 @@ type BotAmenities {
 }
 
 type BotExtraCosts {
-  deposit: String
   feesApply: String
   billsIncluded: String
 }
@@ -202,6 +202,7 @@ input InputTypeBot {
   title: String
   description: String
   price: Int
+  deposit: Int
   photos: [String]
   availabilityFrom: String
   availabilityTo: String
@@ -231,7 +232,6 @@ input InputTypeBotAmenities {
 }
 
 input InputTypeBotExtraCosts {
-  deposit: String
   feesApply: String
   billsIncluded: String
 }
