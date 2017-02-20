@@ -10,6 +10,7 @@ export const query = () => Relay.QL`
       listingId
       description
       price
+      deposit
       homeType
       hostName
       numOfFemale
@@ -48,7 +49,6 @@ export const query = () => Relay.QL`
         nationality
       }
       extraCosts {
-        deposit
         feesApply
         billsIncluded
       }

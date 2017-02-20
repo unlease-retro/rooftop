@@ -48,7 +48,7 @@ export const transformAdvertToListing = advert => ({
       pricing: {
         weeklyRent: advert.price,
         cleaningFee: 0,
-        deposit: 0,
+        deposit: advert.deposit,
         serviceFee: 0.03,
         extraGuestCharge: 0,
         sectionCompleted: true
