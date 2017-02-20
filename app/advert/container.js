@@ -50,10 +50,12 @@ class Advert extends Component {
   onCreateUserWithListingRequest() {
 
     const { onUpdateAdvertRequest } = this
-    const { editForm, query: { advert } } = this.props
+    const { relay, editForm, query: { advert } } = this.props
 
     // I have given up! 😫
     let emailAddress
+
+    relay.setVariables({ requesting: true })
 
     return onUpdateAdvertRequest(advert._id, editForm)
       .then( () => getAddressFromGeocode(advert.geocode) )
@@ -67,6 +69,7 @@ class Advert extends Component {
 
       } )
       .then( () => API.post( 'webhooks/sendSms', { body: getSmsBody({ ...this.props.query.advert, emailAddress }), to: this.props.query.advert.phoneNumber }) )
+      .then( () => relay.setVariables({ requesting: false }) )
 
   }
 
@@ -96,8 +99,9 @@ class Advert extends Component {
 
   render() {
 
-    const { doesFormHaveErrors, query } = this.props
+    const { doesFormHaveErrors, query, relay: { variables } } = this.props
     const { advert } = query
+    const { requesting } = variables
     const { photos, amenities, preferences, household, extraCosts } = advert
 
     const initialValues = {
@@ -472,7 +476,7 @@ class Advert extends Component {
 
             <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
 
-            <Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>
+            { !requesting ? (<Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>) : null }
 
           </Section>
         ) }
