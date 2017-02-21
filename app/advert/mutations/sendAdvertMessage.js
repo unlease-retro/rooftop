@@ -11,7 +11,8 @@ export default class SendAdvertMessageMutation extends Relay.Mutation {
   getVariables() {
 
     return {
-      id: this.props._id,
+      _id: this.props._id,
+      phoneNumber: this.props.phoneNumber,
       message: this.props.message,
     }
 

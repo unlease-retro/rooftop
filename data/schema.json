@@ -2682,11 +2682,31 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "payload",
+              "name": "_id",
               "description": null,
               "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "InputTypeBotReply",
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "phoneNumber",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "message",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               },
               "defaultValue": null
@@ -2707,68 +2727,17 @@
           "possibleTypes": null
         },
         {
-          "kind": "INPUT_OBJECT",
-          "name": "InputTypeBotReply",
-          "description": null,
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "createdAt",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "host",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "message",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "thread",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
           "kind": "OBJECT",
           "name": "SendAdvertMessagePayload",
           "description": null,
           "fields": [
             {
-              "name": "replies",
+              "name": "advert",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "BotReply",
+                "name": "Bot",
                 "ofType": null
               },
               "isDeprecated": false,

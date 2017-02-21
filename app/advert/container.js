@@ -15,7 +15,7 @@ import mutations from './mutations'
 import { updateUI } from '../ui/actions'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
 import { promisifyMutation } from '../shared/util'
 
 import { Image } from 'components/image'
@@ -89,11 +89,10 @@ class Advert extends Component {
   onSendMessageRequest() {
 
     const message = this.SMSContent
-
     const { query: { advert }, actions: { updateUI } } = this.props
-    const { phoneNumber } = advert
+    const { _id, phoneNumber } = advert
 
-    return promisifyMutation( new mutations.sendAdvertMessage({ id: advert._id, payload: { thread: phoneNumber, message } }) )
+    return promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber, message }) )
       .then( () => updateUI({ snackbar: 'Message sent!' }) )
 
   }

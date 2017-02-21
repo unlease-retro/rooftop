@@ -268,13 +268,6 @@ input InputTypeBotPreferences {
   vegetarian: String
 }
 
-input InputTypeBotReply {
-  createdAt: String
-  host: Boolean
-  message: String
-  thread: String
-}
-
 type Listing {
   id: String
   bot: Boolean
@@ -400,12 +393,14 @@ input RoommateInputType {
 }
 
 input SendAdvertMessageInput {
-  payload: InputTypeBotReply
+  _id: String
+  phoneNumber: String
+  message: String
   clientMutationId: String
 }
 
 type SendAdvertMessagePayload {
-  replies: BotReply
+  advert: Bot
   clientMutationId: String
 }
 
