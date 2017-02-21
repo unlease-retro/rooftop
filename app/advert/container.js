@@ -17,6 +17,7 @@ import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
 import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserPassword, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
 import { promisifyMutation } from '../shared/util'
+import { TABS } from './constants'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
@@ -137,6 +138,14 @@ class Advert extends Component {
 
   }
 
+  onChangeTab(visibleTab) {
+
+    const { relay } = this.props
+
+    return relay.setVariables({ visibleTab })
+
+  }
+
   renderReply(reply, index) {
 
     const { message, host, createdAt } = reply
@@ -167,7 +176,7 @@ class Advert extends Component {
 
     const { doesFormHaveErrors, query, requesting, relay: { variables } } = this.props
     const { advert } = query
-    const { createListingRequesting } = variables
+    const { createListingRequesting, visibleTab } = variables
     const { photos, amenities, preferences, household, extraCosts, replies } = advert
 
     const initialValues = {
@@ -191,7 +200,19 @@ class Advert extends Component {
     return (
       <View>
 
-        <Section>
+        <Text atomic={{ fs:6, fw:'b', mb:0, ta:'c' }} color='primary'>{ advert.title }</Text>
+
+        <Text atomic={{ fs:4, mt:0, ta:'c', tt:'u' }} color={ getStatusTextColour(advert.status) }>{ advert.status }</Text>
+
+        <View atomic={{ p:0, ta:'c', mb:4 }}>
+
+          { TABS.map( ({ label, icon }) => <Button key={ label } backgroundColor={ label === visibleTab ? 'secondary' : 'primary' } atomic={{ d:'ib', w:'a', ml:2, mr:2 }} onClick={ () => this.onChangeTab(label) }>{ icon } { label }</Button> ) }
+
+        </View>
+
+        <Anchor atomic={{ d:'ib', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
+
+        { visibleTab === 'messages' ? (<Section>
 
           <View atomic={{ pb:0 }}>
 
@@ -209,15 +230,10 @@ class Advert extends Component {
 
           </View>
 
-        </Section>
+        </Section>) : null }
 
-        <Text atomic={{ fs:6, fw:'b', mb:0, ta:'c' }} color='primary'>{ advert.title }</Text>
 
-        <Text atomic={{ fs:4, mt:0, ta:'c', tt:'u' }} color={ getStatusTextColour(advert.status) }>{ advert.status }</Text>
-
-        <Anchor atomic={{ d:'ib', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
-
-        <Grid>
+        { visibleTab === 'info' ? (<Grid>
 
           <Section>
 
@@ -543,17 +559,17 @@ class Advert extends Component {
 
           </Section>
 
-        </Grid>
+        </Grid>) : null }
 
         <Section>
 
-          <View>
+          { advert.status !== 'active' ? (<View>
 
             <Label atomic={{ ml:0, mr:0 }}>SMS content:</Label>
 
             <Textarea height='250px' defaultValue={ this.generatedSmsContent } onChange={ e => this.generatedSmsContent = e.target.value } atomic={{ m:0, bs:'s', bw:1, bg:'t' }}></Textarea>
 
-          </View>
+          </View>) : null }
 
         </Section>
 
