@@ -29,3 +29,5 @@ export const TABS = [
   { label: 'info', icon: '📝' },
   { label: 'messages', icon: '✉️' }
 ]
+
+export const INITIAL_TAB = 'info'

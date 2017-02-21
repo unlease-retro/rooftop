@@ -17,7 +17,7 @@ import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
 import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserPassword, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
 import { promisifyMutation } from '../shared/util'
-import { TABS } from './constants'
+import { TABS, INITIAL_TAB } from './constants'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
@@ -212,7 +212,7 @@ class Advert extends Component {
 
         <Anchor atomic={{ d:'ib', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
 
-        { visibleTab === 'messages' ? (<Section>
+        { visibleTab !== INITIAL_TAB ? (<Section>
 
           <View atomic={{ pb:0 }}>
 
@@ -233,7 +233,7 @@ class Advert extends Component {
         </Section>) : null }
 
 
-        { visibleTab === 'info' ? (<Grid>
+        { visibleTab === INITIAL_TAB ? (<Grid>
 
           <Section>
 
