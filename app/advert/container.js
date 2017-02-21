@@ -15,7 +15,7 @@ import mutations from './mutations'
 import { updateUI } from '../ui/actions'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserPassword, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
 import { promisifyMutation } from '../shared/util'
 
 import { Image } from 'components/image'
@@ -24,6 +24,7 @@ import { Button } from 'components/button'
 import { View, Grid, Section } from 'components/layout'
 import { Textarea } from 'components/textarea'
 import { Text } from 'components/text'
+import { Label } from 'components/label'
 
 import Form, { Select, Input } from './components'
 
@@ -39,6 +40,8 @@ class Advert extends Component {
     this.onListingViewRequest = this.onListingViewRequest.bind(this)
     this.onSendMessageRequest = this.onSendMessageRequest.bind(this)
     this.renderReply = this.renderReply.bind(this)
+
+    this.generatedSmsContent = getSmsBody()
 
   }
 
@@ -65,32 +68,49 @@ class Advert extends Component {
 
     const { onUpdateAdvertRequest } = this
     const { relay, editForm, query: { advert } } = this.props
-    const { _id, phoneNumber } = advert
+    const { _id, phoneNumber, geocode } = advert
 
     // I have given up! 😫
-    let emailAddress
+    const user = {}
+    const listing = {}
 
     relay.setVariables({ createListingRequesting: true })
 
-    return onUpdateAdvertRequest(advert._id, editForm)
-      .then( () => getAddressFromGeocode(advert.geocode) )
+    return onUpdateAdvertRequest(_id, editForm)
+      .then( () => getAddressFromGeocode(geocode) )
       .then( address => transformAdvertToListing({ ...this.props.query.advert, ...address }) )
       .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
       .then( ({ createUserWithListing: { listingId, email } }) => {
 
-        emailAddress = email
+        user.emailAddress = email
+        user.password = getUserPassword(email)
+        listing.listingUrl = getListingUrl(listingId)
 
-        return onUpdateAdvertRequest(advert._id, { listingId: listingId, submitted: true })
+        return onUpdateAdvertRequest(_id, { listingId, submitted: true })
 
       } )
-      .then( () => promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber, message: getSmsBody({ ...this.props.query.advert, emailAddress }) }) ) )
+      .then( () => {
+
+        const { generatedSmsContent } = this
+        const { query: { advert } } = this.props
+
+        return compileSmsBody(generatedSmsContent, advert, listing, user)
+
+      } )
+      .then( message => {
+
+        console.log(message)
+
+        return promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber, message }) )
+
+      } )
       .then( () => relay.setVariables({ createListingRequesting: false }) )
 
   }
 
   onSendMessageRequest() {
 
-    const message = this.SMSContent
+    const message = this.smsContent
     const { query: { advert }, actions: { updateUI } } = this.props
     const { _id, phoneNumber } = advert
 
@@ -189,7 +209,7 @@ class Advert extends Component {
 
             <Text atomic={{ mt: 0 }}>Your message:</Text>
 
-            <Textarea placeholder='Write here..' disabled={ requesting } defaultValue={ this.SMSContent } onChange={ e => this.SMSContent = e.target.value } />
+            <Textarea placeholder='Write here..' disabled={ requesting } defaultValue={ this.smsContent } onChange={ e => this.smsContent = e.target.value } />
 
             { !requesting ? (<Button atomic={{ w:'a' }} onClick={ this.onSendMessageRequest }>Send message</Button>) : null }
 
@@ -217,13 +237,13 @@ class Advert extends Component {
 
             </View>
 
-            <View atomic={{ p:0, o:'s' }} height='500px'>
+            <View atomic={{ p:0, o:'s' }}>
 
               <View>
 
                 <Anchor href={ getMapUrl(advert.geocode) } target='_blank'>View on map</Anchor>
 
-                <Text atomic={{ fw:'b', fs:6 }}>Amenities</Text>
+                <Text atomic={{ fw:'b', fs:4 }}>Amenities</Text>
 
                 <View atomic={{ d:'f', p:0 }}>
 
@@ -293,7 +313,7 @@ class Advert extends Component {
 
               <View>
 
-                <Text atomic={{ fw:'b', fs:6 }}>Household</Text>
+                <Text atomic={{ fw:'b', fs:4 }}>Household</Text>
 
                 <View atomic={{ d:'f', p:0 }}>
 
@@ -387,7 +407,7 @@ class Advert extends Component {
 
               <View>
 
-                <Text atomic={{ fw:'b', fs:6 }}>Extra Costs</Text>
+                <Text atomic={{ fw:'b', fs:4 }}>Extra Costs</Text>
 
                 <View atomic={{ d:'f', p:0 }}>
 
@@ -409,7 +429,7 @@ class Advert extends Component {
 
               <View>
 
-                <Text atomic={{ fw:'b', fs:6 }}>Preferences</Text>
+                <Text atomic={{ fw:'b', fs:4 }}>Preferences</Text>
 
                 <View atomic={{ d:'f', p:0 }}>
 
@@ -530,6 +550,18 @@ class Advert extends Component {
           </Section>
 
         </Grid>
+
+        <Section>
+
+          <View>
+
+            <Label atomic={{ ml:0, mr:0 }}>SMS content:</Label>
+
+            <Textarea height='250px' defaultValue={ this.generatedSmsContent } onChange={ e => this.generatedSmsContent = e.target.value } atomic={{ m:0, bs:'s', bw:1, bg:'t' }}></Textarea>
+
+          </View>
+
+        </Section>
 
         { advert.status !== 'active' && (
           <Section atomic={{ ta:'c' }}>
