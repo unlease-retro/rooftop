@@ -6,11 +6,15 @@ import { AutoSizer, Column, SortIndicator, Table } from 'react-virtualized'
 import { FIELDS, FILTERS } from './constants'
 import * as fragments from './fragments'
 import variables from './variables'
+import { getFilteredBotAdverts } from './computed'
 import { getSortedList } from '../shared/util/virtualized'
 
 import { View } from 'components/layout'
 import { Select } from 'components/select'
 import { Text } from 'components/text'
+import { Checkbox } from 'components/checkbox'
+import { Label } from 'components/label'
+
 
 class Bot extends Component {
 
@@ -59,10 +63,10 @@ class Bot extends Component {
 
     const { query, relay: { variables } } = this.props
     const { allAdverts } = query
-    const { sortBy, sortDirection, status } = variables
+    const { sortBy, sortDirection, status, contacted } = variables
 
     // sort adverts
-    const sortedList = getSortedList(allAdverts, sortBy, sortDirection)
+    const sortedList = getSortedList(getFilteredBotAdverts(allAdverts, { contacted }), sortBy, sortDirection)
 
     // make column headers sortable
     const headerRenderer = ({ dataKey, label, sortBy, sortDirection }) => ( <div>{ label } { sortBy === dataKey && <SortIndicator sortDirection={ sortDirection } /> } </div> )
@@ -86,6 +90,16 @@ class Bot extends Component {
           onChange={ ({ value }) => this.onStatusFilterChange(value) }
         />
 
+        <View atomic={{ p:0, d:'ib', w:'a' }}>
+
+          <Label atomic={{ d:'ib', m:0 }}>
+            <Checkbox atomic={{ d:'ib', mr:1, mt:0, mb:0, w:'a' }} onChange={ () => this.props.relay.setVariables({ contacted: !contacted })} type='checkbox' />
+            Display only Contacted adverts
+          </Label>
+
+        </View>
+
+
         <AutoSizer>
 
           { ({ width }) => (
@@ -96,7 +110,7 @@ class Bot extends Component {
               headerHeight={30}
               noRowsRenderer={ () => ( <div>No data</div> ) }
               overscanRowCount={10}
-              rowCount={ allAdverts.length }
+              rowCount={ sortedList.length }
               rowGetter={ ({ index }) => sortedList[index % sortedList.length] }
               rowHeight={40}
               sort={ this.onSort }

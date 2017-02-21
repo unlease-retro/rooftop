@@ -7,7 +7,8 @@ const variables = {
     sortBy: 'title',
     sortDirection: 'ASC',
     status: 'pending',
-  },
+    contacted: false
+  }
 
 }
 

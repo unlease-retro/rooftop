@@ -18,6 +18,10 @@ export const query = () => Relay.QL`
       postcode
       price
       title
+      replies {
+        _id,
+        message
+      }
     },
   }
 `
