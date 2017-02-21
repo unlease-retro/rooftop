@@ -97,13 +97,7 @@ class Advert extends Component {
         return compileSmsBody(generatedSmsContent, advert, listing, user)
 
       } )
-      .then( message => {
-
-        console.log(message)
-
-        return promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber, message }) )
-
-      } )
+      .then( message => promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber, message }) ) )
       .then( () => relay.setVariables({ createListingRequesting: false }) )
 
   }

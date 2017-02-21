@@ -21,7 +21,7 @@ export const Input = props => {
   let renderElement = <TextInput { ...input } type={ type } atomic={ atomic }/>
 
   if (!type) renderElement = <Textarea { ...input } height='300px' atomic={ atomic }/>
-  // fix warning on date
+
   if (input.value === 'unspecified') input.value = null
 
   return (
