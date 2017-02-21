@@ -15,7 +15,7 @@ import mutations from './mutations'
 import { updateUI } from '../ui/actions'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
 import { promisifyMutation } from '../shared/util'
 
 import { Image } from 'components/image'
@@ -65,6 +65,7 @@ class Advert extends Component {
 
     const { onUpdateAdvertRequest } = this
     const { relay, editForm, query: { advert } } = this.props
+    const { _id, phoneNumber } = advert
 
     // I have given up! 😫
     let emailAddress
@@ -82,6 +83,7 @@ class Advert extends Component {
         return onUpdateAdvertRequest(advert._id, { listingId: listingId, submitted: true })
 
       } )
+      .then( () => promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber, message: getSmsBody({ ...this.props.query.advert, emailAddress }) }) ) )
       .then( () => relay.setVariables({ createListingRequesting: false }) )
 
   }
