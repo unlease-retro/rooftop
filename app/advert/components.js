@@ -20,14 +20,14 @@ export const Input = props => {
 
   let renderElement = <TextInput { ...input } type={ type } atomic={ atomic }/>
 
-  if (!type) renderElement = <Textarea { ...input } atomic={ atomic }/>
-  // fix warning on date
+  if (!type) renderElement = <Textarea { ...input } height='300px' atomic={ atomic }/>
+
   if (input.value === 'unspecified') input.value = null
 
   return (
     <View atomic={{ m:0, mb:2, p:0, d:'f', fd:'c' }}>
 
-      <Label atomic={{ ml:0, mr:0 }}>{ label }</Label>
+      <Label atomic={{ ml:0, mr:0, fs:4 }}>{ label }</Label>
 
       { renderElement }
 

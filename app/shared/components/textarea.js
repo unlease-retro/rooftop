@@ -6,6 +6,7 @@ import { colours, typography } from 'style'
 export const Textarea = styled.textarea`
   ${ typography.ff() }
   width: ${ props => props.width || Textarea.default.width };
+  height: ${ props => props.height || Textarea.default.height };
   resize: none;
   outline: none;
   margin-left: auto;
@@ -19,6 +20,7 @@ export const Textarea = styled.textarea`
 
 Textarea.default = {
   width: '100%',
+  height: '150px',
   atomic: {
     d: 'b',
     fs: 5,

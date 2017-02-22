@@ -3,6 +3,16 @@ schema {
   mutation: Mutations
 }
 
+input AddBlacklistInput {
+  phoneNumber: String
+  clientMutationId: String
+}
+
+type AddBlacklistPayload {
+  advert: Bot
+  clientMutationId: String
+}
+
 input AddListingToPopularInput {
   id: String
   clientMutationId: String
@@ -119,7 +129,7 @@ type BotPreferences {
 }
 
 type BotReply {
-  id: String
+  _id: String
   host: Boolean
   thread: String
   message: String
@@ -308,6 +318,8 @@ input ListingInputType {
 type Mutations {
   updateAdvert(input: UpdateAdvertInput!): UpdateAdvertPayload
   createAdvert(input: CreateAdvertInput!): CreateAdvertPayload
+  sendAdvertMessage(input: SendAdvertMessageInput!): SendAdvertMessagePayload
+  addBlacklist(input: AddBlacklistInput!): AddBlacklistPayload
   createListing(input: CreateListingInput!): CreateListingPayload
   removeListing(input: RemoveListingInput!): RemoveListingPayload
   createUserWithListing(input: CreateUserWithListingInput!): CreateUserWithListingPayload
@@ -389,6 +401,18 @@ input RoommateInputType {
   numOfMale: Int
   occupation: [String]
   sectionCompleted: Boolean
+}
+
+input SendAdvertMessageInput {
+  _id: String
+  phoneNumber: String
+  message: String
+  clientMutationId: String
+}
+
+type SendAdvertMessagePayload {
+  advert: Bot
+  clientMutationId: String
 }
 
 input UpdateAdvertInput {

@@ -1,25 +1,31 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Field } from 'redux-form/immutable'
 
-import * as API from '../shared/services/api'
+//import * as API from '../shared/services/api'
 import * as Bot from '../bot'
 import { getStatus } from './computed'
 import * as selectors from './selectors'
+import UISelectors from '../ui/selectors'
 import * as fragments from './fragments'
 import mutations from './mutations'
+import { updateUI } from '../ui/actions'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getMapUrl, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserPassword, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
 import { promisifyMutation } from '../shared/util'
+import { TABS, INITIAL_TAB } from './constants'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
 import { View, Grid, Section } from 'components/layout'
+import { Textarea } from 'components/textarea'
 import { Text } from 'components/text'
+import { Label } from 'components/label'
 
 import Form, { Select, Input } from './components'
 
@@ -33,6 +39,18 @@ class Advert extends Component {
     this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
     this.onDeleteListingRequest = this.onDeleteListingRequest.bind(this)
     this.onListingViewRequest = this.onListingViewRequest.bind(this)
+    this.onSendMessageRequest = this.onSendMessageRequest.bind(this)
+    this.renderReply = this.renderReply.bind(this)
+
+    this.generatedSmsContent = getSmsBody()
+
+  }
+
+  componentWillUnmount() {
+
+    const { actions: { updateUI } } = this.props
+
+    return updateUI({ snackbar: null })
 
   }
 
@@ -40,36 +58,60 @@ class Advert extends Component {
 
     const { onUpdateAdvertRequest } = this
     const { query: { advert } } = this.props
-    const { listingId, _id } = advert
+    const { listingId, _id, phoneNumber } = advert
 
     return promisifyMutation( new mutations.removeListing({ id: listingId }) )
       .then( () => onUpdateAdvertRequest(_id, { disabled: true, submitted: false, listingId: 'listingDeleted' }) )
-
+      .then( () => promisifyMutation( new mutations.addBlacklist({ phoneNumber, _id }) ) )
+    
   }
 
   onCreateUserWithListingRequest() {
 
     const { onUpdateAdvertRequest } = this
     const { relay, editForm, query: { advert } } = this.props
+    const { _id, phoneNumber, geocode } = advert
 
     // I have given up! 😫
-    let emailAddress
+    const user = {}
+    const listing = {}
 
-    relay.setVariables({ requesting: true })
+    relay.setVariables({ createListingRequesting: true })
 
-    return onUpdateAdvertRequest(advert._id, editForm)
-      .then( () => getAddressFromGeocode(advert.geocode) )
+    return onUpdateAdvertRequest(_id, editForm)
+      .then( () => getAddressFromGeocode(geocode) )
       .then( address => transformAdvertToListing({ ...this.props.query.advert, ...address }) )
       .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
       .then( ({ createUserWithListing: { listingId, email } }) => {
 
-        emailAddress = email
+        user.emailAddress = email
+        user.password = getUserPassword(email)
+        listing.listingUrl = getListingUrl(listingId)
 
-        return onUpdateAdvertRequest(advert._id, { listingId: listingId, submitted: true })
+        return onUpdateAdvertRequest(_id, { listingId, submitted: true })
 
       } )
-      .then( () => API.post( 'webhooks/sendSms', { body: getSmsBody({ ...this.props.query.advert, emailAddress }), to: this.props.query.advert.phoneNumber }) )
-      .then( () => relay.setVariables({ requesting: false }) )
+      .then( () => {
+
+        const { generatedSmsContent } = this
+        const { query: { advert } } = this.props
+
+        return compileSmsBody(generatedSmsContent, advert, listing, user)
+
+      } )
+      .then( message => promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber, message }) ) )
+      .then( () => relay.setVariables({ createListingRequesting: false }) )
+
+  }
+
+  onSendMessageRequest() {
+
+    const message = this.smsContent
+    const { query: { advert }, actions: { updateUI } } = this.props
+    const { _id, phoneNumber } = advert
+
+    return promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber, message }) )
+      .then( () => updateUI({ snackbar: 'Message sent!' }) )
 
   }
 
@@ -91,18 +133,53 @@ class Advert extends Component {
 
   }
 
+
   onUpdateAdvertRequest(_id, payload) {
 
     return promisifyMutation( new mutations.updateAdvert({ _id, payload }) )
 
   }
 
+  onChangeTab(visibleTab) {
+
+    const { relay } = this.props
+
+    return relay.setVariables({ visibleTab })
+
+  }
+
+  renderReply(reply, index) {
+
+    const { message, host, createdAt } = reply
+
+    const dateTextColor = host ? 'error' : 'primary'
+    const date = formatReplyDate(createdAt)
+
+    return (
+      <View atomic={{ m:0, p:0 }} key={ index }>
+
+        <View atomic={{ pl:0, pr:0, pt:0, pb:4 }}>
+
+          <Text>{ message }</Text>
+
+          <Text color={ dateTextColor } atomic={{ mb: 0 }}>{ date }</Text>
+
+        </View>
+
+        <View height='1px' backgroundColor='dark' atomic={{ m:0, p:0 }} />
+
+      </View>
+    )
+
+  }
+
   render() {
 
-    const { doesFormHaveErrors, query, relay: { variables } } = this.props
+
+    const { doesFormHaveErrors, query, requesting, relay: { variables } } = this.props
     const { advert } = query
-    const { requesting } = variables
-    const { photos, amenities, preferences, household, extraCosts } = advert
+    const { createListingRequesting, visibleTab } = variables
+    const { photos, amenities, preferences, household, extraCosts, replies } = advert
 
     const initialValues = {
       title: advert.title,
@@ -112,7 +189,6 @@ class Advert extends Component {
       hostName: advert.hostName,
       phoneNumber: advert.phoneNumber,
       homeType: advert.homeType,
-      postcode: advert.postcode,
       availabilityFrom: advert.availabilityFrom,
       availabilityTo: advert.availabilityTo,
       numOfFemale: advert.numOfFemale,
@@ -129,9 +205,36 @@ class Advert extends Component {
 
         <Text atomic={{ fs:4, mt:0, ta:'c', tt:'u' }} color={ getStatusTextColour(advert.status) }>{ advert.status }</Text>
 
+        <View atomic={{ p:0, ta:'c', mb:4 }}>
+
+          { TABS.map( ({ label, icon }) => <Button key={ label } backgroundColor={ label === visibleTab ? 'secondary' : 'primary' } atomic={{ d:'ib', w:'a', ml:2, mr:2 }} onClick={ () => this.onChangeTab(label) }>{ icon } { label }</Button> ) }
+
+        </View>
+
         <Anchor atomic={{ d:'ib', mb:4, td:'n' }} to={Bot.route}>&larr; Back</Anchor>
 
-        <Grid>
+        { visibleTab !== INITIAL_TAB ? (<Section>
+
+          <View atomic={{ pb:0 }}>
+
+            { replies.map( (reply, index) => this.renderReply(reply, index) ) }
+
+          </View>
+
+          <View>
+
+            <Text atomic={{ mt: 0 }}>Your message:</Text>
+
+            <Textarea placeholder='Write here..' disabled={ requesting } defaultValue={ this.smsContent } onChange={ e => this.smsContent = e.target.value } />
+
+            { !requesting ? (<Button atomic={{ w:'a' }} onClick={ this.onSendMessageRequest }>Send message</Button>) : null }
+
+          </View>
+
+        </Section>) : null }
+
+
+        { visibleTab === INITIAL_TAB ? (<Grid>
 
           <Section>
 
@@ -145,13 +248,13 @@ class Advert extends Component {
 
             </View>
 
-            <View atomic={{ p:0, o:'s' }} height='500px'>
+            <View atomic={{ p:0, o:'s' }}>
 
               <View>
 
                 <Anchor href={ getMapUrl(advert.geocode) } target='_blank'>View on map</Anchor>
 
-                <Text atomic={{ fw:'b', fs:6 }}>Amenities</Text>
+                <Text atomic={{ fw:'b', fs:4 }}>Amenities</Text>
 
                 <View atomic={{ d:'f', p:0 }}>
 
@@ -221,7 +324,7 @@ class Advert extends Component {
 
               <View>
 
-                <Text atomic={{ fw:'b', fs:6 }}>Household</Text>
+                <Text atomic={{ fw:'b', fs:4 }}>Household</Text>
 
                 <View atomic={{ d:'f', p:0 }}>
 
@@ -315,7 +418,7 @@ class Advert extends Component {
 
               <View>
 
-                <Text atomic={{ fw:'b', fs:6 }}>Extra Costs</Text>
+                <Text atomic={{ fw:'b', fs:4 }}>Extra Costs</Text>
 
                 <View atomic={{ d:'f', p:0 }}>
 
@@ -337,7 +440,7 @@ class Advert extends Component {
 
               <View>
 
-                <Text atomic={{ fw:'b', fs:6 }}>Preferences</Text>
+                <Text atomic={{ fw:'b', fs:4 }}>Preferences</Text>
 
                 <View atomic={{ d:'f', p:0 }}>
 
@@ -427,7 +530,7 @@ class Advert extends Component {
 
           <Section>
 
-            <Form initialValues={ initialValues }>
+            <Form initialValues={ initialValues } atomic={{ m:0 }}>
 
               <Field name='title' type='text' label='Title' component={ Input } validate={ required }/>
 
@@ -443,8 +546,6 @@ class Advert extends Component {
 
               <Field name='homeType' label='Home type' component={ Select } validate={ required }/>
 
-              <Field name='postcode' type='text' label='Postcode' component={ Input } validate={ required }/>
-
               <Field name='availabilityFrom' type='date' label='Availability from' component={ Input } validate={ required }/>
 
               <Field name='availabilityTo' type='date' label='Availability to' component={ Input } validate={ required }/>
@@ -457,26 +558,30 @@ class Advert extends Component {
 
           </Section>
 
-        </Grid>
+        </Grid>) : null }
 
-        {/* <View>
+        <Section>
 
-          <Text>SMS content:</Text>
+          { advert.status !== 'active' ? (<View>
 
-          <Textarea defaultValue={ this.SMSContent } onChange={ e => this.SMSContent = e.target.value } />
+            <Label atomic={{ ml:0, mr:0 }}>SMS content:</Label>
 
-        </View> */}
+            <Textarea height='250px' defaultValue={ this.generatedSmsContent } onChange={ e => this.generatedSmsContent = e.target.value } atomic={{ m:0, bs:'s', bw:1, bg:'t' }}></Textarea>
+
+          </View>) : null }
+
+        </Section>
 
         { advert.status !== 'active' && (
           <Section atomic={{ ta:'c' }}>
 
             { advert.status !== 'declined' && (
-              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
+              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id) }>Decline Advert</Button>
             ) }
 
             <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
 
-            { !requesting ? (<Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>) : null }
+            { !createListingRequesting ? (<Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>) : null }
 
           </Section>
         ) }
@@ -509,7 +614,10 @@ class Advert extends Component {
 
 export default Relay.createContainer(
   connect(
-    createStructuredSelector({ ...selectors })
+    createStructuredSelector({ ...selectors, ...UISelectors }),
+    dispatch => ({
+      actions: bindActionCreators({ updateUI }, dispatch)
+    })
   )(Advert),
   { ...variables, fragments }
 )

@@ -13,8 +13,8 @@ export const MAP_URL_PREFIX = 'https://www.google.co.uk/maps/@'
 export const MAP_URL_SUFFIX = ',17z'
 
 export const HOME_TYPES = [
-	{ value: 'house', label: 'House share' },
-	{ value: 'flat', label: 'Flat share' },
+  { value: 'house', label: 'House share' },
+  { value: 'flat', label: 'Flat share' },
 ]
 
 export const STATUS_TEXT_COLOURS = {
@@ -22,3 +22,12 @@ export const STATUS_TEXT_COLOURS = {
   declined: 'error',
   pending: 'dark',
 }
+
+export const REPLY_DATE_FORMAT = 'HH:mm, DD MMM YYYY'
+
+export const TABS = [
+  { label: 'info', icon: '📝' },
+  { label: 'messages', icon: '✉️' }
+]
+
+export const INITIAL_TAB = 'info'

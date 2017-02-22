@@ -1,8 +1,11 @@
+import { INITIAL_TAB } from './constants'
+
 const variables = {
 
   initialVariables: {
     _id: null,
-    requesting: false,
+    visibleTab: INITIAL_TAB,
+    createListingRequesting: false,
   },
 
 }

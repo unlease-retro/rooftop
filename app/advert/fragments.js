@@ -64,6 +64,11 @@ export const query = () => Relay.QL`
         maxAge
         vegetarian
       }
+      replies {
+        host
+        message
+        createdAt
+      }
       disabled
       submitted
     },
