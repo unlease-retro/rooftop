@@ -70,7 +70,7 @@ class Advert extends Component {
 
     const { onUpdateAdvertRequest } = this
     const { relay, editForm, query: { advert } } = this.props
-    const { _id, phoneNumber, geocode } = advert
+    const { _id, geocode } = advert
 
     // I have given up! 😫
     const user = {}
@@ -88,7 +88,7 @@ class Advert extends Component {
         user.password = getUserPassword(email)
         listing.listingUrl = getListingUrl(listingId)
 
-        return onUpdateAdvertRequest(_id, { listingId, submitted: true })
+        return onUpdateAdvertRequest(_id, { listingId, submitted: true, disabled: false })
 
       } )
       .then( () => {
@@ -99,7 +99,7 @@ class Advert extends Component {
         return compileSmsBody(generatedSmsContent, advert, listing, user)
 
       } )
-      .then( message => promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber, message }) ) )
+      .then( message => promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber : this.props.query.advert.phoneNumber, message }) ) )
       .then( () => relay.setVariables({ createListingRequesting: false }) )
 
   }
@@ -576,12 +576,16 @@ class Advert extends Component {
           <Section atomic={{ ta:'c' }}>
 
             { advert.status !== 'declined' && (
-              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id) }>Decline Advert</Button>
+              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, {disabled: true}) }>Decline Advert</Button>
+            ) }
+
+            { advert.status === 'declined' && (
+              <Button atomic={{ d:'ib', w:'a', mr:4 }} onClick={ () => this.onUpdateAdvertRequest(advert._id, {disabled: false}) }>Enable Advert</Button>
             ) }
 
             <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
 
-            { !createListingRequesting ? (<Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>) : null }
+            { advert.status !== 'declined' && !createListingRequesting ? (<Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>) : null }
 
           </Section>
         ) }
