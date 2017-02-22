@@ -38,7 +38,6 @@ class Advert extends Component {
     this.onCreateUserWithListingRequest = this.onCreateUserWithListingRequest.bind(this)
     this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
     this.onDeleteListingRequest = this.onDeleteListingRequest.bind(this)
-    this.onDisableAdvertRequest = this.onDisableAdvertRequest.bind(this)
     this.onListingViewRequest = this.onListingViewRequest.bind(this)
     this.onSendMessageRequest = this.onSendMessageRequest.bind(this)
     this.renderReply = this.renderReply.bind(this)
@@ -59,11 +58,12 @@ class Advert extends Component {
 
     const { onUpdateAdvertRequest } = this
     const { query: { advert } } = this.props
-    const { listingId, _id } = advert
+    const { listingId, _id, phoneNumber } = advert
 
     return promisifyMutation( new mutations.removeListing({ id: listingId }) )
       .then( () => onUpdateAdvertRequest(_id, { disabled: true, submitted: false, listingId: 'listingDeleted' }) )
-
+      .then( () => promisifyMutation( new mutations.addBlacklist({ phoneNumber, _id }) ) )
+    
   }
 
   onCreateUserWithListingRequest() {
@@ -133,14 +133,6 @@ class Advert extends Component {
 
   }
 
-  onDisableAdvertRequest(_id, phoneNumber) {
-
-    const { onUpdateAdvertRequest } = this
-
-    return onUpdateAdvertRequest(_id, { disabled: true })
-      .then( () => promisifyMutation( new mutations.addBlacklist({ phoneNumber, _id }) ) )
-
-  }
 
   onUpdateAdvertRequest(_id, payload) {
 
@@ -587,7 +579,7 @@ class Advert extends Component {
           <Section atomic={{ ta:'c' }}>
 
             { advert.status !== 'declined' && (
-              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onDisableAdvertRequest(advert._id, advert.phoneNumber) }>Decline Advert</Button>
+              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id) }>Decline Advert</Button>
             ) }
 
             <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
