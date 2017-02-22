@@ -1,8 +1,4 @@
 /**
- * Created by marius on 21/02/17.
- */
-
-/**
  * @desc Listing computed values, memoized using ramda-memoize
  * @see http://ramdajs.com/docs/#memoize
  */

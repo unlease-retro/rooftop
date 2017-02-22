@@ -3,6 +3,16 @@ schema {
   mutation: Mutations
 }
 
+input AddBlacklistInput {
+  phoneNumber: String
+  clientMutationId: String
+}
+
+type AddBlacklistPayload {
+  advert: Bot
+  clientMutationId: String
+}
+
 input AddListingToPopularInput {
   id: String
   clientMutationId: String
@@ -309,6 +319,7 @@ type Mutations {
   updateAdvert(input: UpdateAdvertInput!): UpdateAdvertPayload
   createAdvert(input: CreateAdvertInput!): CreateAdvertPayload
   sendAdvertMessage(input: SendAdvertMessageInput!): SendAdvertMessagePayload
+  addBlacklist(input: AddBlacklistInput!): AddBlacklistPayload
   createListing(input: CreateListingInput!): CreateListingPayload
   removeListing(input: RemoveListingInput!): RemoveListingPayload
   createUserWithListing(input: CreateUserWithListingInput!): CreateUserWithListingPayload

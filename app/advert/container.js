@@ -38,6 +38,7 @@ class Advert extends Component {
     this.onCreateUserWithListingRequest = this.onCreateUserWithListingRequest.bind(this)
     this.onListingPreviewRequest = this.onListingPreviewRequest.bind(this)
     this.onDeleteListingRequest = this.onDeleteListingRequest.bind(this)
+    this.onDisableAdvertRequest = this.onDisableAdvertRequest.bind(this)
     this.onListingViewRequest = this.onListingViewRequest.bind(this)
     this.onSendMessageRequest = this.onSendMessageRequest.bind(this)
     this.renderReply = this.renderReply.bind(this)
@@ -129,6 +130,15 @@ class Advert extends Component {
     const { query: { advert } } = this.props
 
     return window.open( getListingUrl(advert.listingId) )
+
+  }
+
+  onDisableAdvertRequest(_id, phoneNumber) {
+
+    const { onUpdateAdvertRequest } = this
+
+    return onUpdateAdvertRequest(_id, { disabled: true })
+      .then( () => promisifyMutation( new mutations.addBlacklist({ phoneNumber, _id }) ) )
 
   }
 
@@ -577,7 +587,7 @@ class Advert extends Component {
           <Section atomic={{ ta:'c' }}>
 
             { advert.status !== 'declined' && (
-              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, { disabled: true }) }>Decline Advert</Button>
+              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onDisableAdvertRequest(advert._id, advert.phoneNumber) }>Decline Advert</Button>
             ) }
 
             <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>

@@ -80,7 +80,7 @@ class Bot extends Component {
         <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>All Adverts</Text>
 
         <Select
-          atomic={{ d:'b', mt:4, mb:6, ta:'c' }}
+          atomic={{ d:'b', mt:4, mb:2, ta:'c' }}
           name='status'
           value={ status }
           options={ FILTERS.status }
@@ -90,7 +90,7 @@ class Bot extends Component {
           onChange={ ({ value }) => this.onStatusFilterChange(value) }
         />
 
-        <View atomic={{ p:0, d:'ib', w:'a' }}>
+        <View atomic={{ p:0, d:'ib', w:'a', ta:'c', mb:4 }}>
 
           <Label atomic={{ d:'ib', m:0 }}>
             <Checkbox atomic={{ d:'ib', mr:1, mt:0, mb:0, w:'a' }} onChange={ () => this.props.relay.setVariables({ contacted: !contacted })} type='checkbox' />
