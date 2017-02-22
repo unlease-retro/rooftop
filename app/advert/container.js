@@ -189,7 +189,6 @@ class Advert extends Component {
       hostName: advert.hostName,
       phoneNumber: advert.phoneNumber,
       homeType: advert.homeType,
-      postcode: advert.postcode,
       availabilityFrom: advert.availabilityFrom,
       availabilityTo: advert.availabilityTo,
       numOfFemale: advert.numOfFemale,
@@ -546,8 +545,6 @@ class Advert extends Component {
               <Field name='phoneNumber' type='text' label='Phone number' component={ Input } validate={ required }/>
 
               <Field name='homeType' label='Home type' component={ Select } validate={ required }/>
-
-              <Field name='postcode' type='text' label='Postcode' component={ Input } validate={ required }/>
 
               <Field name='availabilityFrom' type='date' label='Availability from' component={ Input } validate={ required }/>
 
