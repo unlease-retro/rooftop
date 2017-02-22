@@ -560,45 +560,49 @@ class Advert extends Component {
 
         </Grid>) : null }
 
-        <Section>
+        { visibleTab === INITIAL_TAB ? <View>
+          
+          <Section>
 
-          { advert.status !== 'active' ? (<View>
+            { advert.status !== 'active' ? (<View>
 
-            <Label atomic={{ ml:0, mr:0 }}>SMS content:</Label>
+              <Label atomic={{ ml:0, mr:0 }}>SMS content:</Label>
 
-            <Textarea height='250px' defaultValue={ this.generatedSmsContent } onChange={ e => this.generatedSmsContent = e.target.value } atomic={{ m:0, bs:'s', bw:1, bg:'t' }}></Textarea>
+              <Textarea height='250px' defaultValue={ this.generatedSmsContent } onChange={ e => this.generatedSmsContent = e.target.value } atomic={{ m:0, bs:'s', bw:1, bg:'t' }}></Textarea>
 
-          </View>) : null }
-
-        </Section>
-
-        { advert.status !== 'active' && (
-          <Section atomic={{ ta:'c' }}>
-
-            { advert.status !== 'declined' && (
-              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, {disabled: true}) }>Decline Advert</Button>
-            ) }
-
-            { advert.status === 'declined' && (
-              <Button atomic={{ d:'ib', w:'a', mr:4 }} onClick={ () => this.onUpdateAdvertRequest(advert._id, {disabled: false}) }>Enable Advert</Button>
-            ) }
-
-            <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
-
-            { advert.status !== 'declined' && !createListingRequesting ? (<Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>) : null }
+            </View>) : null }
 
           </Section>
-        ) }
 
-        { advert.status === 'active' && (
-          <Section atomic={{ ta:'c' }}>
+          { advert.status !== 'active' && (
+            <Section atomic={{ ta:'c' }}>
 
-            <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onListingViewRequest }>View Listing</Button>
+              { advert.status !== 'declined' && (
+                <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='error' onClick={ () => this.onUpdateAdvertRequest(advert._id, {disabled: true}) }>Decline Advert</Button>
+              ) }
 
-            <Button atomic={{ ml:4, d:'ib', w:'a' }} onClick={ this.onDeleteListingRequest } backgroundColor='error'>Delete listing</Button>
+              { advert.status === 'declined' && (
+                <Button atomic={{ d:'ib', w:'a', mr:4 }} onClick={ () => this.onUpdateAdvertRequest(advert._id, {disabled: false}) }>Enable Advert</Button>
+              ) }
 
-          </Section>
-        ) }
+              <Button atomic={{ d:'ib', w:'a', mr:4 }} backgroundColor='dark' disabled={ doesFormHaveErrors } onClick={ this.onListingPreviewRequest }>Preview Listing</Button>
+
+              { advert.status !== 'declined' && !createListingRequesting ? (<Button atomic={{ d:'ib', w:'a' }} disabled={ doesFormHaveErrors } onClick={ this.onCreateUserWithListingRequest }>Create Listing</Button>) : null }
+
+            </Section>
+          ) }
+
+          { advert.status === 'active' && (
+            <Section atomic={{ ta:'c' }}>
+
+              <Button atomic={{ d:'ib', w:'a' }} onClick={ this.onListingViewRequest }>View Listing</Button>
+
+              <Button atomic={{ ml:4, d:'ib', w:'a' }} onClick={ this.onDeleteListingRequest } backgroundColor='error'>Delete listing</Button>
+
+            </Section>
+          ) }
+        </View> : null}
+
 
         <Section>
 
