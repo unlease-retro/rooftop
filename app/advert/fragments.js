@@ -20,6 +20,7 @@ export const query = () => Relay.QL`
       availabilityFrom
       availabilityTo
       city
+      serviceFee
       postcode
       geocode {
         lat

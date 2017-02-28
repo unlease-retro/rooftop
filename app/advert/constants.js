@@ -12,9 +12,20 @@ export const LISTING_URL_PREFIX = `${UI}/room/`
 export const MAP_URL_PREFIX = 'https://www.google.co.uk/maps/@'
 export const MAP_URL_SUFFIX = ',17z'
 
-export const HOME_TYPES = [
+export const HOME_TYPE = [
   { value: 'house', label: 'House share' },
   { value: 'flat', label: 'Flat share' },
+]
+
+export const COUPLE_TYPE = [
+  { value: 'Yes', label: 'Allowed' },
+  { value: 'No', label: 'Not allowed' },
+]
+
+export const SERVICE_FEE = [
+  { value: 0.01, label: '1%' },
+  { value: 0.02, label: '2%' },
+  { value: 0.03, label: '3%' }
 ]
 
 export const STATUS_TEXT_COLOURS = {

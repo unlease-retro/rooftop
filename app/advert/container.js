@@ -17,7 +17,7 @@ import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
 import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserPassword, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
 import { promisifyMutation, getFormattedTimestamp } from '../shared/util'
-import { TABS, INITIAL_TAB, MESSAGES, MESSAGE_TYPES } from './constants'
+import { TABS, INITIAL_TAB, MESSAGES, MESSAGE_TYPES, HOME_TYPE, COUPLE_TYPE, SERVICE_FEE } from './constants'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
@@ -71,7 +71,7 @@ class Advert extends Component {
   onCreateUserWithListingRequest() {
 
     const { onUpdateAdvertRequest } = this
-    const { relay, editForm, query: { advert } } = this.props
+    const { relay, advertForm, query: { advert } } = this.props
     const { _id, geocode } = advert
 
     // I have given up! 😫
@@ -80,9 +80,9 @@ class Advert extends Component {
 
     relay.setVariables({ createListingRequesting: true })
 
-    return onUpdateAdvertRequest(_id, editForm)
+    return onUpdateAdvertRequest(_id, advertForm)
       .then( () => getAddressFromGeocode(geocode) )
-      .then( address => transformAdvertToListing({ ...this.props.query.advert, ...address }) )
+      .then( address => transformAdvertToListing({ ...this.props.query.advert, ...advertForm, ...address }) )
       .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
       .then( ({ createUserWithListing: { listingId, email } }) => {
 
@@ -121,10 +121,10 @@ class Advert extends Component {
 
   onListingPreviewRequest() {
 
-    const { editForm, query: { advert } } = this.props
+    const { advertForm, query: { advert } } = this.props
 
     return getAddressFromGeocode(advert.geocode)
-      .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...editForm, ...address }) ) )
+      .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...advertForm, ...address }) ) )
       .then( url => window.open(url) )
 
   }
@@ -204,6 +204,10 @@ class Advert extends Component {
       availabilityTo: advert.availabilityTo,
       numOfFemale: advert.numOfFemale,
       numOfMale: advert.numOfMale,
+      serviceFee: advert.serviceFee,
+      preferences: {
+        couples: advert.preferences.couples
+      }
     }
 
     // set computed values
@@ -504,14 +508,6 @@ class Advert extends Component {
 
                 <View atomic={{ d:'f', p:0 }}>
 
-                  <Text atomic={{ m:0 }}>Couples:</Text>
-
-                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.couples }</Text>
-
-                </View>
-
-                <View atomic={{ d:'f', p:0 }}>
-
                   <Text atomic={{ m:0 }}>Smoking:</Text>
 
                   <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.smoking }</Text>
@@ -568,27 +564,31 @@ class Advert extends Component {
 
             <Form initialValues={ initialValues } atomic={{ m:0 }}>
 
-              <Field name='title' type='text' label='Title' component={ Components.Input } validate={ required }/>
+              <Field name='title' type='text' label='Title' component={ Components.input } validate={ required }/>
 
-              <Field name='description' label='Description' component={ Components.Input } validate={ required }/>
+              <Field name='description' label='Description' component={ Components.input } validate={ required }/>
 
-              <Field name='price' type='number' label='Price' normalize={ normalize } component={ Components.Input } validate={ required }/>
+              <Field name='price' type='number' label='Price' normalize={ normalize } component={ Components.input } validate={ required }/>
 
-              <Field name='deposit' type='number' label='Deposit' normalize={ normalize } component={ Components.Input } validate={ required }/>
+              <Field name='deposit' type='number' label='Deposit' normalize={ normalize } component={ Components.input } validate={ required }/>
 
-              <Field name='hostName' type='text' label='Host name' component={ Components.Input } validate={ required }/>
+              <Field name='hostName' type='text' label='Host name' component={ Components.input } validate={ required }/>
 
-              <Field name='phoneNumber' type='text' label='Phone number' component={ Components.Input } validate={ required }/>
+              <Field name='phoneNumber' type='text' label='Phone number' component={ Components.input } validate={ required }/>
 
-              <Field name='homeType' label='Home type' component={ Components.Select } validate={ required }/>
+              <Field name='homeType' label='Home type' options={ HOME_TYPE } component={ Components.select } validate={ required }/>
 
-              <Field name='availabilityFrom' type='date' label='Availability from' component={ Components.Input } validate={ required }/>
+              <Field name='availabilityFrom' type='date' label='Availability from' component={ Components.input } validate={ required }/>
 
-              <Field name='availabilityTo' type='date' label='Availability to' component={ Components.Input } validate={ required }/>
+              <Field name='availabilityTo' type='date' label='Availability to' component={ Components.input } validate={ required }/>
 
-              <Field name='numOfMale' type='number' label='Number of Male Housemates' normalize={ normalize } component={ Components.Input } validate={ required }/>
+              <Field name='numOfMale' type='number' label='Number of Male Housemates' normalize={ normalize } component={ Components.input } validate={ required }/>
 
-              <Field name='numOfFemale' type='number' label='Number of Female Housemates' normalize={ normalize } component={ Components.Input } validate={ required }/>
+              <Field name='numOfFemale' type='number' label='Number of Female Housemates' normalize={ normalize } component={ Components.input } validate={ required }/>
+
+              <Field name='preferences.couples' label='Couple allowed' options={ COUPLE_TYPE } component={ Components.select } validate={ required } />
+
+              <Field name='serviceFee' label='Service charge' options={ SERVICE_FEE } component={ Components.select } validate={ required } />
 
             </Form>
 

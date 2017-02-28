@@ -31,6 +31,16 @@ export const getAddressFromGeocode = ({ lat, lng }) => fetch(`https://nominatim.
   .then( res => res.json() )
   .then( ({ address: { city, country, postcode, road } }) => ({ city, country, postcode, road }) )
 
+export const getAccommodatesValue = advert => {
+
+  const { preferences: { couples } } = advert
+
+  const accommodates = { Yes: 2, No: 1 }
+
+  return accommodates[couples]
+
+}
+
 export const transformAdvertToListing = advert => ({
   payload: {
     user: {
@@ -51,7 +61,7 @@ export const transformAdvertToListing = advert => ({
         occupation: [],
         sectionCompleted: true
       },
-      accommodates: 1,
+      accommodates: getAccommodatesValue(advert),
       pricing: {
         weeklyRent: advert.price,
         cleaningFee: 0,

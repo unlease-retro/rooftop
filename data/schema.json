@@ -610,6 +610,18 @@
               "deprecationReason": null
             },
             {
+              "name": "serviceFee",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "amenities",
               "description": null,
               "args": [],
@@ -2231,6 +2243,16 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "InputTypeBotAmenities",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "serviceFee",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               },
               "defaultValue": null

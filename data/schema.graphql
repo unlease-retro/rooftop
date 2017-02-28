@@ -74,6 +74,7 @@ type Bot {
   submitted: Boolean
   createdAt: Float
   updatedAt: Float
+  serviceFee: Float
   amenities: BotAmenities
   preferences: BotPreferences
   household: BotHousehold
@@ -230,6 +231,7 @@ input InputTypeBot {
   extraCosts: InputTypeBotExtraCosts
   preferences: InputTypeBotPreferences
   amenities: InputTypeBotAmenities
+  serviceFee: Float
   createdAt: Float
   updatedAt: Float
 }
