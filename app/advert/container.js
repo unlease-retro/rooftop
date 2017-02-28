@@ -252,7 +252,21 @@ class Advert extends Component {
 
               <View>
 
-                <Anchor href={ getMapUrl(advert.geocode) } target='_blank'>View on map</Anchor>
+                <View atomic={{ p:0 }}>
+
+                  <Anchor href={ getMapUrl(advert.geocode) } target='_blank'>View on map</Anchor>
+
+                  <Text atomic={{ m:0, mr:2, ml:2, d:'ib' }}>|</Text>
+                  
+                  <View atomic={{ d:'ib', p:0 }} width='auto'>
+                    
+                    <Text atomic={{ d:'ib', m:0, mr:1 }}>Postcode:</Text>
+
+                    <Text atomic={{ fw:'b', d:'ib', m:0 }}>{ advert.postcode }</Text>
+
+                  </View>
+
+                </View>
 
                 <Text atomic={{ fw:'b', fs:4 }}>Amenities</Text>
 
