@@ -236,7 +236,7 @@ class Advert extends Component {
 
           <View atomic={{ mt:4 }}>
 
-            <Text atomic={{ mt:0, mr:2, d:'ib' }}>Your message:</Text>
+            <Text atomic={{ mt:0, mr:2, d:'ib' }}>Message type:</Text>
 
             <Select
               name='messages'
@@ -248,7 +248,7 @@ class Advert extends Component {
               onChange={ ({ value }) => this.onSmsChange(MESSAGES[value], value) }
             />
 
-            <Textarea disabled={ requesting } value={ smsContent } onChange={ e => this.onSmsChange(e.target.value) } />
+            <Textarea placeholder='Your message here...' disabled={ requesting } value={ smsContent } onChange={ e => this.onSmsChange(e.target.value) } />
 
             { !requesting ? (<Button atomic={{ w:'a' }} onClick={ this.onSendMessageRequest }>Send message</Button>) : null }
 

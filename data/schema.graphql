@@ -72,6 +72,8 @@ type Bot {
   crawled: Boolean
   disabled: Boolean
   submitted: Boolean
+  createdAt: String
+  updatedAt: String
   amenities: BotAmenities
   preferences: BotPreferences
   household: BotHousehold
@@ -228,6 +230,8 @@ input InputTypeBot {
   extraCosts: InputTypeBotExtraCosts
   preferences: InputTypeBotPreferences
   amenities: InputTypeBotAmenities
+  createdAt: String
+  updatedAt: String
 }
 
 input InputTypeBotAmenities {

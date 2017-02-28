@@ -4,8 +4,8 @@ const variables = {
 
   initialVariables: {
     _id: null,
-    selectedSms: 'hook',
-    smsContent: MESSAGES.hook,
+    selectedSms: 'blank',
+    smsContent: MESSAGES.blank,
     visibleTab: INITIAL_TAB,
     createListingRequesting: false,
   },
