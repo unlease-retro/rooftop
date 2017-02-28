@@ -61,7 +61,7 @@ const select = props => {
         width='100%'
       />
 
-      { touched && error ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
+      { touched && error || !value ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
 
     </View>
   )
