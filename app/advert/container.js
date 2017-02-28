@@ -16,7 +16,7 @@ import { updateUI } from '../ui/actions'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
 import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserPassword, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
-import { promisifyMutation } from '../shared/util'
+import { promisifyMutation, getFormattedTimestamp } from '../shared/util'
 import { TABS, INITIAL_TAB, MESSAGES, MESSAGE_TYPES } from './constants'
 
 import { Image } from 'components/image'
@@ -165,9 +165,7 @@ class Advert extends Component {
   renderReply(reply, index) {
 
     const { message, host, createdAt } = reply
-
     const dateTextColor = host ? 'error' : 'primary'
-    const date = formatReplyDate(createdAt)
 
     return (
       <View atomic={{ m:0, p:0 }} key={ index }>
@@ -176,7 +174,7 @@ class Advert extends Component {
 
           <Text>{ message }</Text>
 
-          <Text color={ dateTextColor } atomic={{ mb: 0 }}>{ date }</Text>
+          <Text color={ dateTextColor } atomic={{ mb: 0 }}>{ formatReplyDate(createdAt) }</Text>
 
         </View>
 
@@ -281,6 +279,14 @@ class Advert extends Component {
                   <Text atomic={{ d:'ib', m:0, mr:1 }}>Postcode:</Text>
 
                   <Text atomic={{ d:'ib', m:0 }}>{ advert.postcode }</Text>
+
+                </View>
+
+                <View atomic={{ d:'ib', p:0 }}>
+                    
+                  <Text atomic={{ d:'ib', m:0, mr:1 }}>Updated at:</Text>
+
+                  <Text atomic={{ d:'ib', m:0 }}>{ getFormattedTimestamp(advert.updatedAt) }</Text>
 
                 </View>
 

@@ -6,7 +6,7 @@ import { AutoSizer, Column, SortIndicator, Table } from 'react-virtualized'
 import { FIELDS, FILTERS } from './constants'
 import * as fragments from './fragments'
 import variables from './variables'
-import { getFilteredBotAdverts } from './computed'
+import { getFilteredBotAdverts, getFormattedDateBotAdverts } from './computed'
 import { getSortedList } from '../shared/util/virtualized'
 
 import { View } from 'components/layout'
@@ -22,8 +22,8 @@ class Bot extends Component {
 
     super()
 
-    this.onAdvertClick = this.onAdvertClick.bind(this)
     this.onSort = this.onSort.bind(this)
+    this.onAdvertClick = this.onAdvertClick.bind(this)
     this.onStatusFilterChange = this.onStatusFilterChange.bind(this)
 
   }
@@ -66,7 +66,7 @@ class Bot extends Component {
     const { sortBy, sortDirection, status, contacted } = variables
 
     // sort adverts
-    const sortedList = getSortedList(getFilteredBotAdverts(allAdverts, { contacted }), sortBy, sortDirection)
+    const sortedList = getSortedList(getFilteredBotAdverts(getFormattedDateBotAdverts(allAdverts), { contacted }), sortBy, sortDirection)
 
     // make column headers sortable
     const headerRenderer = ({ dataKey, label, sortBy, sortDirection }) => ( <div>{ label } { sortBy === dataKey && <SortIndicator sortDirection={ sortDirection } /> } </div> )

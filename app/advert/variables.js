@@ -4,10 +4,10 @@ const variables = {
 
   initialVariables: {
     _id: null,
-    selectedSms: 'custom',
-    smsContent: MESSAGES.custom,
     visibleTab: INITIAL_TAB,
     createListingRequesting: false,
+    selectedSms: 'custom',
+    smsContent: MESSAGES.custom,
   },
 
 }

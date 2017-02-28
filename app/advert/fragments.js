@@ -71,6 +71,7 @@ export const query = () => Relay.QL`
       }
       disabled
       submitted
+      updatedAt
     },
   }
 `

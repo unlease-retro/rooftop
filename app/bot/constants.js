@@ -6,6 +6,10 @@ export const LISTING_PREVIEW_URL_PREFIX = `${UI}/preview-listing?listing=`
 
 export const FIELDS = [
   {
+    key: 'updatedAt',
+    label: 'Updated At'
+  },
+  {
     key: 'title',
     label: 'Title',
   },

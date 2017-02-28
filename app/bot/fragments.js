@@ -22,6 +22,7 @@ export const query = () => Relay.QL`
         _id,
         message
       }
+      updatedAt
     },
   }
 `
