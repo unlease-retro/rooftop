@@ -31,3 +31,29 @@ export const TABS = [
 ]
 
 export const INITIAL_TAB = 'info'
+
+export const MESSAGE_TYPES = [
+  { value: 'hook', label: 'Hook' },
+  { value: 'sell', label: 'Sell' },
+  { value: 'follow', label: 'Follow-up' },
+  { value: 'email', label: 'Get Email' },
+]
+
+export const MESSAGES = {
+  hook: 'Hi {{hostName}}, are you still looking for somebody for your room?',
+  sell: 'Great! I am wondering if you would like to feature your place on my website www.unlease.io to get more exposure.? I\'m not an agent, I run a startup marketplace for short term rentals, so potential tenants will contact you directly and it\'s absolutely free to list. We also have a new video chat feature so you can do online viewings. 🙂 Drew',
+  follow: 'Hi {{hostName}}, so what do you think? Do you mind if I list your room on my website? Again, it\'s completely free so should give give you a little extra exposure',
+  email: 'Perfect, will do. What\'s the best email address to reach you on for when you get booking requests? We\'ll also set that as your username for our site. Thanks!'
+}
+
+
+
+
+
+
+
+
+
+
+
+

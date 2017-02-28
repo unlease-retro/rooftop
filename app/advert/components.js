@@ -11,7 +11,7 @@ import { View } from 'components/layout'
 
 import { name as form, HOME_TYPES } from './constants'
 
-export const Input = props => {
+const Input = props => {
 
   const { label, input, type, meta } = props
   const { touched, error } = meta
@@ -39,7 +39,7 @@ export const Input = props => {
 }
 
 
-export const Select = props => {
+const Select = props => {
 
   const { label, input, meta } = props
   const { value, onChange } = input
@@ -68,5 +68,9 @@ export const Select = props => {
 
 }
 
+export const Components = {
+  Select,
+  Input
+}
 
 export default reduxForm( { form, enableReinitialize: true } )( Form )
