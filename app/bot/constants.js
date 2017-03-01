@@ -49,4 +49,9 @@ export const FILTERS = {
     { value: 'declined', label: 'Declined' },
     { value: 'pending', label: 'Pending' },
   ],
+  contacted: [
+    { value: 'normal', label: 'Normal' },
+    { value: 'contacted', label: 'Contacted' },
+    { value: 'uncontacted', label: 'Uncontacted' }
+  ]
 }

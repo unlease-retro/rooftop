@@ -9,11 +9,10 @@ import variables from './variables'
 import { getFilteredBotAdverts, getFormattedDateBotAdverts } from './computed'
 import { getSortedList } from '../shared/util/virtualized'
 
-import { View } from 'components/layout'
+import { View, Section } from 'components/layout'
 import { Select } from 'components/select'
 import { Text } from 'components/text'
-import { Checkbox } from 'components/checkbox'
-import { Label } from 'components/label'
+import { Icon } from 'components/icon'
 
 
 class Bot extends Component {
@@ -79,26 +78,38 @@ class Bot extends Component {
 
         <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>All Adverts</Text>
 
-        <Select
-          atomic={{ d:'b', mt:4, mb:2, ta:'c' }}
-          name='status'
-          value={ status }
-          options={ FILTERS.status }
-          autoBlur={ true }
-          clearable={ false }
-          searchable={ true }
-          onChange={ ({ value }) => this.onStatusFilterChange(value) }
-        />
+        <Section atomic={{ mt:8, mb:8, ta:'c' }}>
 
-        <View atomic={{ p:0, d:'ib', w:'a', ta:'c', mb:4 }}>
+          <Text atomic={{ d:'ib' }}>
 
-          <Label atomic={{ d:'ib', m:0 }}>
-            <Checkbox atomic={{ d:'ib', mr:1, mt:0, mb:0, w:'a' }} onChange={ () => this.props.relay.setVariables({ contacted: !contacted })} type='checkbox' />
-            Display only Contacted adverts
-          </Label>
+            <Icon>tune</Icon> Show
 
-        </View>
+          </Text>
 
+          <Select
+            width='140px'
+            name='contacted'
+            value={ contacted }
+            options={ FILTERS.contacted }
+            autoBlur={ true }
+            clearable={ false }
+            searchable={ true }
+            onChange={ ({ value }) => console.log(value) }
+          />
+
+          <Text atomic={{ d:'ib' }}>where the listing is</Text>
+
+          <Select
+            name='status'
+            value={ status }
+            options={ FILTERS.status }
+            autoBlur={ true }
+            clearable={ false }
+            searchable={ true }
+            onChange={ ({ value }) => this.onStatusFilterChange(value) }
+          />
+
+        </Section>
 
         <AutoSizer>
 
