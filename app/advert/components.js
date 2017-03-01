@@ -31,7 +31,7 @@ const input = props => {
 
       { renderElement }
 
-      { touched && error ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
+      { !input.value || touched && error ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
 
     </View>
   )
