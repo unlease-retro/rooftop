@@ -43,7 +43,7 @@ export const FIELDS = [
   },
   {
     key: 'replies',
-    label: 'Replies'
+    label: 'Messages'
   }
 ]
 

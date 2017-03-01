@@ -85,9 +85,11 @@ class Bot extends Component {
 
       if (dataKey === 'replies') {
 
-        const lastSms = cellData.pop()
+        const lastSms = cellData[cellData.length-1]
 
         if (lastSms && lastSms.host) return <Text>🔥</Text>
+
+        if (!lastSms) return <Text>Not sent</Text>
 
         return <Text>✅</Text>
 
