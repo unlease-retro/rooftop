@@ -19,8 +19,7 @@ export const query = () => Relay.QL`
       price
       title
       replies {
-        _id,
-        message
+        host
       }
       updatedAt
     },

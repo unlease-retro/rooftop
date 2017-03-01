@@ -8,6 +8,7 @@ import * as fragments from './fragments'
 import variables from './variables'
 import { getFilteredBotAdverts, getFormattedDateBotAdverts } from './computed'
 import { getSortedList } from '../shared/util/virtualized'
+import { getFormattedTimestamp } from '../shared/util'
 
 import { View, Section } from 'components/layout'
 import { Select } from 'components/select'
@@ -79,8 +80,27 @@ class Bot extends Component {
     // make column headers sortable
     const headerRenderer = ({ dataKey, label, sortBy, sortDirection }) => ( <div>{ label } { sortBy === dataKey && <SortIndicator sortDirection={ sortDirection } /> } </div> )
 
+    // render sms notification
+    const cellRenderer = ({ dataKey, cellData }) => {
+
+      if (dataKey === 'replies') {
+
+        const lastSms = cellData.pop()
+
+        if (lastSms && lastSms.host) return <Text>🔥</Text>
+
+        return <Text>✅</Text>
+
+      }
+
+      if (dataKey === 'updatedAt') return <Text>{ getFormattedTimestamp(cellData) }</Text>
+
+      return <Text>{ cellData }</Text>
+
+    }
+
     // create `Column` for each required field
-    const renderColumns = FIELDS.map( (f, i) => <Column key={ i } headerRenderer={ headerRenderer } label={ f.label } dataKey={ f.key } width={1} flexGrow={1} flexShrink={0} /> )
+    const renderColumns = FIELDS.map( (f, i) => <Column key={ i } headerRenderer={ headerRenderer } label={ f.label } dataKey={ f.key } cellRenderer={ cellRenderer } width={1} flexGrow={1} flexShrink={0} /> )
 
     return (
       <View>

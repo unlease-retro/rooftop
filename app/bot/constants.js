@@ -41,6 +41,10 @@ export const FIELDS = [
     key: 'postcode',
     label: 'Postcode'
   },
+  {
+    key: 'replies',
+    label: 'Replies'
+  }
 ]
 
 export const FILTERS = {
