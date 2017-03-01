@@ -11,7 +11,9 @@ import R from 'ramda'
  */
 export const getFilteredBotAdverts = R.memoize( (adverts, { contacted }) => {
 
-  if (!contacted) return adverts
+  if (contacted === 'all') return adverts
+
+  if (contacted === 'uncontacted') return adverts.filter( a => !a.replies.length )
 
   return adverts.filter( a => a.replies.length )
 

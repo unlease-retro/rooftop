@@ -50,7 +50,7 @@ export const FILTERS = {
     { value: 'pending', label: 'Pending' },
   ],
   contacted: [
-    { value: 'normal', label: 'Normal' },
+    { value: 'all', label: 'All' },
     { value: 'contacted', label: 'Contacted' },
     { value: 'uncontacted', label: 'Uncontacted' }
   ]

@@ -24,6 +24,7 @@ class Bot extends Component {
     this.onSort = this.onSort.bind(this)
     this.onAdvertClick = this.onAdvertClick.bind(this)
     this.onStatusFilterChange = this.onStatusFilterChange.bind(this)
+    this.onContactedFilterChange = this.onContactedFilterChange.bind(this)
 
   }
 
@@ -41,6 +42,14 @@ class Bot extends Component {
     const { relay } = this.props
 
     return relay.setVariables(variables)
+
+  }
+
+  onContactedFilterChange(contacted) {
+
+    const { relay } = this.props
+
+    return relay.setVariables({ contacted })
 
   }
 
@@ -94,10 +103,10 @@ class Bot extends Component {
             autoBlur={ true }
             clearable={ false }
             searchable={ true }
-            onChange={ ({ value }) => console.log(value) }
+            onChange={ ({ value }) => this.onContactedFilterChange(value) }
           />
 
-          <Text atomic={{ d:'ib' }}>where the listing is</Text>
+          <Text atomic={{ d:'ib' }}>adverts where they are</Text>
 
           <Select
             name='status'
