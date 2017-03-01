@@ -42,7 +42,7 @@ const input = props => {
 const select = props => {
 
   const { label, input, meta, options } = props
-  const { value, onChange } = input
+  const { onChange } = input
   const { touched, error } = meta
 
   const selectDefaults = { autoBlur: false, clearable: false, searchable: false }
@@ -54,14 +54,14 @@ const select = props => {
 
       <Select
         { ...selectDefaults }
-        value={ value }
+        value={ input.value }
         onChange={ v => onChange(v.value) }
         options={ options }
         atomic={{ ml:0, mr:0, mb:0, mt:1 }}
         width='100%'
       />
 
-      { touched && error || !value ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
+      { touched && error || !input.value ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
 
     </View>
   )

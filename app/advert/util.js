@@ -11,7 +11,7 @@ export const getUserPassword = email => email.replace(/@.*$/, '')
 
 export const formatReplyDate = date => moment(date).format(REPLY_DATE_FORMAT)
 
-export const required = value => !value || value === '' || value === 'unspecified' ? 'Required' : undefined
+export const required = value => !value || value === 'unspecified' ? 'Required' : undefined
 
 export const normalize = value => parseInt( value )
 
