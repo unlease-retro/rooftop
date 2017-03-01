@@ -75,6 +75,7 @@ type Bot {
   createdAt: Float
   updatedAt: Float
   serviceFee: Float
+  email: String
   amenities: BotAmenities
   preferences: BotPreferences
   household: BotHousehold
@@ -232,6 +233,7 @@ input InputTypeBot {
   preferences: InputTypeBotPreferences
   amenities: InputTypeBotAmenities
   serviceFee: Float
+  email: String
   createdAt: Float
   updatedAt: Float
 }

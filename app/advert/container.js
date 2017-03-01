@@ -205,6 +205,7 @@ class Advert extends Component {
       numOfFemale: advert.numOfFemale,
       numOfMale: advert.numOfMale,
       serviceFee: advert.serviceFee,
+      email: advert.email,
       preferences: {
         couples: advert.preferences.couples
       }
@@ -573,6 +574,8 @@ class Advert extends Component {
               <Field name='deposit' type='number' label='Deposit' normalize={ normalize } component={ Components.input } validate={ required }/>
 
               <Field name='hostName' type='text' label='Host name' component={ Components.input } validate={ required }/>
+
+              <Field name='email' type='text' label='Email' component={ Components.input } validate={ required }/>
 
               <Field name='phoneNumber' type='text' label='Phone number' component={ Components.input } validate={ required }/>
 
