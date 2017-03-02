@@ -72,8 +72,8 @@ type Bot {
   crawled: Boolean
   disabled: Boolean
   submitted: Boolean
-  createdAt: Float
-  updatedAt: Float
+  createdAt: String
+  updatedAt: String
   serviceFee: Float
   email: String
   amenities: BotAmenities
@@ -236,8 +236,8 @@ input InputTypeBot {
   amenities: InputTypeBotAmenities
   serviceFee: Float
   email: String
-  createdAt: Float
-  updatedAt: Float
+  createdAt: String
+  updatedAt: String
 }
 
 input InputTypeBotAmenities {
