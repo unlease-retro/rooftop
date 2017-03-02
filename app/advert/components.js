@@ -11,6 +11,19 @@ import { View } from 'components/layout'
 
 import { name as form } from './constants'
 
+
+const Warning = ({ touched, error, value, label }) => {
+
+  //isNaN(null) === false
+  let isNaN = typeof value !== 'number'
+
+  if (!value && isNaN || touched && error) return <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error>
+
+  return null
+
+}
+
+
 const input = props => {
 
   const { label, input, type, meta } = props
@@ -31,7 +44,7 @@ const input = props => {
 
       { renderElement }
 
-      { !input.value || touched && error ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
+      <Warning touched={ touched } error={ error } label={ label } value={ input.value } />
 
     </View>
   )
@@ -61,7 +74,7 @@ const select = props => {
         width='100%'
       />
 
-      { touched && error || !input.value ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
+      <Warning touched={ touched } error={ error } label={ label } value={ input.value } />
 
     </View>
   )

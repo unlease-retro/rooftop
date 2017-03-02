@@ -21,7 +21,7 @@ export const getUserEmail = hostName => `${getTrimmedString(hostName.toLowerCase
 
 export const formatReplyDate = date => moment(date).format(REPLY_DATE_FORMAT)
 
-export const required = value => !value || value === 'unspecified' ? 'Required' : undefined
+export const required = value => !value && typeof value !== 'number' || value === 'unspecified' ? 'Required' : undefined
 
 export const normalize = value => parseInt( value )
 
