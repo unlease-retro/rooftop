@@ -5,7 +5,19 @@
 import moment from 'moment'
 import compileString from 'string'
 
-import { LISTING_PREVIEW_URL_PREFIX, LISTING_URL_PREFIX, MAP_URL_PREFIX, MAP_URL_SUFFIX, STATUS_TEXT_COLOURS, REPLY_DATE_FORMAT } from './constants'
+import { LISTING_PREVIEW_URL_PREFIX, LISTING_URL_PREFIX, MAP_URL_PREFIX, MAP_URL_SUFFIX, STATUS_TEXT_COLOURS, REPLY_DATE_FORMAT, UNLEASE_MAIL } from './constants'
+
+export const getRandomDigits = (count=3) => {
+
+  const base = Math.pow(10, (count - 1))
+
+  return Math.floor( Math.random() * 9 * base ) + base
+
+}
+
+export const getTrimmedString = str => str.replace(/\W/g, '')
+
+export const getUserEmail = hostName => `${getTrimmedString(hostName.toLowerCase())}${getRandomDigits(3)}@${UNLEASE_MAIL}`
 
 export const getUserPassword = email => email.replace(/@.*$/, '')
 

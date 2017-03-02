@@ -15,7 +15,7 @@ import mutations from './mutations'
 import { updateUI } from '../ui/actions'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserPassword, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserPassword, getUserEmail, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
 import { promisifyMutation, getFormattedTimestamp } from '../shared/util'
 import { TABS, INITIAL_TAB, MESSAGES, MESSAGE_TYPES, HOME_TYPE, COUPLE_TYPE, SERVICE_FEE } from './constants'
 
@@ -44,7 +44,15 @@ class Advert extends Component {
     this.onSmsChange = this.onSmsChange.bind(this)
     this.renderReply = this.renderReply.bind(this)
 
+  }
+
+  componentWillMount() {
+
+    const { query: { advert } } = this.props
+    const { hostName } = advert
+
     this.generatedSmsContent = getSmsBody()
+    this.generatedEmail = getUserEmail(hostName)
 
   }
 
@@ -187,8 +195,8 @@ class Advert extends Component {
 
   render() {
 
-    const { doesFormHaveErrors, query, requesting, relay: { variables } } = this.props
-    const { advert } = query
+    const { generatedEmail } = this
+    const { doesFormHaveErrors, requesting, query: { advert }, relay: { variables } } = this.props
     const { createListingRequesting, visibleTab, smsContent, selectedSms } = variables
     const { photos, amenities, preferences, household, extraCosts, replies } = advert
 
@@ -205,7 +213,7 @@ class Advert extends Component {
       numOfFemale: advert.numOfFemale,
       numOfMale: advert.numOfMale,
       serviceFee: advert.serviceFee,
-      email: advert.email,
+      email: advert.email || generatedEmail,
       preferences: {
         couples: advert.preferences.couples
       }

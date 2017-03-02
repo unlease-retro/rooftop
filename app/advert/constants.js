@@ -6,6 +6,8 @@ export const route = '/bot/:_id'
 
 export const DEFAULT_SMS = 'Default SMS content here'
 
+export const UNLEASE_MAIL = 'unleasemail.io'
+
 export const LISTING_PREVIEW_URL_PREFIX = `${UI}/preview-listing?listing=`
 export const LISTING_URL_PREFIX = `${UI}/room/`
 
