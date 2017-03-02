@@ -7,6 +7,7 @@ export const query = () => Relay.QL`
       id
       url
       title
+      email
       listingId
       description
       price
@@ -20,6 +21,7 @@ export const query = () => Relay.QL`
       availabilityFrom
       availabilityTo
       city
+      serviceFee
       postcode
       geocode {
         lat
@@ -71,6 +73,7 @@ export const query = () => Relay.QL`
       }
       disabled
       submitted
+      updatedAt
     },
   }
 `

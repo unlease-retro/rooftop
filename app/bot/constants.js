@@ -6,6 +6,10 @@ export const LISTING_PREVIEW_URL_PREFIX = `${UI}/preview-listing?listing=`
 
 export const FIELDS = [
   {
+    key: 'updatedAt',
+    label: 'Updated At'
+  },
+  {
     key: 'title',
     label: 'Title',
   },
@@ -37,6 +41,10 @@ export const FIELDS = [
     key: 'postcode',
     label: 'Postcode'
   },
+  {
+    key: 'replies',
+    label: 'Messages'
+  }
 ]
 
 export const FILTERS = {
@@ -45,4 +53,9 @@ export const FILTERS = {
     { value: 'declined', label: 'Declined' },
     { value: 'pending', label: 'Pending' },
   ],
+  contacted: [
+    { value: 'all', label: 'All' },
+    { value: 'contacted', label: 'Contacted' },
+    { value: 'uncontacted', label: 'Uncontacted' }
+  ]
 }

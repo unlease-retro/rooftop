@@ -5,13 +5,23 @@
 import moment from 'moment'
 import compileString from 'string'
 
-import { LISTING_PREVIEW_URL_PREFIX, LISTING_URL_PREFIX, MAP_URL_PREFIX, MAP_URL_SUFFIX, STATUS_TEXT_COLOURS, REPLY_DATE_FORMAT } from './constants'
+import { LISTING_PREVIEW_URL_PREFIX, LISTING_URL_PREFIX, MAP_URL_PREFIX, MAP_URL_SUFFIX, STATUS_TEXT_COLOURS, REPLY_DATE_FORMAT, UNLEASE_MAIL } from './constants'
 
-export const getUserPassword = email => email.replace(/@.*$/, '')
+export const getRandomDigits = (count=3) => {
+
+  const base = Math.pow(10, (count - 1))
+
+  return Math.floor( Math.random() * 9 * base ) + base
+
+}
+
+export const getTrimmedString = str => str.replace(/\W/g, '')
+
+export const getUserEmail = hostName => `${getTrimmedString(hostName.toLowerCase())}${getRandomDigits(3)}@${UNLEASE_MAIL}`
 
 export const formatReplyDate = date => moment(date).format(REPLY_DATE_FORMAT)
 
-export const required = value => value === '' || value === 'unspecified' ? 'Required' : undefined
+export const required = value => !value && typeof value !== 'number' || value === 'unspecified' ? 'Required' : undefined
 
 export const normalize = value => parseInt( value )
 
@@ -30,6 +40,16 @@ export const getStatusTextColour = status => STATUS_TEXT_COLOURS[status]
 export const getAddressFromGeocode = ({ lat, lng }) => fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
   .then( res => res.json() )
   .then( ({ address: { city, country, postcode, road } }) => ({ city, country, postcode, road }) )
+
+export const getAccommodatesValue = advert => {
+
+  const { preferences: { couples } } = advert
+
+  const accommodates = { Yes: 2, No: 1 }
+
+  return accommodates[couples]
+
+}
 
 export const transformAdvertToListing = advert => ({
   payload: {
@@ -51,7 +71,7 @@ export const transformAdvertToListing = advert => ({
         occupation: [],
         sectionCompleted: true
       },
-      accommodates: 1,
+      accommodates: getAccommodatesValue(advert),
       pricing: {
         weeklyRent: advert.price,
         cleaningFee: 0,

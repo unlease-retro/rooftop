@@ -1,13 +1,13 @@
 import { getFormSyncErrors, getFormValues } from 'redux-form/immutable'
 import { name } from './constants'
 
-export const editForm = state => {
+export const advertForm = state => {
 
-  const editForm = getFormValues(name)(state)
+  const advertForm = getFormValues(name)(state)
 
-  if (!editForm) return {}
+  if (!advertForm) return {}
 
-  return editForm.toObject()
+  return advertForm.toJS()
 
 }
 

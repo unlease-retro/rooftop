@@ -15,9 +15,9 @@ import mutations from './mutations'
 import { updateUI } from '../ui/actions'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserPassword, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
-import { promisifyMutation } from '../shared/util'
-import { TABS, INITIAL_TAB } from './constants'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserEmail, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
+import { promisifyMutation, getFormattedTimestamp } from '../shared/util'
+import { TABS, INITIAL_TAB, MESSAGES, MESSAGE_TYPES, HOME_TYPE, COUPLE_TYPE, SERVICE_FEE } from './constants'
 
 import { Image } from 'components/image'
 import { Anchor } from 'components/anchor'
@@ -26,8 +26,9 @@ import { View, Grid, Section } from 'components/layout'
 import { Textarea } from 'components/textarea'
 import { Text } from 'components/text'
 import { Label } from 'components/label'
+import { Select } from 'components/select'
 
-import Form, { Select, Input } from './components'
+import Form, { Components } from './components'
 
 class Advert extends Component {
 
@@ -40,9 +41,18 @@ class Advert extends Component {
     this.onDeleteListingRequest = this.onDeleteListingRequest.bind(this)
     this.onListingViewRequest = this.onListingViewRequest.bind(this)
     this.onSendMessageRequest = this.onSendMessageRequest.bind(this)
+    this.onSmsChange = this.onSmsChange.bind(this)
     this.renderReply = this.renderReply.bind(this)
 
+  }
+
+  componentWillMount() {
+
+    const { query: { advert } } = this.props
+    const { hostName } = advert
+
     this.generatedSmsContent = getSmsBody()
+    this.generatedEmail = getUserEmail(hostName)
 
   }
 
@@ -69,8 +79,9 @@ class Advert extends Component {
   onCreateUserWithListingRequest() {
 
     const { onUpdateAdvertRequest } = this
-    const { relay, editForm, query: { advert } } = this.props
+    const { relay, advertForm, query: { advert } } = this.props
     const { _id, geocode } = advert
+    const { email } = advertForm
 
     // I have given up! 😫
     const user = {}
@@ -78,14 +89,14 @@ class Advert extends Component {
 
     relay.setVariables({ createListingRequesting: true })
 
-    return onUpdateAdvertRequest(_id, editForm)
+    return onUpdateAdvertRequest(_id, advertForm)
       .then( () => getAddressFromGeocode(geocode) )
-      .then( address => transformAdvertToListing({ ...this.props.query.advert, ...address }) )
-      .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
-      .then( ({ createUserWithListing: { listingId, email } }) => {
+      .then( address => transformAdvertToListing({ ...this.props.query.advert, ...advertForm, ...address }) )
+      .then( ({ payload }) => promisifyMutation( new ListingMutations.createUserWithListing({ payload, email }) ) )
+      .then( ({ createUserWithListing: { listingId, email, password } }) => {
 
         user.emailAddress = email
-        user.password = getUserPassword(email)
+        user.password = password
         listing.listingUrl = getListingUrl(listingId)
 
         return onUpdateAdvertRequest(_id, { listingId, submitted: true, disabled: false })
@@ -106,9 +117,11 @@ class Advert extends Component {
 
   onSendMessageRequest() {
 
-    const message = this.smsContent
-    const { query: { advert }, actions: { updateUI } } = this.props
+    const { query: { advert }, actions: { updateUI }, relay: { variables } } = this.props
     const { _id, phoneNumber } = advert
+    const { smsContent } = variables
+
+    const message = compileSmsBody(smsContent, advert)
 
     return promisifyMutation( new mutations.sendAdvertMessage({ _id, phoneNumber, message }) )
       .then( () => updateUI({ snackbar: 'Message sent!' }) )
@@ -117,10 +130,10 @@ class Advert extends Component {
 
   onListingPreviewRequest() {
 
-    const { editForm, query: { advert } } = this.props
+    const { advertForm, query: { advert } } = this.props
 
     return getAddressFromGeocode(advert.geocode)
-      .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...editForm, ...address }) ) )
+      .then( address => getListingPreviewUrl( transformAdvertToListingPreview({ ...advert, ...advertForm, ...address }) ) )
       .then( url => window.open(url) )
 
   }
@@ -140,6 +153,16 @@ class Advert extends Component {
 
   }
 
+  onSmsChange(smsContent, selectedSms=null) {
+
+    const { relay } = this.props
+
+    if (!selectedSms) return relay.setVariables({ smsContent })
+
+    return relay.setVariables({ smsContent, selectedSms })
+
+  }
+
   onChangeTab(visibleTab) {
 
     const { relay } = this.props
@@ -151,9 +174,7 @@ class Advert extends Component {
   renderReply(reply, index) {
 
     const { message, host, createdAt } = reply
-
     const dateTextColor = host ? 'error' : 'primary'
-    const date = formatReplyDate(createdAt)
 
     return (
       <View atomic={{ m:0, p:0 }} key={ index }>
@@ -162,7 +183,7 @@ class Advert extends Component {
 
           <Text>{ message }</Text>
 
-          <Text color={ dateTextColor } atomic={{ mb: 0 }}>{ date }</Text>
+          <Text color={ dateTextColor } atomic={{ mb: 0 }}>{ formatReplyDate(createdAt) }</Text>
 
         </View>
 
@@ -175,10 +196,9 @@ class Advert extends Component {
 
   render() {
 
-
-    const { doesFormHaveErrors, query, requesting, relay: { variables } } = this.props
-    const { advert } = query
-    const { createListingRequesting, visibleTab } = variables
+    const { generatedEmail } = this
+    const { doesFormHaveErrors, requesting, query: { advert }, relay: { variables } } = this.props
+    const { createListingRequesting, visibleTab, smsContent, selectedSms } = variables
     const { photos, amenities, preferences, household, extraCosts, replies } = advert
 
     const initialValues = {
@@ -193,6 +213,11 @@ class Advert extends Component {
       availabilityTo: advert.availabilityTo,
       numOfFemale: advert.numOfFemale,
       numOfMale: advert.numOfMale,
+      serviceFee: advert.serviceFee,
+      email: advert.email || generatedEmail,
+      preferences: {
+        couples: advert.preferences.couples
+      }
     }
 
     // set computed values
@@ -221,18 +246,27 @@ class Advert extends Component {
 
           </View>
 
-          <View>
+          <View atomic={{ mt:4 }}>
 
-            <Text atomic={{ mt: 0 }}>Your message:</Text>
+            <Text atomic={{ mt:0, mr:2, d:'ib' }}>Message type:</Text>
 
-            <Textarea placeholder='Write here..' disabled={ requesting } defaultValue={ this.smsContent } onChange={ e => this.smsContent = e.target.value } />
+            <Select
+              name='messages'
+              value={ selectedSms }
+              options={ MESSAGE_TYPES }
+              autoBlur={ true }
+              clearable={ false }
+              searchable={ false }
+              onChange={ ({ value }) => this.onSmsChange(MESSAGES[value], value) }
+            />
+
+            <Textarea placeholder='Your message here...' disabled={ requesting } value={ smsContent } onChange={ e => this.onSmsChange(e.target.value) } />
 
             { !requesting ? (<Button atomic={{ w:'a' }} onClick={ this.onSendMessageRequest }>Send message</Button>) : null }
 
           </View>
 
         </Section>) : null }
-
 
         { visibleTab === INITIAL_TAB ? (<Grid>
 
@@ -253,6 +287,22 @@ class Advert extends Component {
               <View>
 
                 <Anchor href={ getMapUrl(advert.geocode) } target='_blank'>View on map</Anchor>
+
+                <View atomic={{ d:'ib', p:0 }}>
+                    
+                  <Text atomic={{ d:'ib', m:0, mr:1 }}>Postcode:</Text>
+
+                  <Text atomic={{ d:'ib', m:0 }}>{ advert.postcode }</Text>
+
+                </View>
+
+                <View atomic={{ d:'ib', p:0 }}>
+                    
+                  <Text atomic={{ d:'ib', m:0, mr:1 }}>Updated at:</Text>
+
+                  <Text atomic={{ d:'ib', m:0 }}>{ getFormattedTimestamp(advert.updatedAt) }</Text>
+
+                </View>
 
                 <Text atomic={{ fw:'b', fs:4 }}>Amenities</Text>
 
@@ -468,14 +518,6 @@ class Advert extends Component {
 
                 <View atomic={{ d:'f', p:0 }}>
 
-                  <Text atomic={{ m:0 }}>Couples:</Text>
-
-                  <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.couples }</Text>
-
-                </View>
-
-                <View atomic={{ d:'f', p:0 }}>
-
                   <Text atomic={{ m:0 }}>Smoking:</Text>
 
                   <Text atomic={{ ml:1, mb:0, mr:0, mt:0 }}>{ preferences.smoking }</Text>
@@ -532,27 +574,33 @@ class Advert extends Component {
 
             <Form initialValues={ initialValues } atomic={{ m:0 }}>
 
-              <Field name='title' type='text' label='Title' component={ Input } validate={ required }/>
+              <Field name='title' type='text' label='Title' component={ Components.input } validate={ required }/>
 
-              <Field name='description' label='Description' component={ Input } validate={ required }/>
+              <Field name='description' label='Description' component={ Components.input } validate={ required }/>
 
-              <Field name='price' type='number' label='Price' normalize={ normalize } component={ Input } validate={ required }/>
+              <Field name='price' type='number' label='Price' normalize={ normalize } component={ Components.input } validate={ required }/>
 
-              <Field name='deposit' type='number' label='Deposit' normalize={ normalize } component={ Input } validate={ required }/>
+              <Field name='deposit' type='number' label='Deposit' normalize={ normalize } component={ Components.input } validate={ required }/>
 
-              <Field name='hostName' type='text' label='Host name' component={ Input } validate={ required }/>
+              <Field name='hostName' type='text' label='Host name' component={ Components.input } validate={ required }/>
 
-              <Field name='phoneNumber' type='text' label='Phone number' component={ Input } validate={ required }/>
+              <Field name='email' type='text' label='Email' component={ Components.input } validate={ required }/>
 
-              <Field name='homeType' label='Home type' component={ Select } validate={ required }/>
+              <Field name='phoneNumber' type='text' label='Phone number' component={ Components.input } validate={ required }/>
 
-              <Field name='availabilityFrom' type='date' label='Availability from' component={ Input } validate={ required }/>
+              <Field name='homeType' label='Home type' options={ HOME_TYPE } component={ Components.select } validate={ required }/>
 
-              <Field name='availabilityTo' type='date' label='Availability to' component={ Input } validate={ required }/>
+              <Field name='availabilityFrom' type='date' label='Availability from' component={ Components.input } validate={ required }/>
 
-              <Field name='numOfMale' type='number' label='Number of Male Housemates' normalize={ normalize } component={ Input } validate={ required }/>
+              <Field name='availabilityTo' type='date' label='Availability to' component={ Components.input } validate={ required }/>
 
-              <Field name='numOfFemale' type='number' label='Number of Female Housemates' normalize={ normalize } component={ Input } validate={ required }/>
+              <Field name='numOfMale' type='number' label='Number of Male Housemates' normalize={ normalize } component={ Components.input } validate={ required }/>
+
+              <Field name='numOfFemale' type='number' label='Number of Female Housemates' normalize={ normalize } component={ Components.input } validate={ required }/>
+
+              <Field name='preferences.couples' label='Couple allowed' options={ COUPLE_TYPE } component={ Components.select } validate={ required } />
+
+              <Field name='serviceFee' label='Service charge' options={ SERVICE_FEE } component={ Components.select } validate={ required } />
 
             </Form>
 

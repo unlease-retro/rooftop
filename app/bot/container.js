@@ -6,14 +6,14 @@ import { AutoSizer, Column, SortIndicator, Table } from 'react-virtualized'
 import { FIELDS, FILTERS } from './constants'
 import * as fragments from './fragments'
 import variables from './variables'
-import { getFilteredBotAdverts } from './computed'
+import { getFilteredBotAdverts, getFormattedDateBotAdverts } from './computed'
 import { getSortedList } from '../shared/util/virtualized'
+import { getFormattedTimestamp } from '../shared/util'
 
-import { View } from 'components/layout'
+import { View, Section } from 'components/layout'
 import { Select } from 'components/select'
 import { Text } from 'components/text'
-import { Checkbox } from 'components/checkbox'
-import { Label } from 'components/label'
+import { Icon } from 'components/icon'
 
 
 class Bot extends Component {
@@ -22,9 +22,10 @@ class Bot extends Component {
 
     super()
 
-    this.onAdvertClick = this.onAdvertClick.bind(this)
     this.onSort = this.onSort.bind(this)
+    this.onAdvertClick = this.onAdvertClick.bind(this)
     this.onStatusFilterChange = this.onStatusFilterChange.bind(this)
+    this.onContactedFilterChange = this.onContactedFilterChange.bind(this)
 
   }
 
@@ -42,6 +43,14 @@ class Bot extends Component {
     const { relay } = this.props
 
     return relay.setVariables(variables)
+
+  }
+
+  onContactedFilterChange(contacted) {
+
+    const { relay } = this.props
+
+    return relay.setVariables({ contacted })
 
   }
 
@@ -66,39 +75,72 @@ class Bot extends Component {
     const { sortBy, sortDirection, status, contacted } = variables
 
     // sort adverts
-    const sortedList = getSortedList(getFilteredBotAdverts(allAdverts, { contacted }), sortBy, sortDirection)
+    const sortedList = getSortedList(getFilteredBotAdverts(getFormattedDateBotAdverts(allAdverts), { contacted }), sortBy, sortDirection)
 
     // make column headers sortable
     const headerRenderer = ({ dataKey, label, sortBy, sortDirection }) => ( <div>{ label } { sortBy === dataKey && <SortIndicator sortDirection={ sortDirection } /> } </div> )
 
+    // render sms notification
+    const cellRenderer = ({ dataKey, cellData }) => {
+
+      if (dataKey === 'replies') {
+
+        const lastSms = cellData[cellData.length-1]
+
+        if (lastSms && lastSms.host) return <Text>🔥</Text>
+
+        if (!lastSms) return <Text>Not sent</Text>
+
+        return <Text>✅</Text>
+
+      }
+
+      if (dataKey === 'updatedAt') return <Text>{ getFormattedTimestamp(cellData) }</Text>
+
+      return <Text>{ cellData }</Text>
+
+    }
+
     // create `Column` for each required field
-    const renderColumns = FIELDS.map( (f, i) => <Column key={ i } headerRenderer={ headerRenderer } label={ f.label } dataKey={ f.key } width={1} flexGrow={1} flexShrink={0} /> )
+    const renderColumns = FIELDS.map( (f, i) => <Column key={ i } headerRenderer={ headerRenderer } label={ f.label } dataKey={ f.key } cellRenderer={ cellRenderer } width={1} flexGrow={1} flexShrink={0} /> )
 
     return (
       <View>
 
         <Text atomic={{ fs:6, fw:'b', ta:'c' }} color='primary'>All Adverts</Text>
 
-        <Select
-          atomic={{ d:'b', mt:4, mb:2, ta:'c' }}
-          name='status'
-          value={ status }
-          options={ FILTERS.status }
-          autoBlur={ true }
-          clearable={ false }
-          searchable={ true }
-          onChange={ ({ value }) => this.onStatusFilterChange(value) }
-        />
+        <Section atomic={{ mt:8, mb:8, ta:'c' }}>
 
-        <View atomic={{ p:0, d:'ib', w:'a', ta:'c', mb:4 }}>
+          <Text atomic={{ d:'ib' }}>
 
-          <Label atomic={{ d:'ib', m:0 }}>
-            <Checkbox atomic={{ d:'ib', mr:1, mt:0, mb:0, w:'a' }} onChange={ () => this.props.relay.setVariables({ contacted: !contacted })} type='checkbox' />
-            Display only Contacted adverts
-          </Label>
+            <Icon>tune</Icon> Show
 
-        </View>
+          </Text>
 
+          <Select
+            width='140px'
+            name='contacted'
+            value={ contacted }
+            options={ FILTERS.contacted }
+            autoBlur={ true }
+            clearable={ false }
+            searchable={ true }
+            onChange={ ({ value }) => this.onContactedFilterChange(value) }
+          />
+
+          <Text atomic={{ d:'ib' }}>adverts where they are</Text>
+
+          <Select
+            name='status'
+            value={ status }
+            options={ FILTERS.status }
+            autoBlur={ true }
+            clearable={ false }
+            searchable={ true }
+            onChange={ ({ value }) => this.onStatusFilterChange(value) }
+          />
+
+        </Section>
 
         <AutoSizer>
 

@@ -1,4 +1,4 @@
-import { INITIAL_TAB } from './constants'
+import { INITIAL_TAB, MESSAGES } from './constants'
 
 const variables = {
 
@@ -6,6 +6,8 @@ const variables = {
     _id: null,
     visibleTab: INITIAL_TAB,
     createListingRequesting: false,
+    selectedSms: 'custom',
+    smsContent: MESSAGES.custom,
   },
 
 }

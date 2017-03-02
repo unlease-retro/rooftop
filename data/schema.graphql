@@ -72,6 +72,10 @@ type Bot {
   crawled: Boolean
   disabled: Boolean
   submitted: Boolean
+  createdAt: Float
+  updatedAt: Float
+  serviceFee: Float
+  email: String
   amenities: BotAmenities
   preferences: BotPreferences
   household: BotHousehold
@@ -167,6 +171,7 @@ type CreateUserPayload {
 }
 
 input CreateUserWithListingInput {
+  email: String
   payload: UserWithListingInputType
   clientMutationId: String
 }
@@ -174,6 +179,7 @@ input CreateUserWithListingInput {
 type CreateUserWithListingPayload {
   listingId: String
   email: String
+  password: String
   clientMutationId: String
 }
 
@@ -228,6 +234,10 @@ input InputTypeBot {
   extraCosts: InputTypeBotExtraCosts
   preferences: InputTypeBotPreferences
   amenities: InputTypeBotAmenities
+  serviceFee: Float
+  email: String
+  createdAt: Float
+  updatedAt: Float
 }
 
 input InputTypeBotAmenities {

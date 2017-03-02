@@ -2,7 +2,6 @@
  * @desc Listing computed values, memoized using ramda-memoize
  * @see http://ramdajs.com/docs/#memoize
  */
-
 import R from 'ramda'
 
 /**
@@ -12,8 +11,20 @@ import R from 'ramda'
  */
 export const getFilteredBotAdverts = R.memoize( (adverts, { contacted }) => {
 
-  if (!contacted) return adverts
+  if (contacted === 'all') return adverts
+
+  if (contacted === 'uncontacted') return adverts.filter( a => !a.replies.length )
 
   return adverts.filter( a => a.replies.length )
 
 })
+
+const getFormattedTimestamp = advert => {
+
+  advert.updatedAt = new Date(advert.updatedAt) 
+
+  return advert
+
+}
+
+export const getFormattedDateBotAdverts = R.memoize( adverts => R.map(getFormattedTimestamp, adverts) )

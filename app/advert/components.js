@@ -2,23 +2,36 @@ import React from 'react'
 import { reduxForm } from 'redux-form/immutable'
 
 import { Form } from 'components/form'
-import { Input as TextInput } from 'components/input'
-import { Select as Dropdown } from 'components/select'
+import { Input } from 'components/input'
+import { Select } from 'components/select'
 import { Textarea } from 'components/textarea'
 import { Label } from 'components/label'
 import { Error } from 'components/error'
 import { View } from 'components/layout'
 
-import { name as form, HOME_TYPES } from './constants'
+import { name as form } from './constants'
 
-export const Input = props => {
+
+const Warning = ({ touched, error, value, label }) => {
+
+  //isNaN(null) === false
+  let isNaN = typeof value !== 'number'
+
+  if (!value && isNaN || touched && error) return <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error>
+
+  return null
+
+}
+
+
+const input = props => {
 
   const { label, input, type, meta } = props
   const { touched, error } = meta
 
   const atomic = { m:0, bs:'s', bw:1, bg:'t' }
 
-  let renderElement = <TextInput { ...input } type={ type } atomic={ atomic }/>
+  let renderElement = <Input { ...input } type={ type } atomic={ atomic }/>
 
   if (!type) renderElement = <Textarea { ...input } height='300px' atomic={ atomic }/>
 
@@ -31,7 +44,7 @@ export const Input = props => {
 
       { renderElement }
 
-      { touched && error ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
+      <Warning touched={ touched } error={ error } label={ label } value={ input.value } />
 
     </View>
   )
@@ -39,10 +52,10 @@ export const Input = props => {
 }
 
 
-export const Select = props => {
+const select = props => {
 
-  const { label, input, meta } = props
-  const { value, onChange } = input
+  const { label, input, meta, options } = props
+  const { onChange } = input
   const { touched, error } = meta
 
   const selectDefaults = { autoBlur: false, clearable: false, searchable: false }
@@ -52,21 +65,25 @@ export const Select = props => {
 
       <Label atomic={{ ml:0, mr:0 }}>{ label }</Label>
 
-      <Dropdown
+      <Select
         { ...selectDefaults }
-        value={ value }
+        value={ input.value }
         onChange={ v => onChange(v.value) }
-        options={ HOME_TYPES }
+        options={ options }
         atomic={{ ml:0, mr:0, mb:0, mt:1 }}
         width='100%'
       />
 
-      { touched && error ? <Error atomic={{ ml:0, mr:0, mb:0, mt:1 }}>{ label } is required</Error> : null }
+      <Warning touched={ touched } error={ error } label={ label } value={ input.value } />
 
     </View>
   )
 
 }
 
+export const Components = {
+  select,
+  input,
+}
 
 export default reduxForm( { form, enableReinitialize: true } )( Form )
