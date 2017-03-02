@@ -12,6 +12,7 @@ export default class CreateUserWithListingMutation extends Relay.Mutation {
 
     return {
       id: this.props.id,
+      email: this.props.email,
       payload: this.props.payload,
     }
 
@@ -23,6 +24,7 @@ export default class CreateUserWithListingMutation extends Relay.Mutation {
       fragment on CreateUserWithListingPayload @relay(pattern: true) {
         listingId
         email
+        password
       }
     `
 
@@ -37,6 +39,7 @@ export default class CreateUserWithListingMutation extends Relay.Mutation {
           fragment on CreateUserWithListingPayload {
             listingId
             email
+            password
           }
         `,
       ],

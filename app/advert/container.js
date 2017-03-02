@@ -15,7 +15,7 @@ import mutations from './mutations'
 import { updateUI } from '../ui/actions'
 import { mutations as ListingMutations } from '../listings'
 import variables from './variables'
-import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserPassword, getUserEmail, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
+import { getAddressFromGeocode, getListingPreviewUrl, getListingUrl, getUserEmail, getMapUrl, compileSmsBody, getSmsBody, getStatusTextColour, required, normalize, transformAdvertToListing, transformAdvertToListingPreview, formatReplyDate } from './util'
 import { promisifyMutation, getFormattedTimestamp } from '../shared/util'
 import { TABS, INITIAL_TAB, MESSAGES, MESSAGE_TYPES, HOME_TYPE, COUPLE_TYPE, SERVICE_FEE } from './constants'
 
@@ -81,6 +81,7 @@ class Advert extends Component {
     const { onUpdateAdvertRequest } = this
     const { relay, advertForm, query: { advert } } = this.props
     const { _id, geocode } = advert
+    const { email } = advertForm
 
     // I have given up! 😫
     const user = {}
@@ -91,11 +92,11 @@ class Advert extends Component {
     return onUpdateAdvertRequest(_id, advertForm)
       .then( () => getAddressFromGeocode(geocode) )
       .then( address => transformAdvertToListing({ ...this.props.query.advert, ...advertForm, ...address }) )
-      .then( payload => promisifyMutation( new ListingMutations.createUserWithListing(payload) ) )
-      .then( ({ createUserWithListing: { listingId, email } }) => {
+      .then( ({ payload }) => promisifyMutation( new ListingMutations.createUserWithListing({ payload, email }) ) )
+      .then( ({ createUserWithListing: { listingId, email, password } }) => {
 
         user.emailAddress = email
-        user.password = getUserPassword(email)
+        user.password = password
         listing.listingUrl = getListingUrl(listingId)
 
         return onUpdateAdvertRequest(_id, { listingId, submitted: true, disabled: false })

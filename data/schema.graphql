@@ -171,6 +171,7 @@ type CreateUserPayload {
 }
 
 input CreateUserWithListingInput {
+  email: String
   payload: UserWithListingInputType
   clientMutationId: String
 }
@@ -178,6 +179,7 @@ input CreateUserWithListingInput {
 type CreateUserWithListingPayload {
   listingId: String
   email: String
+  password: String
   clientMutationId: String
 }
 

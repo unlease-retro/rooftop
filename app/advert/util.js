@@ -19,8 +19,6 @@ export const getTrimmedString = str => str.replace(/\W/g, '')
 
 export const getUserEmail = hostName => `${getTrimmedString(hostName.toLowerCase())}${getRandomDigits(3)}@${UNLEASE_MAIL}`
 
-export const getUserPassword = email => email.replace(/@.*$/, '')
-
 export const formatReplyDate = date => moment(date).format(REPLY_DATE_FORMAT)
 
 export const required = value => !value || value === 'unspecified' ? 'Required' : undefined
