@@ -26,8 +26,10 @@ export const getFormattedTimestamp = ts => {
   const DD = padLeft(day)
   const MM = padLeft(month)
   const YYYY = date.getFullYear()
+  const HH = date.getHours()
+  const MMMM = date.getMinutes()
 
-  return `${DD}/${MM}/${YYYY}`
+  return `${DD}/${MM}/${YYYY} ${HH}:${MMMM}`
 
 }
 
