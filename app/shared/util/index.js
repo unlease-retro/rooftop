@@ -22,12 +22,14 @@ export const getFormattedTimestamp = ts => {
   const date = new Date(ts)
   const day = date.getDate().toString()
   const month = (date.getMonth() + 1).toString()
+  const hour = date.getHours().toString()
+  const minutes = date.getMinutes().toString()
 
   const DD = padLeft(day)
   const MM = padLeft(month)
   const YYYY = date.getFullYear()
-  const HH = date.getHours()
-  const MMMM = date.getMinutes()
+  const HH = padLeft(hour)
+  const MMMM = padLeft(minutes)
 
   return `${DD}/${MM}/${YYYY} ${HH}:${MMMM}`
 

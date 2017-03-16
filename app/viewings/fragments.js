@@ -5,15 +5,24 @@ export const query = () => Relay.QL`
     upcomingViewings {
       host {
         firstName
+        lastName
+        phoneVerification {
+          contactNumber
+        }
       }
       guest {
         firstName
+        lastName
+        phoneVerification {
+          contactNumber
+        }
       }
       viewing {
         confirmedTime
       }
       listing {
         title
+        id
       }
     }
   }

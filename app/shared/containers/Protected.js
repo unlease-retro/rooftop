@@ -10,6 +10,7 @@ import { selectors as UISelectors, actions as UIActions } from '../../ui'
 
 import * as Bot from '../../bot'
 import * as Listings from '../../listings'
+import * as Viewings from '../../viewings'
 
 import { Anchor } from 'components/anchor'
 import { Button } from 'components/button'
@@ -36,6 +37,7 @@ class Protected extends Component {
       <Nav onClick={ () => updateUI({ isNavOpen: false }) }>
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Bot.route}>🤖 Bot</Anchor>
         <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Listings.route}>🏠 Listings</Anchor>
+        <Anchor atomic={{ d:'b', mb:4, td:'n' }} to={Viewings.route}>📷 Viewings</Anchor>
       </Nav>
     ) : null
 
