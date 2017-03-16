@@ -10,6 +10,7 @@ import * as Advert from '../../advert'
 import * as Auth from '../../auth'
 import * as Bot from '../../bot'
 import * as Listings from '../../listings'
+import * as Viewings from '../../viewings'
 
 // hooks
 import { protectedOnEnter } from './hooks'
@@ -24,6 +25,7 @@ const routes = store => (
       <IndexRoute component={Listings.Container} queries={RootQuery} />
       <Route path={Advert.route} component={Advert.Container} queries={RootQuery} prepareParams={ params => params } />
       <Route path={Bot.route} component={Bot.Container} queries={RootQuery} />
+      <Route path={Viewings.route} component={Viewings.Container} queries={RootQuery} />
     </Route>
     <Route path='*' component={NotFound} />
   </Route>

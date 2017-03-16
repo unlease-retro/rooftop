@@ -378,9 +378,12 @@ type Query {
   allAdverts(submitted: Boolean, disabled: Boolean, crawled: Boolean, limit: Int = 0): [Bot]
   advert(_id: String): Bot
   listings(lng: Float, lat: Float, radius: Int, startDateInNextDays: Int, listed: Boolean, sortBy: String, direction: String): [Listing]
+  listingById(id: String): Listing
   notificationById(id: String, token: String): Notification
   users(token: String): [User]
   userById(id: String, token: String): User
+  viewingByMessageId(id: String, token: String): Viewing
+  upcomingViewings: [upcomingViewings]
 }
 
 input RemoveListingFromPopularInput {
@@ -423,6 +426,14 @@ input SendAdvertMessageInput {
 type SendAdvertMessagePayload {
   advert: Bot
   clientMutationId: String
+}
+
+type upcomingViewings {
+  host: User
+  guest: User
+  listing: Listing
+  viewing: Viewing
+  callUrl: String
 }
 
 input UpdateAdvertInput {
@@ -473,4 +484,25 @@ input UserInputType {
 input UserWithListingInputType {
   listing: ListingInputType
   user: UserInputType
+}
+
+type Viewing {
+  id: String
+  messageThreadId: String
+  proposedTime: [Float]
+  previousProposedTime: [[Float]]
+  confirmedTime: Float
+  participants: [String]
+  cancelled: Boolean
+  declined: Boolean
+  createdAt: Float
+  updatedAt: Float
+  proposedTimeChangeAt: Float
+  proposedTimeExpiredAt: Float
+  acceptedBy: String
+  canceledBy: String
+  declinedBy: String
+  scheduledBy: String
+  reminderSent: Boolean
+  postViewingEmailSent: Boolean
 }
