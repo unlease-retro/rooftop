@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
-// import { bindActionCreators } from 'redux'
-// import { connect } from 'react-redux'
-// import { createStructuredSelector } from 'reselect'
+
+// vendor
 import { AutoSizer, Column, Table } from 'react-virtualized'
 
 // variables
@@ -95,10 +94,13 @@ class Viewings extends Component {
 
       let { dataKey } = props
 
+      // render listing cell
       if (dataKey === 'listing') return renderListing(props)
 
+      // render viewing cell
       if (dataKey === 'viewing') return renderViewing(props)
 
+      // render guest or host cell
       return renderUser(props)
 
     }
