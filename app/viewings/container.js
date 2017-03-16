@@ -28,14 +28,13 @@ class Viewings extends Component {
     super()
 
     this.renderUser = this.renderUser.bind(this)
+    this.renderStatus = this.renderStatus.bind(this)
     this.renderListing = this.renderListing.bind(this)
     this.renderViewing = this.renderViewing.bind(this)
 
   }
 
-  renderUser({ cellData }) {
-
-    const { firstName, lastName, phoneVerification } = cellData    
+  renderUser({ firstName, lastName, phoneVerification }) {
 
     return (
       <View atomic={{ m:0, p: 0 }}>
@@ -51,9 +50,7 @@ class Viewings extends Component {
 
   }
 
-  renderListing({ cellData }) {
-
-    const { id, title } = cellData
+  renderListing({ id, title }) {
 
     return (
       <View atomic={{ m:0, p:0, ta:'l' }}>
@@ -65,9 +62,7 @@ class Viewings extends Component {
 
   }
 
-  renderViewing({ cellData }) {
-
-    const { confirmedTime } = cellData
+  renderViewing({ confirmedTime }) {
 
     return (
       <View atomic={{ m:0, p: 0 }}>
@@ -79,9 +74,21 @@ class Viewings extends Component {
 
   }
 
+  renderStatus(callUrl) {
+    
+    return (
+      <View atomic={{ m:0, p: 0 }}>
+
+        { callUrl ? <Anchor atomic={{ d:'ib', m:0, td:'u' }} to={callUrl} target='_blank'>{callUrl}</Anchor> : <Text atomic={{ m:0 }}>☎️ Call not started</Text> }
+
+      </View>
+    )
+
+  }
+
   render() {
 
-    const { renderUser, renderListing, renderViewing } = this
+    const { renderUser, renderListing, renderStatus, renderViewing } = this
 
     const { query } = this.props
     const { upcomingViewings } = query
@@ -90,18 +97,19 @@ class Viewings extends Component {
     const headerRenderer = ({ label }) => ( <Text atomic={{ m:0, p:0, fw:'b' }}>{ label }</Text> )
 
     // render cell
-    const cellRenderer = props => {
+    const cellRenderer = ({ dataKey, cellData }) => {
 
-      let { dataKey } = props
-
-      // render listing cell
-      if (dataKey === 'listing') return renderListing(props)
+      // render status cell
+      if (dataKey === 'callUrl') return renderStatus(cellData)
 
       // render viewing cell
-      if (dataKey === 'viewing') return renderViewing(props)
+      if (dataKey === 'viewing') return renderViewing(cellData)
+
+      // render listing cell
+      if (dataKey === 'listing') return renderListing(cellData)
 
       // render guest or host cell
-      return renderUser(props)
+      return renderUser(cellData)
 
     }
 

@@ -3,6 +3,7 @@ import Relay from 'react-relay'
 export const query = () => Relay.QL`
   fragment on Query {
     upcomingViewings {
+      callUrl
       host {
         firstName
         lastName

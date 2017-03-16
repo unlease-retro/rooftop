@@ -7,6 +7,10 @@ export const FIELDS = [
     label: 'Viewing'
   },
   {
+    key: 'callUrl',
+    label: 'Status'
+  },
+  {
     key: 'listing',
     label: 'Listing'
   },
